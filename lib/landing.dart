@@ -12,18 +12,97 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Material(
-              child: Text('data',
-              style: TextStyle(
-                fontSize: size.width*0.5
-              ),),
-            )
-          ],
+      // backgroundColor: Colors.blue,
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/bg.jpg'), fit: BoxFit.cover)),
+        child: SafeArea(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Hi there 👋',
+                    style: TextStyle(fontSize: 30
+                        // fontSize: size.width*0.5
+                        ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    '''Welcome''',
+                    style: TextStyle(fontSize: 45
+                        // fontSize: size.width*0.5
+                        ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.45,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            minimumSize: MaterialStateProperty.all(
+                                Size(double.infinity, 50))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text('Login as User'), Text('-->')],
+                        ))),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            minimumSize: MaterialStateProperty.all(
+                                Size(double.infinity, 50))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text('Login as Doctor'), Text('-->')],
+                        ))),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            minimumSize: MaterialStateProperty.all(
+                                Size(double.infinity, 50))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text('Login as Relative'), Text('-->')],
+                        ))),
+              ),
+            ],
+          ),
         ),
       ),
     );
