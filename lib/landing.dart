@@ -1,3 +1,4 @@
+import 'package:adv_egg/emailLogin.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
@@ -74,7 +75,10 @@ class _LandingPageState extends State<LandingPage> {
                 child: Align(
                     alignment: Alignment.bottomLeft,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // Navigator.push(context, MaterialPageRoute(builder: >)
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EmailLogin()));
+                        },
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
