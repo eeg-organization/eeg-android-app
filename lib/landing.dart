@@ -15,7 +15,7 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       // backgroundColor: Colors.blue,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/bg.jpg'), fit: BoxFit.cover)),
         child: SafeArea(
@@ -54,7 +54,7 @@ class _LandingPageState extends State<LandingPage> {
                 height: size.height * 0.45,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
                     alignment: Alignment.bottomLeft,
                     child: ElevatedButton(
@@ -64,33 +64,33 @@ class _LandingPageState extends State<LandingPage> {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
                             minimumSize: MaterialStateProperty.all(
-                                Size(double.infinity, 50))),
+                                const Size(double.infinity, 50))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('Login as User'), Text('-->')],
+                          children: const [Text('Login as User'), Text('-->')],
                         ))),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                 child: Align(
                     alignment: Alignment.bottomLeft,
                     child: ElevatedButton(
                         onPressed: () {
                           // Navigator.push(context, MaterialPageRoute(builder: >)
-                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EmailLogin()));
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const EmailLogin()));
                         },
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
                             minimumSize: MaterialStateProperty.all(
-                                Size(double.infinity, 50))),
+                                const Size(double.infinity, 50))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('Login as Doctor'), Text('-->')],
+                          children: const [Text('Login as Doctor'), Text('-->')],
                         ))),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
                     alignment: Alignment.bottomLeft,
                     child: ElevatedButton(
@@ -99,10 +99,10 @@ class _LandingPageState extends State<LandingPage> {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
                             minimumSize: MaterialStateProperty.all(
-                                Size(double.infinity, 50))),
+                                const Size(double.infinity, 50))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('Login as Relative'), Text('-->')],
+                          children: const [Text('Login as Relative'), Text('-->')],
                         ))),
               ),
             ],
