@@ -1,5 +1,6 @@
 import 'package:adv_egg/quiz_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PatientLogin extends StatefulWidget {
   const PatientLogin({Key? key}) : super(key: key);
@@ -16,18 +17,24 @@ class _PatientLoginState extends State<PatientLogin> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/bg1.jpg'), fit: BoxFit.cover)),
+                colorFilter:
+                    ColorFilter.mode(Colors.black, BlendMode.softLight),
+                image: AssetImage('assets/bg1.jpg'),
+                fit: BoxFit.cover)),
         child: SafeArea(
             child: Column(
           children: [
             SizedBox(
               height: size.height * 0.2,
             ),
-            const Align(
+            Align(
               alignment: Alignment.center,
               child: Text(
                 'Login as Patient',
-                style: TextStyle(fontSize: 30),
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -39,11 +46,15 @@ class _PatientLoginState extends State<PatientLogin> {
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const QuizPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const QuizPage()));
                       },
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
+                              MaterialStateProperty.all(Colors.black),
                           minimumSize: MaterialStateProperty.all(
                               const Size(double.infinity, 50))),
                       child: const Text('Quiz'))),
@@ -59,7 +70,7 @@ class _PatientLoginState extends State<PatientLogin> {
                       onPressed: () {},
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
+                              MaterialStateProperty.all(Colors.black),
                           minimumSize: MaterialStateProperty.all(
                               const Size(double.infinity, 50))),
                       child: const Text('EEG'))),

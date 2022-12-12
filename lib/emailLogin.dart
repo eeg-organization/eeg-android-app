@@ -1,6 +1,5 @@
 import 'package:adv_egg/patient_login.dart';
 import 'package:flutter/material.dart';
-
 class EmailLogin extends StatefulWidget {
   const EmailLogin({super.key});
 
@@ -22,8 +21,12 @@ class _EmailLoginState extends State<EmailLogin> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
+                colorFilter:
+                ColorFilter.mode(Colors.black, BlendMode.softLight),
+                // colorFilter: ColorFilterLayer(colorFilter: ColorFilter.matrix(matrix)),
                 image: AssetImage(
                   'assets/bg1.jpg',
+
                 ),
                 fit: BoxFit.cover)),
         child: SafeArea(
@@ -36,7 +39,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   'Login with your E-mail',
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(fontSize: 30,color: Colors.white),
                 ),
               ),
               SizedBox(
@@ -48,7 +51,7 @@ class _EmailLoginState extends State<EmailLogin> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Email',
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30,color: Colors.white),
                   ),
                 ),
               ),
@@ -58,27 +61,33 @@ class _EmailLoginState extends State<EmailLogin> {
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    textAlign: TextAlign.start,
-                    obscureText: true,
-                    onChanged: (value) {
-                      email = value;
-                    },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-
-                      //   hintStyle: TextStyle(color:Colors.black),
-                      hintText: 'Enter your Email',
-                      // icon: Icon(Icons.lock)
-                    ),
-                    style: const TextStyle(
-                        // color:Colors.white
+                  child: Material(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(color: Colors.white)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        textAlign: TextAlign.start,
+                        // obscureText: true,
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          //   hintStyle: TextStyle(color:Colors.black),
+                          hintText: 'Enter your Email',
+                          hintStyle: TextStyle(color: Colors.white)
+                          // icon: Icon(Icons.lock)
                         ),
+                        style: const TextStyle(
+                            color:Colors.white
+                            ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: size.height * 0.05,
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
@@ -86,32 +95,41 @@ class _EmailLoginState extends State<EmailLogin> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Password',
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30,color: Colors.white),
                   ),
                 ),
               ),
               Material(
-                // elevation: 20,
+                // elevation: 5,
                 color: Colors.transparent,
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    textAlign: TextAlign.start,
-                    obscureText: true,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-
-                      //   hintStyle: TextStyle(color:Colors.black),
-                      hintText: 'Enter your password',
-                      // icon: Icon(Icons.lock)
-                    ),
-                    style: const TextStyle(
-                        // color:Colors.white
+                  child: Material(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(color: Colors.white)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        textAlign: TextAlign.start,
+                        obscureText: true,
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          //   hintStyle: TextStyle(color:Colors.black),
+                          hintText: 'Enter your password',
+                          hintStyle: TextStyle(color: Colors.white)
+                          // icon: Icon(Icons.lock)
                         ),
+                        style: const TextStyle(
+                            // color:Colors.white
+                            ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -125,20 +143,21 @@ class _EmailLoginState extends State<EmailLogin> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.05,
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const PatientLogin()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const PatientLogin()));
                     },
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.transparent),
+                            MaterialStateProperty.all(Colors.black),
                         minimumSize: MaterialStateProperty.all(
                             const Size(double.infinity, 50))),
                     child: const Text(
@@ -153,7 +172,7 @@ class _EmailLoginState extends State<EmailLogin> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('New User?',
-                        style: TextStyle(color: Colors.black38)),
+                        style: TextStyle(color: Colors.grey)),
                     TextButton(onPressed: () {}, child: const Text('Sign up'))
                   ],
                 ),

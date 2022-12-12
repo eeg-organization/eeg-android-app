@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:adv_egg/emailLogin.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
 
@@ -9,6 +11,13 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -62,7 +71,7 @@ class _LandingPageState extends State<LandingPage> {
                         style: ButtonStyle(
 
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
+                                MaterialStateProperty.all(Colors.deepOrange),
                             minimumSize: MaterialStateProperty.all(
                                 const Size(double.infinity, 50))),
                         child: Row(
@@ -81,7 +90,7 @@ class _LandingPageState extends State<LandingPage> {
                         },
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
+                                MaterialStateProperty.all(Colors.deepOrange),
                             minimumSize: MaterialStateProperty.all(
                                 const Size(double.infinity, 50))),
                         child: Row(
@@ -97,7 +106,7 @@ class _LandingPageState extends State<LandingPage> {
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
+                                MaterialStateProperty.all(Colors.deepOrange),
                             minimumSize: MaterialStateProperty.all(
                                 const Size(double.infinity, 50))),
                         child: Row(
