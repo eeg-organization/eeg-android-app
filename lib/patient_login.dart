@@ -19,7 +19,7 @@ class _PatientLoginState extends State<PatientLogin> {
             image: DecorationImage(
                 colorFilter:
                     ColorFilter.mode(Colors.black, BlendMode.softLight),
-                image: AssetImage('assets/bg1.jpg'),
+                image: AssetImage('assets/bg1.png'),
                 fit: BoxFit.cover)),
         child: SafeArea(
             child: Column(

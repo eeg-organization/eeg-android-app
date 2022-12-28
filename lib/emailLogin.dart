@@ -1,5 +1,8 @@
+import 'package:adv_egg/controllers/question_controller.dart';
 import 'package:adv_egg/patient_login.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 class EmailLogin extends StatefulWidget {
   const EmailLogin({super.key});
 
@@ -10,6 +13,7 @@ class EmailLogin extends StatefulWidget {
 }
 
 class _EmailLoginState extends State<EmailLogin> {
+  // final QuestionController questionController = Get.put(QuestionController());
   String? email;
   String? password;
   @override
@@ -22,11 +26,10 @@ class _EmailLoginState extends State<EmailLogin> {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 colorFilter:
-                ColorFilter.mode(Colors.black, BlendMode.softLight),
+                    ColorFilter.mode(Colors.black, BlendMode.softLight),
                 // colorFilter: ColorFilterLayer(colorFilter: ColorFilter.matrix(matrix)),
                 image: AssetImage(
-                  'assets/bg1.jpg',
-
+                  'assets/bg1.png',
                 ),
                 fit: BoxFit.cover)),
         child: SafeArea(
@@ -39,7 +42,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   'Login with your E-mail',
-                  style: TextStyle(fontSize: 30,color: Colors.white),
+                  style: TextStyle(fontSize: 30, color: Colors.white),
                 ),
               ),
               SizedBox(
@@ -51,7 +54,7 @@ class _EmailLoginState extends State<EmailLogin> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Email',
-                    style: TextStyle(fontSize: 30,color: Colors.white),
+                    style: TextStyle(fontSize: 30, color: Colors.white),
                   ),
                 ),
               ),
@@ -75,15 +78,13 @@ class _EmailLoginState extends State<EmailLogin> {
                           email = value;
                         },
                         decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          //   hintStyle: TextStyle(color:Colors.black),
-                          hintText: 'Enter your Email',
-                          hintStyle: TextStyle(color: Colors.white)
-                          // icon: Icon(Icons.lock)
-                        ),
-                        style: const TextStyle(
-                            color:Colors.white
+                            border: InputBorder.none,
+                            //   hintStyle: TextStyle(color:Colors.black),
+                            hintText: 'Enter your Email',
+                            hintStyle: TextStyle(color: Colors.white)
+                            // icon: Icon(Icons.lock)
                             ),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -95,7 +96,7 @@ class _EmailLoginState extends State<EmailLogin> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Password',
-                    style: TextStyle(fontSize: 30,color: Colors.white),
+                    style: TextStyle(fontSize: 30, color: Colors.white),
                   ),
                 ),
               ),
@@ -119,12 +120,12 @@ class _EmailLoginState extends State<EmailLogin> {
                           password = value;
                         },
                         decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          //   hintStyle: TextStyle(color:Colors.black),
-                          hintText: 'Enter your password',
-                          hintStyle: TextStyle(color: Colors.white)
-                          // icon: Icon(Icons.lock)
-                        ),
+                            border: InputBorder.none,
+                            //   hintStyle: TextStyle(color:Colors.black),
+                            hintText: 'Enter your password',
+                            hintStyle: TextStyle(color: Colors.white)
+                            // icon: Icon(Icons.lock)
+                            ),
                         style: const TextStyle(
                             // color:Colors.white
                             ),

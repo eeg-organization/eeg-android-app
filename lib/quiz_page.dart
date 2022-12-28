@@ -1,32 +1,31 @@
 import 'package:adv_egg/questions_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class QuizPage extends StatefulWidget {
+class QuizPage extends StatelessWidget {
   const QuizPage({Key? key}) : super(key: key);
 
-  @override
-  State<QuizPage> createState() => _QuizPageState();
-}
-
-class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-            // boxShadow: [
-            //   BoxShadow(color: Colors.black)
-            // ],
-            // backgroundBlendMode: BlendMode.color,
-            image: DecorationImage(
-                colorFilter:
-                    ColorFilter.mode(Colors.black, BlendMode.softLight),
-                image: AssetImage('assets/bg1.jpg'),
-                fit: BoxFit.cover)),
+          // boxShadow: [
+          //   BoxShadow(color: Colors.black)
+          // ],
+          // backgroundBlendMode: BlendMode.color,
+          image: DecorationImage(
+            colorFilter: ColorFilter.mode(
+              Colors.black,
+              BlendMode.softLight,
+            ),
+            image: AssetImage('assets/bg1.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: SafeArea(
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
@@ -45,59 +44,53 @@ class _QuizPageState extends State<QuizPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const QuestionsPage(
-                                    type: 'HAM_D',
-                                  )));
-                    },
-                    child: Material(
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            side: const BorderSide(color: Colors.white)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text(
-                              'Quiz 1',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ))),
+                  onTap: () {
+                    Get.to(() => const QuestionsPage(type: 'HAM_D'));
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(color: Colors.white)),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Quiz 1',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: size.height * 0.025,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30.0,
+                ),
                 child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const QuestionsPage(
-                                    type: 'BID',
-                                  )));
-                    },
-                    child: Material(
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            side: const BorderSide(color: Colors.white)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text(
-                              'Quiz 2',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ))),
+                  onTap: () {
+                    Get.to(() => const QuestionsPage(type: 'BID'));
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(color: Colors.white)),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Quiz 2',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               // SizedBox(
               //   height: size.height * 0.025,

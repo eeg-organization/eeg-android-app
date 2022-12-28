@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:adv_egg/emailLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
 
@@ -11,13 +12,12 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -26,7 +26,7 @@ class _LandingPageState extends State<LandingPage> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/bg.jpg'), fit: BoxFit.cover)),
+                image: AssetImage('assets/bg.png'), fit: BoxFit.cover)),
         child: SafeArea(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,6 @@ class _LandingPageState extends State<LandingPage> {
                     child: ElevatedButton(
                         onPressed: () {},
                         style: ButtonStyle(
-
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.deepOrange),
                             minimumSize: MaterialStateProperty.all(
@@ -80,13 +79,18 @@ class _LandingPageState extends State<LandingPage> {
                         ))),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                 child: Align(
                     alignment: Alignment.bottomLeft,
                     child: ElevatedButton(
                         onPressed: () {
                           // Navigator.push(context, MaterialPageRoute(builder: >)
-                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const EmailLogin()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const EmailLogin()));
                         },
                         style: ButtonStyle(
                             backgroundColor:
@@ -95,7 +99,10 @@ class _LandingPageState extends State<LandingPage> {
                                 const Size(double.infinity, 50))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [Text('Login as Doctor'), Text('-->')],
+                          children: const [
+                            Text('Login as Doctor'),
+                            Text('-->')
+                          ],
                         ))),
               ),
               Padding(
@@ -111,7 +118,10 @@ class _LandingPageState extends State<LandingPage> {
                                 const Size(double.infinity, 50))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [Text('Login as Relative'), Text('-->')],
+                          children: const [
+                            Text('Login as Relative'),
+                            Text('-->')
+                          ],
                         ))),
               ),
             ],
