@@ -1,7 +1,7 @@
 import 'package:adv_egg/controllers/counter_controller.dart';
 import 'package:adv_egg/controllers/question_controller.dart';
 import 'package:adv_egg/controllers/quiz_controller.dart';
-import 'package:adv_egg/quiz_page.dart';
+import 'package:adv_egg/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';

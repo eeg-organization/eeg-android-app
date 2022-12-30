@@ -1,4 +1,4 @@
-import 'package:adv_egg/quiz_page.dart';
+import 'package:adv_egg/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

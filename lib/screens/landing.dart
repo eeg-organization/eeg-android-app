@@ -1,7 +1,10 @@
 import 'dart:convert';
 
-import 'package:adv_egg/emailLogin.dart';
+import 'package:adv_egg/screens/doctorView.dart';
+import 'package:adv_egg/screens/emailLogin.dart';
+import 'package:adv_egg/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class LandingPage extends StatefulWidget {
@@ -67,7 +70,9 @@ class _LandingPageState extends State<LandingPage> {
                 child: Align(
                     alignment: Alignment.bottomLeft,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => const QuizPage());
+                        },
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.deepOrange),
@@ -86,11 +91,7 @@ class _LandingPageState extends State<LandingPage> {
                     child: ElevatedButton(
                         onPressed: () {
                           // Navigator.push(context, MaterialPageRoute(builder: >)
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const EmailLogin()));
+                          Get.to(() => const DoctorView());
                         },
                         style: ButtonStyle(
                             backgroundColor:

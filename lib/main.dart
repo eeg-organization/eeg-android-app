@@ -1,4 +1,4 @@
-import 'package:adv_egg/landing.dart';
+import 'package:adv_egg/screens/landing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // routes: ,
       home: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
