@@ -1,5 +1,8 @@
+import 'package:adv_egg/screens/eegScreen.dart';
 import 'package:adv_egg/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PatientLogin extends StatefulWidget {
@@ -67,7 +70,11 @@ class _PatientLoginState extends State<PatientLogin> {
               child: Align(
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final BluetoothDevice? selectedDevice = await Get.to(
+                            () => EegScreen(),
+                            transition: Transition.cupertino);
+                      },
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.black),

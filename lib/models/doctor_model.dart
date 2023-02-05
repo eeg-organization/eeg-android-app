@@ -133,7 +133,7 @@ class QuizInfo {
   final DateTime createdAt;
   final Data data;
   final Options options;
-  final int? score;
+  final dynamic score;
   final String? user;
   final String? questionare;
 
@@ -232,7 +232,7 @@ class Option {
   final String? uid;
   final String? option;
   final String? question;
-  final int? optionId;
+  final dynamic optionId;
 
   factory Option.fromJson(Map<String?, dynamic> json) => Option(
         uid: json["uid"],
@@ -309,23 +309,23 @@ class Options {
   final String? q3;
   final String? q4;
   final String? q5;
-  final int? insight;
-  final int? suicide;
-  final int? agitation;
-  final int? retardation;
-  final int? weightLoss;
-  final int? depressedMood;
-  final int? hypochondriasis;
-  final int? genitalSymptoms;
-  final int? anxietyPsychic;
-  final int? anxietySomatic;
-  final int? feelingsOfGuilt;
-  final int? insomniaMiddle;
-  final int? insomniaDelayed;
-  final int? insomniaInitial;
-  final int? workAndInterests;
-  final int? somaticSymptomsGeneral;
-  final int? somaticSymptomsGastrointestinal;
+  final dynamic insight;
+  final dynamic suicide;
+  final dynamic agitation;
+  final dynamic retardation;
+  final dynamic weightLoss;
+  final dynamic depressedMood;
+  final dynamic hypochondriasis;
+  final dynamic genitalSymptoms;
+  final dynamic anxietyPsychic;
+  final dynamic anxietySomatic;
+  final dynamic feelingsOfGuilt;
+  final dynamic insomniaMiddle;
+  final dynamic insomniaDelayed;
+  final dynamic insomniaInitial;
+  final dynamic workAndInterests;
+  final dynamic somaticSymptomsGeneral;
+  final dynamic somaticSymptomsGastrointestinal;
 
   factory Options.fromJson(Map<String?, dynamic> json) => Options(
         q1: json["Q1"],

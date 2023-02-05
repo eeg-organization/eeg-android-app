@@ -1,11 +1,13 @@
 import 'package:adv_egg/screens/landing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 
-void main() {
+Future main() async {
   runApp(const MyApp());
+//  await dotenv.load(fileName: ".env");
+  await GetStorage.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       // routes: ,
       home: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'ADV_EEG',
         theme: ThemeData(
             // This is the theme of your application.
             //
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.poppinsTextTheme()),
         // darkTheme: ThemeData(primarySwatch: Colors.primaries.first.shade200.blue),
-        home: LandingPage(),
+        home: const LandingPage(),
       ),
     );
   }

@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class QuestionController extends GetxController {
+  String type;
+  QuestionController(this.type);
   @override
   void onInit() async {
     await getQuestions();
@@ -29,8 +31,9 @@ class QuestionController extends GetxController {
 
   getQuestions() async {
     try {
-      final url = '${Constants.apiUrl}/get-questionare/?type=HAM_D';
-      var response = await http.get(Uri.parse(url), headers: Constants.header);
+      final url = '${Constants.apiUrl}/get-questionare/?type=$type';
+      var response =
+          await http.get(Uri.parse(url), headers: Constants().authHeader);
       // print(jsonDecode(response.body));
 
       question.value = baseResp.fromJson(jsonDecode(response.body));

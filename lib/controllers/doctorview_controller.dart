@@ -21,10 +21,10 @@ class DoctorViewController extends GetxController {
 
   fetchDocDetails() async {
     try {
-      var response = await http.get(Uri.parse(url), headers: Constants.header);
+      var response = await http.get(Uri.parse(url), headers: Constants().authHeader);
       // print(jsonDecode(response.body));
       // print(response.body.toString());
-      print('chud gaya kya??');
+      // print('chud gaya kya??');
       docDetails.value = doctorDataFromJson(response.body);
       // print(docDetails.value);
     } catch (er) {
@@ -32,3 +32,4 @@ class DoctorViewController extends GetxController {
     }
   }
 }
+

@@ -40,10 +40,16 @@ dependencies:
   http: ^0.13.5
   introduction_screen: ^3.0.2
   modal_progress_hud_nsn: ^0.3.0
+  multi_charts: ^0.3.0
+  permission_handler: ^10.2.0
+  scoped_model: ^2.0.0-nullsafety.0
   step_progress_indicator: ^1.0.2
+  syncfusion_flutter_charts: ^20.4.41
 
 dev_dependencies:
   flutter_lints: ^2.0.0
+  flutter_bluetooth_serial:
+    path: ./flutter_bluetooth_serial
   flutter_test:
     sdk: flutter
 

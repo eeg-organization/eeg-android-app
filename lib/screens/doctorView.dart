@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:adv_egg/controllers/doctorview_controller.dart';
+import 'package:adv_egg/screens/patientDetailedView(DocEnd).dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -128,7 +129,7 @@ class DoctorView extends StatelessWidget {
                                       ),
                                       Obx(
                                         () => Text(
-                                          'Recent Score ${doctorViewController.docDetails.value.patientInfo[index].quizInfo.first.score}',
+                                          'Recent Score ${doctorViewController.docDetails.value.patientInfo[index].quizInfo.last.score}',
                                           style: const TextStyle(
                                             color: Colors.white,
                                           ),
@@ -153,7 +154,11 @@ class DoctorView extends StatelessWidget {
                               ],
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => PatientDetailedViewForDoc(
+                                    doctorViewController
+                                        .docDetails.value.patientInfo[index]));
+                              },
                               child: const Text('View'),
                               style: ButtonStyle(
                                   backgroundColor:

@@ -2,28 +2,20 @@ import 'dart:convert';
 
 import 'package:adv_egg/screens/doctorView.dart';
 import 'package:adv_egg/screens/emailLogin.dart';
+import 'package:adv_egg/screens/patient_login.dart';
 import 'package:adv_egg/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-class LandingPage extends StatefulWidget {
+class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
-
-  @override
-  State<LandingPage> createState() => _LandingPageState();
-}
-
-class _LandingPageState extends State<LandingPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    GetStorage box = GetStorage();
     return Scaffold(
       // backgroundColor: Colors.blue,
       body: Container(
@@ -71,7 +63,11 @@ class _LandingPageState extends State<LandingPage> {
                     alignment: Alignment.bottomLeft,
                     child: ElevatedButton(
                         onPressed: () {
-                          Get.to(() => const QuizPage());
+                          if (box.read('loginDetails') == null) {
+                            Get.to(() => EmailLogin());
+                          } else {
+                            Get.to(() => const PatientLogin());
+                          }
                         },
                         style: ButtonStyle(
                             backgroundColor:

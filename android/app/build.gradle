@@ -55,6 +55,9 @@ android {
 }
 android{
     compileSdkVersion 32
+    defaultConfig{
+        minSdkVersion 19
+    }
 }
 
 flutter {

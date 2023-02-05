@@ -16,10 +16,7 @@ class QuizPage extends StatelessWidget {
           // ],
           // backgroundBlendMode: BlendMode.color,
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(
-              Colors.black,
-              BlendMode.softLight,
-            ),
+            colorFilter: ColorFilter.mode(Colors.black87, BlendMode.hardLight),
             image: AssetImage('assets/bg1.png'),
             fit: BoxFit.cover,
           ),
@@ -39,7 +36,7 @@ class QuizPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: size.height * 0.05,
+                height: 80,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -53,11 +50,11 @@ class QuizPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         side: const BorderSide(color: Colors.white)),
                     child: const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(12.0),
                       child: Center(
                         child: Text(
                           'Quiz 1',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
                     ),
@@ -65,7 +62,7 @@ class QuizPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: size.height * 0.025,
+                height: 40,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -81,11 +78,11 @@ class QuizPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         side: const BorderSide(color: Colors.white)),
                     child: const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(12.0),
                       child: Center(
                         child: Text(
                           'Quiz 2',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
                     ),

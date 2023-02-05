@@ -1,23 +1,16 @@
-import 'package:adv_egg/controllers/question_controller.dart';
+// import 'package:adv_egg/controllers/question_controller.dart';
+import 'package:adv_egg/controllers/login_controller.dart';
 import 'package:adv_egg/screens/patient_login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
-class EmailLogin extends StatefulWidget {
-  const EmailLogin({super.key});
+class EmailLogin extends StatelessWidget {
+  EmailLogin({super.key});
 
-  // const EmailLogin({Key? key}) : super(key: key);
-
-  @override
-  State<EmailLogin> createState() => _EmailLoginState();
-}
-
-class _EmailLoginState extends State<EmailLogin> {
-  // final QuestionController questionController = Get.put(QuestionController());
-  String? email;
-  String? password;
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Get.put(LoginController());
     var size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -26,7 +19,7 @@ class _EmailLoginState extends State<EmailLogin> {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 colorFilter:
-                    ColorFilter.mode(Colors.black, BlendMode.softLight),
+                    ColorFilter.mode(Colors.black87, BlendMode.hardLight),
                 // colorFilter: ColorFilterLayer(colorFilter: ColorFilter.matrix(matrix)),
                 image: AssetImage(
                   'assets/bg1.png',
@@ -73,10 +66,11 @@ class _EmailLoginState extends State<EmailLogin> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         textAlign: TextAlign.start,
-                        // obscureText: true,
-                        onChanged: (value) {
-                          email = value;
-                        },
+                        controller: loginController.username,
+                        // // obscureText: true,
+                        // onChanged: (value) {
+                        //   email = value;
+                        // },
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             //   hintStyle: TextStyle(color:Colors.black),
@@ -116,9 +110,7 @@ class _EmailLoginState extends State<EmailLogin> {
                       child: TextField(
                         textAlign: TextAlign.start,
                         obscureText: true,
-                        onChanged: (value) {
-                          password = value;
-                        },
+                        controller: loginController.password,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             //   hintStyle: TextStyle(color:Colors.black),
@@ -149,12 +141,13 @@ class _EmailLoginState extends State<EmailLogin> {
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const PatientLogin()));
+                    onPressed: () async{
+                      await loginController.login();
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (BuildContext context) =>
+                      //             const PatientLogin()));
                     },
                     style: ButtonStyle(
                         backgroundColor:

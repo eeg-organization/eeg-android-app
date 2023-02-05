@@ -6,8 +6,17 @@ import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
 
 class QuizController extends GetxController {
+  String type;
+  late QuestionController questionController;
+  var isLoading = false.obs;
+  QuizController(this.type);
+  @override
+  void onInit() {
+    questionController = Get.put(QuestionController(type));
+    super.onInit();
+  }
+
   final url = '${Constants.apiUrl}/create-quiz/';
-  final QuestionController questionController = Get.put(QuestionController());
 
   var options = <String, int>{}.obs;
   mergeScoreAndQuestion() {
@@ -17,13 +26,16 @@ class QuizController extends GetxController {
       options['${questionController.question.value.questions?[i].question?.question}'] =
           questionController.options[i];
     }
+    print(options);
     // options.value = options;
-    // print(options);
   }
   // options.value=
 
   postData() async {
+    isLoading = true.obs;
     try {
+      // print(questionController.question);
+      // print(questionController.question.value.questionare?.uid);
       var response = await http.post(Uri.parse(url),
           body: jsonEncode(
             {
@@ -33,12 +45,15 @@ class QuizController extends GetxController {
               "user": "8516d8db-ab20-443e-8cfa-2b90a107ac34"
             },
           ),
-          headers: Constants.header);
+          headers: Constants().authHeader);
+      isLoading.value = false;
       // print(response.body);
       // print(response.statusCode);
+
       return response.statusCode;
     } catch (er) {
       print(er);
+      isLoading.value = false;
     }
   }
 }
