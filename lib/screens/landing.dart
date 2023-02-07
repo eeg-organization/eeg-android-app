@@ -64,9 +64,9 @@ class LandingPage extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: () {
                           if (box.read('loginDetails') == null) {
-                            Get.to(() => EmailLogin());
+                            Get.offAll(() => EmailLogin());
                           } else {
-                            Get.to(() => const PatientLogin());
+                            Get.offAll(() => const PatientLogin());
                           }
                         },
                         style: ButtonStyle(
@@ -87,7 +87,7 @@ class LandingPage extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: () {
                           // Navigator.push(context, MaterialPageRoute(builder: >)
-                          Get.to(() => const DoctorView());
+                          Get.offAll(() => const DoctorView());
                         },
                         style: ButtonStyle(
                             backgroundColor:

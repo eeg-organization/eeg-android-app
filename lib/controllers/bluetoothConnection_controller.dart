@@ -18,6 +18,7 @@ class BluetoothController extends GetxController {
   StreamSubscription<BluetoothDiscoveryResult>? _streamSubscription;
   var results = <BluetoothDiscoveryResult>[].obs;
   var isDiscovering = false.obs;
+  var connecting = false.obs;
   void _startDiscovery() async {
     // results.value = [];
     isDiscovering = true.obs;

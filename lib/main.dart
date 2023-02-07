@@ -8,6 +8,17 @@ Future main() async {
   runApp(const MyApp());
 //  await dotenv.load(fileName: ".env");
   await GetStorage.init();
+  // GetStorage().erase();
+  // if(GetStorage().read('timestamp')-DateTime.now().millisecondsSinceEpoch)
+  print(DateTime.fromMillisecondsSinceEpoch(GetStorage().read('timestamp'))
+      .difference(DateTime.now())
+      .inDays);
+  if (DateTime.fromMillisecondsSinceEpoch(GetStorage().read('timestamp'))
+          .difference(DateTime.now())
+          .inDays >=
+      3) {
+    GetStorage().erase();
+  }
 }
 
 class MyApp extends StatelessWidget {

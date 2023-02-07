@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:adv_egg/controllers/question_controller.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
 
@@ -32,7 +33,7 @@ class QuizController extends GetxController {
   // options.value=
 
   postData() async {
-    isLoading = true.obs;
+    isLoading.value = true;
     try {
       // print(questionController.question);
       // print(questionController.question.value.questionare?.uid);
@@ -42,7 +43,7 @@ class QuizController extends GetxController {
               "data": questionController.question.value,
               "questionare": questionController.question.value.questionare?.uid,
               "options": options,
-              "user": "8516d8db-ab20-443e-8cfa-2b90a107ac34"
+              "user": GetStorage().read('loginDetails')['user_id']
             },
           ),
           headers: Constants().authHeader);

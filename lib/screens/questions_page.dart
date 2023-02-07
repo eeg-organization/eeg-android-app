@@ -20,238 +20,249 @@ class QuestionsPage extends StatelessWidget {
     return Obx(
       () => questionController.isLoading.value
           ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          : ModalProgressHUD(
-              inAsyncCall: quizController.isLoading.value,
-              progressIndicator: CircularProgressIndicator(
-                backgroundColor: Colors.amber,
-              ),
-              child: Scaffold(
-                appBar: AppBar(
-                  elevation: 0,
-                  backgroundColor: Colors.black,
+          : Obx(
+              () => ModalProgressHUD(
+                inAsyncCall: quizController.isLoading.value,
+                progressIndicator: CircularProgressIndicator(
+                  backgroundColor: Colors.amber,
                 ),
-                resizeToAvoidBottomInset: false,
-                body: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      colorFilter:
-                          ColorFilter.mode(Colors.black87, BlendMode.hardLight),
-                      image: AssetImage('assets/bg1.png'),
-                      fit: BoxFit.cover,
-                    ),
+                child: Scaffold(
+                  appBar: AppBar(
+                    elevation: 0,
+                    backgroundColor: Colors.black,
                   ),
-                  child: SafeArea(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.05,
-                        ),
-                        Obx(
-                          () => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8),
-                            child: StepProgressIndicator(
-                              totalSteps: questionController
-                                  .question.value.questions!.length,
-                              currentStep:
-                                  counterController.current_step.value + 1,
-                              selectedColor: Colors.purple,
-                            ),
+                  resizeToAvoidBottomInset: false,
+                  body: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        colorFilter: ColorFilter.mode(
+                            Colors.black87, BlendMode.hardLight),
+                        image: AssetImage('assets/bg1.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: SafeArea(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: size.height * 0.05,
                           ),
-                        ),
-                        Obx(
-                          () => Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Text(
-                                '${counterController.current_step.value + 1}/${questionController.question.value.questions!.length}',
-                                style: const TextStyle(color: Colors.white),
+                          Obx(
+                            () => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8),
+                              child: StepProgressIndicator(
+                                totalSteps: questionController
+                                    .question.value.questions!.length,
+                                currentStep:
+                                    counterController.current_step.value + 1,
+                                selectedColor: Colors.purple,
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.025,
-                        ),
-                        Obx(
-                          () => Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  ' ${questionController.question.value.questions?[counterController.current_step.value].question?.question}', //get question data from backend
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
+                          Obx(
+                            () => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  '${counterController.current_step.value + 1}/${questionController.question.value.questions!.length}',
+                                  style: const TextStyle(color: Colors.white),
                                 ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Tooltip(
-                                  showDuration: Duration(seconds: 5),
-                                  triggerMode: TooltipTriggerMode.tap,
-                                  message: questionController
-                                              .question
-                                              .value
-                                              .questions?[counterController
-                                                  .current_step.value]
-                                              .question
-                                              ?.description !=
-                                          null
-                                      ? '${questionController.question.value.questions?[counterController.current_step.value].question?.description}'
-                                      : '',
-                                  child: const Icon(
-                                    Icons.info,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.0025,
-                        ),
-                        Expanded(
-                          child: Obx(
-                            () => ListView.builder(
-                              itemCount: questionController
-                                  .question
-                                  .value
-                                  .questions?[
-                                      counterController.current_step.value]
-                                  .options
-                                  ?.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    questionController.options[counterController
-                                        .current_step.value] = index;
-                                    print(questionController.options);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Obx(
-                                      () => Material(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                            side: const BorderSide(
-                                                color: Colors.white)),
-                                        color: questionController.options[
-                                                    counterController
-                                                        .current_step.value] ==
-                                                index
-                                            ? Colors.blueAccent
-                                            : Colors.transparent,
-                                        child: Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0,
-                                              horizontal: 4,
-                                            ),
-                                            child: Text(
-                                              '${questionController.question.value.questions?[counterController.current_step.value].options?[index].option}',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18,
+                          SizedBox(
+                            height: size.height * 0.025,
+                          ),
+                          Obx(
+                            () => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    ' ${questionController.question.value.questions?[counterController.current_step.value].question?.question}', //get question data from backend
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Tooltip(
+                                    showDuration: Duration(seconds: 5),
+                                    triggerMode: TooltipTriggerMode.tap,
+                                    message: questionController
+                                                .question
+                                                .value
+                                                .questions?[counterController
+                                                    .current_step.value]
+                                                .question
+                                                ?.description !=
+                                            null
+                                        ? '${questionController.question.value.questions?[counterController.current_step.value].question?.description}'
+                                        : '',
+                                    child: const Icon(
+                                      Icons.info,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.0025,
+                          ),
+                          Expanded(
+                            child: Obx(
+                              () => ListView.builder(
+                                itemCount: questionController
+                                    .question
+                                    .value
+                                    .questions?[
+                                        counterController.current_step.value]
+                                    .options
+                                    ?.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      questionController.options[
+                                          counterController
+                                              .current_step.value] = index;
+                                      print(questionController.options);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(
+                                        () => Material(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                              side: const BorderSide(
+                                                  color: Colors.white)),
+                                          color: questionController.options[
+                                                      counterController
+                                                          .current_step
+                                                          .value] ==
+                                                  index
+                                              ? Colors.blueAccent
+                                              : Colors.transparent,
+                                          child: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 8.0,
+                                                horizontal: 4,
+                                              ),
+                                              child: Text(
+                                                '${questionController.question.value.questions?[counterController.current_step.value].options?[index].option}',
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        Obx(
-                          () => Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (counterController.current_step.value != 0)
+                          Obx(
+                            () => Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (counterController.current_step.value != 0)
+                                  Padding(
+                                    padding: const EdgeInsets.all(
+                                      16,
+                                    ),
+                                    child: ElevatedButton(
+                                      style: const ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                          Colors.black,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (counterController
+                                                .current_step.value !=
+                                            0) {
+                                          counterController.decrement();
+                                        }
+                                      },
+                                      child: const Text(
+                                        'Previous',
+                                      ),
+                                    ),
+                                  ),
                                 Padding(
                                   padding: const EdgeInsets.all(
                                     16,
                                   ),
                                   child: ElevatedButton(
-                                    style: const ButtonStyle(
-                                      backgroundColor: MaterialStatePropertyAll(
-                                        Colors.black,
-                                      ),
-                                    ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (counterController
-                                              .current_step.value !=
-                                          0) {
-                                        counterController.decrement();
+                                                  .current_step.value !=
+                                              questionController.question.value
+                                                      .questions!.length -
+                                                  1 &&
+                                          questionController.options[
+                                                  counterController
+                                                      .current_step.value] !=
+                                              -1) {
+                                        counterController.increment();
+                                      } else if (counterController
+                                                  .current_step.value ==
+                                              questionController.question.value
+                                                      .questions!.length -
+                                                  1 &&
+                                          questionController.options[
+                                                  counterController
+                                                      .current_step.value] !=
+                                              -1) {
+                                        quizController.mergeScoreAndQuestion();
+                                        if (await quizController.postData() ==
+                                            200) {
+                                          Get.off(() => const QuizPage());
+                                        }
                                       }
                                     },
-                                    child: const Text(
-                                      'Previous',
-                                    ),
-                                  ),
-                                ),
-                              Padding(
-                                padding: const EdgeInsets.all(
-                                  16,
-                                ),
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    if (counterController.current_step.value !=
-                                            questionController.question.value
-                                                    .questions!.length -
-                                                1 &&
-                                        questionController.options[
-                                                counterController
-                                                    .current_step.value] !=
-                                            -1) {
-                                      counterController.increment();
-                                    } else if (counterController
-                                                .current_step.value ==
-                                            questionController.question.value
-                                                    .questions!.length -
-                                                1 &&
-                                        questionController.options[
-                                                counterController
-                                                    .current_step.value] !=
-                                            -1) {
-                                      quizController.mergeScoreAndQuestion();
-                                      if (await quizController.postData() ==
-                                          200) {
-                                        Get.off(() => const QuizPage());
-                                      }
-                                    }
-                                  },
-                                  style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                      Color(
-                                        0xffFF7E1D,
+                                    style: const ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                        Color(
+                                          0xffFF7E1D,
+                                        ),
                                       ),
                                     ),
+                                    child:
+                                        counterController.current_step.value !=
+                                                questionController
+                                                        .question
+                                                        .value
+                                                        .questions!
+                                                        .length -
+                                                    1
+                                            ? const Text(
+                                                'Save & Next',
+                                              )
+                                            : const Text(
+                                                'Submit',
+                                              ),
                                   ),
-                                  child: counterController.current_step.value !=
-                                          questionController.question.value
-                                                  .questions!.length -
-                                              1
-                                      ? const Text(
-                                          'Save & Next',
-                                        )
-                                      : const Text(
-                                          'Submit',
-                                        ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

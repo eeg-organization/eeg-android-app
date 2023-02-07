@@ -1,0 +1,115 @@
+import 'dart:convert';
+
+import 'package:adv_egg/controllers/brain_signals_send_data.dart';
+import 'package:adv_egg/screens/eegScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class CollectingData extends StatelessWidget {
+  CollectingData({super.key});
+
+  BrainSignalsController brainSignalsController =
+      Get.put(BrainSignalsController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                colorFilter:
+                    ColorFilter.mode(Colors.black87, BlendMode.hardLight),
+                // colorFilter: ColorFilterLayer(colorFilter: ColorFilter.matrix(matrix)),
+                image: AssetImage(
+                  'assets/bg1.png',
+                ),
+                fit: BoxFit.cover)),
+        // child: SafeArea(child: Text('h')),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Center(
+              child: Text(
+                'Wait we are scanning your brain signals',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            _Musicvisulaizer()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class VisualComponent extends StatefulWidget {
+  VisualComponent({super.key, required this.duration});
+  final int duration;
+  // final Color color;
+
+  @override
+  State<VisualComponent> createState() => _VisualComponentState();
+}
+
+class _VisualComponentState extends State<VisualComponent>
+    with TickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController animController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    animController = AnimationController(
+        duration: Duration(milliseconds: widget.duration), vsync: this);
+    final curvedAnimation =
+        CurvedAnimation(parent: animController, curve: Curves.easeInOut);
+    animation = Tween<double>(begin: 0, end: 100).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+    animController.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    animController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 10,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [Colors.cyan, Color(0xfffff)])),
+      height: animation.value,
+    );
+  }
+}
+
+class _Musicvisulaizer extends StatelessWidget {
+  _Musicvisulaizer({super.key});
+  List<int> duration = [900, 700, 600, 800, 500];
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: List<Widget>.generate(
+          10,
+          (index) => VisualComponent(
+                duration: duration[index % 5],
+                // color: colors[index % 4],
+              )),
+    );
+  }
+}

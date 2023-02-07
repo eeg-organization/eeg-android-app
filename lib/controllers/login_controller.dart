@@ -28,6 +28,7 @@ class LoginController extends GetxController {
     if (response.statusCode == 200) {
       loginDetails.value = loginFromJson(response.body);
       await box.write("loginDetails", jsonDecode(response.body));
+      await box.write("timestamp", DateTime.now().millisecondsSinceEpoch);
       Get.offAll(() => const PatientLogin());
     }
   }
