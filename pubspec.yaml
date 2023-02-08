@@ -1,4 +1,4 @@
-name: adv_egg
+name: adv_eeg
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -33,6 +33,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_bluetooth_seria_changed: ^0.4.0
   flutter_progress_hud: ^2.0.2
   get: ^4.6.5
   get_storage: ^2.0.3
@@ -49,8 +50,6 @@ dependencies:
   syncfusion_flutter_charts: ^20.4.41
 
 dev_dependencies:
-  flutter_bluetooth_serial:
-    path: ./flutter_bluetooth_serial
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

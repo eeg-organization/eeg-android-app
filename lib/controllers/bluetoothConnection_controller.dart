@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:io';
+// import 'dart:io';
 
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
+// import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 // import 'package:permission_handler/permission_handler.dart';
 

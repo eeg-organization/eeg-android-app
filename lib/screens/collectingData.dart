@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:adv_egg/controllers/brain_signals_send_data.dart';
-import 'package:adv_egg/screens/eegScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../controllers/brain_signals_send_data.dart';
 
 class CollectingData extends StatelessWidget {
   CollectingData({super.key});

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:adv_egg/models/doctor_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
+import '../models/doctor_model.dart';
 
 class DoctorViewController extends GetxController {
   final url =

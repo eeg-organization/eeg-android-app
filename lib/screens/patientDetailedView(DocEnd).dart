@@ -1,8 +1,9 @@
-import 'package:adv_egg/models/doctor_model.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../models/doctor_model.dart';
 
 class PatientDetailedViewForDoc extends StatelessWidget {
   final PatientInfo patientInfo;

@@ -1,16 +1,15 @@
-import 'dart:async';
 import 'dart:convert';
 
-import 'package:adv_egg/controllers/bluetoothConnection_controller.dart';
-import 'package:adv_egg/controllers/brain_signals_send_data.dart';
-import 'package:adv_egg/screens/collectingData.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+// import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
+import '../controllers/bluetoothConnection_controller.dart';
+import '../controllers/brain_signals_send_data.dart';
+import 'collectingData.dart';
 
 class EegScreen extends StatelessWidget {
   EegScreen({super.key});

@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:adv_egg/Constants/constants.dart';
-import 'package:adv_egg/models/questions_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../Constants/constants.dart';
+import '../models/questions_model.dart';
 
 class QuestionController extends GetxController {
   String type;

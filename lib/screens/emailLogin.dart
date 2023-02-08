@@ -1,8 +1,8 @@
-// import 'package:adv_egg/controllers/question_controller.dart';
-import 'package:adv_egg/controllers/login_controller.dart';
-import 'package:adv_egg/screens/patient_login.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../controllers/login_controller.dart';
 // import 'package:get/get.dart';
 
 class EmailLogin extends StatelessWidget {

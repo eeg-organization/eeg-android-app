@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:adv_egg/screens/eegScreen.dart';
-import 'package:adv_egg/screens/patient_login.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
+import '../screens/eegScreen.dart';
+import '../screens/patient_login.dart';
 
 class BrainSignalsController extends GetxController {
   // @override
@@ -49,7 +49,7 @@ class BrainSignalsController extends GetxController {
       print(response.statusCode);
       if (response.statusCode == 201) {
         connection.finish();
-        // Get.off(() => const PatientLogin()); 
+        Get.off(() => const PatientLogin());
       }
     } catch (err) {
       print(err);

@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:adv_egg/screens/doctorView.dart';
-import 'package:adv_egg/screens/emailLogin.dart';
-import 'package:adv_egg/screens/patient_login.dart';
-import 'package:adv_egg/screens/quiz_page.dart';
+import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+
+import 'doctorView.dart';
+import 'emailLogin.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -21,14 +21,17 @@ class LandingPage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/bg.png'), fit: BoxFit.cover)),
+                colorFilter:
+                    ColorFilter.mode(Colors.black38, BlendMode.hardLight),
+                image: AssetImage('assets/bg.png'),
+                fit: BoxFit.cover)),
         child: SafeArea(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 30,
+                height: 50,
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15),
@@ -36,9 +39,10 @@ class LandingPage extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Hi there 👋',
-                    style: TextStyle(fontSize: 30
+                    style: TextStyle(
+                        fontSize: 30,
                         // fontSize: size.width*0.5
-                        ),
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -48,7 +52,8 @@ class LandingPage extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Text(
                     '''Welcome''',
-                    style: TextStyle(fontSize: 45
+                    style: TextStyle(fontSize: 60, color: Colors.white
+
                         // fontSize: size.width*0.5
                         ),
                   ),
@@ -61,22 +66,45 @@ class LandingPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
                     alignment: Alignment.bottomLeft,
-                    child: ElevatedButton(
-                        onPressed: () {
+                    child: GestureDetector(
+                        onTap: () {
                           if (box.read('loginDetails') == null) {
-                            Get.offAll(() => EmailLogin());
+                            Get.to(() => EmailLogin());
                           } else {
-                            Get.offAll(() => const PatientLogin());
+                            Get.to(() => const PatientLogin());
                           }
                         },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.deepOrange),
-                            minimumSize: MaterialStateProperty.all(
-                                const Size(double.infinity, 50))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [Text('Login as User'), Text('-->')],
+                        // style: ButtonStyle(
+                        //     backgroundColor:
+                        //         MaterialStateProperty.all(Colors.deepOrange),
+                        //     minimumSize: MaterialStateProperty.all(
+                        //         const Size(double.infinity, 50))),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(5)),
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Text(
+                                  'Login as User',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                              ),
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Image.asset('assets/Star 1.png'),
+                                  Image.asset('assets/Vector 6.png'),
+                                ],
+                              )
+                            ], 
+                          ),
                         ))),
               ),
               Padding(

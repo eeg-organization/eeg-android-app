@@ -1,9 +1,12 @@
-import 'package:adv_egg/screens/eegScreen.dart';
-import 'package:adv_egg/screens/quiz_page.dart';
+
+import 'package:adv_eeg/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
+// import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'eegScreen.dart';
 
 class PatientLogin extends StatefulWidget {
   const PatientLogin({Key? key}) : super(key: key);
