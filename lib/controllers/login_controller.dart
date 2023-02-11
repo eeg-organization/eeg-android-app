@@ -11,10 +11,12 @@ import '../screens/patient_login.dart';
 
 class LoginController extends GetxController {
   var loginDetails = Login().obs;
+  var isLoading = false.obs;
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   GetStorage box = GetStorage();
   login() async {
+    isLoading.value = true;
     final url = '${Constants.apiUrl}/login/';
     var response = await http.post(
       Uri.parse(url),
@@ -30,7 +32,9 @@ class LoginController extends GetxController {
       loginDetails.value = loginFromJson(response.body);
       await box.write("loginDetails", jsonDecode(response.body));
       await box.write("timestamp", DateTime.now().millisecondsSinceEpoch);
+      isLoading.value = false;
       Get.offAll(() => const PatientLogin());
     }
+    return response.statusCode;
   }
 }

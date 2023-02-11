@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:adv_eeg/controllers/bluetoothConnection_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +11,7 @@ class CollectingData extends StatelessWidget {
 
   BrainSignalsController brainSignalsController =
       Get.put(BrainSignalsController());
+  BluetoothController bluetoothController = Get.put(BluetoothController());
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +21,12 @@ class CollectingData extends StatelessWidget {
             image: DecorationImage(
                 colorFilter:
                     ColorFilter.mode(Colors.black87, BlendMode.hardLight),
-                // colorFilter: ColorFilterLayer(colorFilter: ColorFilter.matrix(matrix)),
+          
                 image: AssetImage(
                   'assets/bg1.png',
                 ),
                 fit: BoxFit.cover)),
-        // child: SafeArea(child: Text('h')),
+    
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,

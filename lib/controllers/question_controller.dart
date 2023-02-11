@@ -20,12 +20,12 @@ class QuestionController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    question = baseResp().obs;
+    question = baseResp(questions: []).obs;
     options = [].obs;
     isLoading = true.obs;
   }
 
-  var question = baseResp().obs;
+  var question = baseResp(questions: []).obs;
   var options = [].obs;
   var quizResponse = ''.obs;
   var isLoading = true.obs;
