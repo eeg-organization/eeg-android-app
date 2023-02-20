@@ -40,7 +40,7 @@ class QuestionController extends GetxController {
       question.value = baseResp.fromJson(jsonDecode(response.body));
       quizResponse.value = response.body;
       // print(question.value.questions);
-      options.value = List.filled(question.value.questions!.length, -1);
+      options.value = List.filled(question.value.questions.length, -1);
     } catch (err) {
       // isLoading.value
       print(err);

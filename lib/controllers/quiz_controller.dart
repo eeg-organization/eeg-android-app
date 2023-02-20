@@ -23,14 +23,14 @@ class QuizController extends GetxController {
   mergeScoreAndQuestion() {
     int sum = 0;
     for (int i = 0;
-        i < questionController.question.value.questions!.length;
+        i < questionController.question.value.questions.length;
         i++) {
       sum += i;
-      options['${questionController.question.value.questions?[i].question?.question}'] =
+      options['${questionController.question.value.questions[i].question?.question}'] =
           questionController.options[i];
     }
-    print(options);
-    print(sum);
+    // print(options);
+    // print(sum);
     // options.value = options;
   }
   // options.value=
@@ -51,7 +51,7 @@ class QuizController extends GetxController {
           ),
           headers: Constants().authHeader);
       isLoading.value = false;
-      // print(response.body);
+      print(response.body);
       // print(response.statusCode);
 
       return response.statusCode;

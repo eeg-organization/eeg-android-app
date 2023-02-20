@@ -3,10 +3,10 @@ import 'package:adv_eeg/screens/quiz_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'package:string_contains/string_contains.dart';
 import 'package:toast/toast.dart';
 
 import '../controllers/counter_controller.dart';
@@ -39,7 +39,7 @@ class QuestionsPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Center(child: CircularProgressIndicator()),
+                      const Center(child: CircularProgressIndicator()),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: AutoSizeText(
@@ -71,7 +71,7 @@ class QuestionsPage extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: BackButton(
                               onPressed: () {
-                                Get.off(() => QuizPage());
+                                Get.off(() => const QuizPage());
                               },
                               color: Colors.white,
                             ),
@@ -84,12 +84,12 @@ class QuestionsPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16.0, vertical: 8),
                               child: StepProgressIndicator(
-                                roundedEdges: Radius.circular(8),
+                                roundedEdges: const Radius.circular(8),
                                 totalSteps: questionController
                                     .question.value.questions.length,
                                 currentStep:
                                     counterController.current_step.value + 1,
-                                selectedColor: Color(0xff0850FD),
+                                selectedColor: const Color(0xff0850FD),
                               ),
                             ),
                           ),
@@ -118,13 +118,26 @@ class QuestionsPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                    child: AutoSizeText(
-                                      ' ${questionController.question.value.questions[counterController.current_step.value].question?.question}',
-                                      textAlign: TextAlign.center,
-                                      //get question data from backend
-                                      style: GoogleFonts.inter(
-                                          fontSize: 20, color: Colors.white),
+                                  Visibility(
+                                    visible: questionController
+                                                .question
+                                                .value
+                                                .questions[counterController
+                                                    .current_step.value]
+                                                .question
+                                                ?.question
+                                                .contains('Question') ==
+                                            false
+                                        ? true
+                                        : false,
+                                    child: Expanded(
+                                      child: AutoSizeText(
+                                        ' ${questionController.question.value.questions[counterController.current_step.value].question?.question}',
+                                        textAlign: TextAlign.center,
+                                        //get question data from backend
+                                        style: GoogleFonts.inter(
+                                            fontSize: 20, color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -169,72 +182,67 @@ class QuestionsPage extends StatelessWidget {
                           SizedBox(
                             height: size.height * 0.0025,
                           ),
-                          SizedBox(
-                            height: size.height * 0.42,
-                            child: Obx(
-                              () => ListView.builder(
-                                itemCount: questionController
-                                    .question
-                                    .value
-                                    .questions[
-                                        counterController.current_step.value]
-                                    .options
-                                    ?.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      questionController.options[
-                                          counterController
-                                              .current_step.value] = index;
-                                      print(questionController.options);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0, vertical: 8),
-                                      child: Obx(
-                                        () => Material(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4.0),
-                                              side: BorderSide(
-                                                  color: questionController
-                                                                  .options[
-                                                              counterController
-                                                                  .current_step
-                                                                  .value] !=
-                                                          index
-                                                      ? Colors.white
-                                                      : const Color(
-                                                          0xff0850FD))),
-                                          color: questionController.options[
-                                                      counterController
-                                                          .current_step
-                                                          .value] ==
-                                                  index
-                                              ? const Color(0xff0850FD)
-                                              : Colors.transparent,
-                                          child: Center(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 16.0,
-                                                horizontal: 4,
-                                              ),
-                                              child: Text(
-                                                  '${questionController.question.value.questions[counterController.current_step.value].options?[index].option}',
-                                                  textAlign: TextAlign.center,
-                                                  style: GoogleFonts.inter(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                  )),
+                          Obx(
+                            () => ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: questionController
+                                  .question
+                                  .value
+                                  .questions[
+                                      counterController.current_step.value]
+                                  .options
+                                  ?.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    questionController.options[counterController
+                                        .current_step.value] = index;
+                                    // print(questionController.options);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0, vertical: 8),
+                                    child: Obx(
+                                      () => Material(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            side: BorderSide(
+                                                color: questionController
+                                                                .options[
+                                                            counterController
+                                                                .current_step
+                                                                .value] !=
+                                                        index
+                                                    ? Colors.white
+                                                    : const Color(0xff0850FD))),
+                                        color: questionController.options[
+                                                    counterController
+                                                        .current_step.value] ==
+                                                index
+                                            ? const Color(0xff0850FD)
+                                            : Colors.transparent,
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 16.0,
+                                              horizontal: 4,
                                             ),
+                                            child: Text(
+                                                '${questionController.question.value.questions[counterController.current_step.value].options?[index].option}',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.inter(
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                )),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           Obx(
@@ -330,12 +338,12 @@ class QuestionsPage extends StatelessWidget {
                                                         1
                                                 ? '      Next      '
                                                 : 'Submit',
-                                            color: Color(0xffFF7E1D))),
+                                            color: const Color(0xffFF7E1D))),
                                   ),
                                 ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

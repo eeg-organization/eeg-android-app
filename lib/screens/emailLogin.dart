@@ -1,21 +1,23 @@
 import 'package:adv_eeg/screens/patient_login.dart';
+import 'package:adv_eeg/screens/signUpPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../controllers/login_controller.dart';
 // import 'package:get/get.dart';
 
+// ignore: camel_case_types
 class usernameLogin extends StatelessWidget {
-  usernameLogin({super.key});
+  const usernameLogin({super.key, required this.role});
+  final String role;
 
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       // backgroundColor: Colors.blue,
       body: Obx(
         () => ModalProgressHUD(
@@ -33,26 +35,40 @@ class usernameLogin extends StatelessWidget {
                     fit: BoxFit.cover)),
             child: SafeArea(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: BackButton(
-                      color: Colors.white,
-                    ),
+                  Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          children: [
+                            BackButton(
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: size.height * 0.15,
+                  Expanded(
+                    child: SizedBox(
+                      height: size.height * 0.1,
+                    ),
                   ),
                   const Align(
                     alignment: Alignment.topCenter,
                     child: Text(
                       'Login with your Username',
-                      style: TextStyle(fontSize: 30, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
+                  // SizedBox(
+                  //   height: size.height * 0.05,
+                  // ),
                   const Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
@@ -151,45 +167,51 @@ class usernameLogin extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: SizedBox(
-                      height: 80,
-                    ),
-                  ),
+                  // const Expanded(
+                  //   child: SizedBox(
+                  //     height: 80,
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Align(
                       alignment: Alignment.bottomLeft,
                       child: GestureDetector(
                         onTap: () async {
-                          if (await loginController.login() == 200) {
-                            Get.off(() => const PatientLogin());
-                          }
+                          await loginController.login();
+                          // if (await loginController.login() == 200) {
+                          //   Get.off(() => PatientLogin());
+                          // }
                           // Navigator.push(
                           //     context,
                           //     MaterialPageRoute(
                           //         builder: (BuildContext context) =>
                           //             const PatientLogin()));
                         },
-                        child: OptionButton(
+                        child: const OptionButton(
                           text: 'Login',
                           color: Colors.transparent,
                         ),
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('New User?',
-                            style: TextStyle(color: Colors.grey)),
-                        TextButton(
-                            onPressed: () {}, child: const Text('Sign up'))
-                      ],
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('New User?',
+                              style: TextStyle(color: Colors.grey)),
+                          TextButton(
+                              onPressed: () {
+                                Get.to(() => SignUpPage(role: 'USER'));
+                              },
+                              child: const Text('Sign up'))
+                        ],
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

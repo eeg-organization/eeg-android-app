@@ -49,10 +49,10 @@ class EegScreen extends StatelessWidget {
                   width: 200,
                   child: Column(
                     children: [
-                      CircularProgressIndicator(),
+                      const CircularProgressIndicator(),
                       (bluetoothController.connection.value != null &&
                               bluetoothController.connection.value!.isConnected)
-                          ? Text('Getting your Brain Signals')
+                          ? const Text('Getting your Brain Signals')
                           : bluetoothController.connecting.value
                               ? Text('Connecting to your device',
                                   textAlign: TextAlign.center,
@@ -64,7 +64,7 @@ class EegScreen extends StatelessWidget {
                                       style: GoogleFonts.inika(
                                           color: Colors.white),
                                     )
-                                  : Text('')
+                                  : const Text('')
                     ],
                   ),
                 ),
@@ -85,10 +85,12 @@ class EegScreen extends StatelessWidget {
                               // Some simplest connection :F
                               try {
                                 bluetoothController.connecting.value = true;
-                                bluetoothController.connection.value =
+                                connection =
                                     await BluetoothConnection.toAddress(
                                         bluetoothController
                                             .results[index].device.address);
+                                bluetoothController.connection.value =
+                                    connection;
                                 print(connection);
                                 print('Connected to the device');
                                 bluetoothController.connecting.value = false;

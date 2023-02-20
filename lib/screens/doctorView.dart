@@ -1,7 +1,9 @@
 // ignore: file_names
+import 'package:adv_eeg/controllers/getQuizData.dart';
 import 'package:adv_eeg/screens/patientDetailedView(DocEnd).dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/doctorview_controller.dart';
@@ -13,6 +15,7 @@ class DoctorView extends StatelessWidget {
   Widget build(BuildContext context) {
     final DoctorViewController doctorViewController =
         Get.put(DoctorViewController());
+    GetQuizController getQuizController = Get.put(GetQuizController());
     return Scaffold(
       backgroundColor: const Color(0xff1A1B41),
       body: SafeArea(
@@ -79,8 +82,8 @@ class DoctorView extends StatelessWidget {
             Expanded(
               child: Obx(
                 () => ListView.builder(
-                  itemCount:
-                      doctorViewController.docDetails.value.patientInfo.length,
+                  itemCount: doctorViewController
+                      .docDetails.value.data?.patientInfo!.length,
                   itemBuilder: (BuildContext context, int index) => Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 8),
@@ -113,12 +116,7 @@ class DoctorView extends StatelessWidget {
                                     children: [
                                       Obx(
                                         () => Text(
-                                          doctorViewController
-                                              .docDetails
-                                              .value
-                                              .patientInfo[index]
-                                              .patientPersonalInfo
-                                              .name!,
+                                          '${doctorViewController.docDetails.value.data?.patientInfo![index].patient!.name}',
                                           style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.white,
@@ -130,7 +128,11 @@ class DoctorView extends StatelessWidget {
                                       ),
                                       Obx(
                                         () => Text(
-                                          'Recent Score ${doctorViewController.docDetails.value.patientInfo[index].quizInfo.last.score}',
+                                          getQuizController.QuizList[index]
+                                                      .value.quizs.last.score !=
+                                                  null
+                                              ? '${getQuizController.QuizList[index].value.quizs.last.score}'
+                                              : ' 0',
                                           style: const TextStyle(
                                             color: Colors.white,
                                           ),
@@ -157,13 +159,13 @@ class DoctorView extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 Get.to(() => PatientDetailedViewForDoc(
-                                    doctorViewController
-                                        .docDetails.value.patientInfo[index]));
+                                    doctorViewController.docDetails.value.data!
+                                        .patientInfo![index]));
                               },
-                              child: const Text('View'),
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all(Colors.orange)),
+                              child: const Text('View'),
                             )
                           ],
                         ),

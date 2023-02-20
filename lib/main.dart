@@ -1,4 +1,5 @@
 import 'package:adv_eeg/screens/landing.dart';
+import 'package:adv_eeg/screens/patient_login.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,10 +14,15 @@ Future main() async {
   // if(GetStorage().read('timestamp')-DateTime.now().millisecondsSinceEpoch)
   print(DateTime.fromMillisecondsSinceEpoch(GetStorage().read('timestamp'))
       .difference(DateTime.now())
-      .inDays);
-  if (DateTime.fromMillisecondsSinceEpoch(GetStorage().read('timestamp'))
+      .inDays
+      .abs());
+  GetStorage().read('loginDetails')['role'] == 'USER'
+      ? Get.off(() => PatientLogin())
+      : Get.off(() => LandingPage());
+  if ((DateTime.fromMillisecondsSinceEpoch(GetStorage().read('timestamp'))
           .difference(DateTime.now())
-          .inDays >=
+          .inDays
+          .abs()) >=
       3) {
     GetStorage().erase();
   }
@@ -33,6 +39,7 @@ class MyApp extends StatelessWidget {
       home: MaterialApp(
         title: 'ADV_EEG',
         theme: ThemeData(
+            useMaterial3: true,
             // This is the theme of your application.
             //
             // Try running your application with "flutter run". You'll see the
@@ -45,7 +52,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.poppinsTextTheme()),
         // darkTheme: ThemeData(primarySwatch: Colors.primaries.first.shade200.blue),
-        home: const LandingPage(),
+        home: LandingPage(),
       ),
     );
   }

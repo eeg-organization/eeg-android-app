@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:adv_eeg/screens/adminSide.dart';
+import 'package:adv_eeg/screens/doctorView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -28,12 +30,20 @@ class LoginController extends GetxController {
         },
       ),
     );
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       loginDetails.value = loginFromJson(response.body);
       await box.write("loginDetails", jsonDecode(response.body));
       await box.write("timestamp", DateTime.now().millisecondsSinceEpoch);
       isLoading.value = false;
-      Get.offAll(() => const PatientLogin());
+      loginDetails.value.role == 'USER'
+          ? Get.offAll(() => PatientLogin())
+          : loginDetails.value.role == 'DOCTOR'
+              ? Get.offAll(() => DoctorView())
+              : loginDetails.value.role == 'ADMIN'
+                  ? Get.off(() => AdminMain())
+                  : printError();
     }
     return response.statusCode;
   }

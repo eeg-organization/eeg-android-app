@@ -79,11 +79,11 @@ class Questions {
 
 class Question {
   String? uid;
-  String? question;
+  late String question;
   String? description;
   String? questionare;
 
-  Question({this.uid, this.question, this.description, this.questionare});
+  Question({this.uid,required this.question, this.description, this.questionare});
 
   Question.fromJson(Map<String, dynamic> json) {
     uid = json['uid'];

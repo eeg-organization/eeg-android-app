@@ -1,16 +1,20 @@
 import 'dart:convert';
 
+import 'package:adv_eeg/controllers/quiz_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
 import '../models/doctor_model.dart';
+import 'getQuizData.dart';
 
 class DoctorViewController extends GetxController {
   final url =
-      '${Constants.apiUrl}/users-referring-doctor/c280ee21-c4d4-4801-8855-97b7c2996813';
-  var docDetails = DoctorData(patientInfo: []).obs;
+      '${Constants.apiUrl}/patient-refering-doctor/${GetStorage().read('loginDetails')['user_id']}/';
+  var docDetails = DoctorData().obs;
   TextEditingController searchText = TextEditingController();
+  GetQuizController getQuizController = Get.put(GetQuizController());
   // DropDownController dropDown = DropDownController();
   TextEditingController droopDownController = TextEditingController();
   @override
@@ -21,15 +25,20 @@ class DoctorViewController extends GetxController {
 
   fetchDocDetails() async {
     try {
-      var response = await http.get(Uri.parse(url), headers: Constants().authHeader);
+      var response =
+          await http.get(Uri.parse(url), headers: Constants().authHeader);
       // print(jsonDecode(response.body));
       // print(response.body.toString());
       // print('chud gaya kya??');
+      print(response.statusCode);
       docDetails.value = doctorDataFromJson(response.body);
+      for (int i = 0; i < docDetails.value.data!.patientInfo!.length; i++) {
+        getQuizController
+            .fetchQuiz(docDetails.value.data!.patientInfo![i].patient!.uid!);
+      }
       // print(docDetails.value);
     } catch (er) {
       print(er);
     }
   }
 }
-

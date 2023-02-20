@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -12,8 +11,8 @@ class PatientDetailedViewForDoc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    chartData.addAll(
-        patientInfo.quizInfo.map((e) => ChartData(e.createdAt, e.score)));
+    // chartData.addAll(
+    //     patientInfo.quizInfo.map((e) => ChartData(e.createdAt, e.score)));
     return Scaffold(
       backgroundColor: const Color(0xff1A1B41),
       body: SafeArea(
@@ -60,7 +59,8 @@ class PatientDetailedViewForDoc extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  patientInfo.patientPersonalInfo.name!,
+                                  // patientInfo.patientPersonalInfo.name!,
+                                  '',
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -70,7 +70,7 @@ class PatientDetailedViewForDoc extends StatelessWidget {
                                   height: 2,
                                 ),
                                 Text(
-                                  'Recent Score ${patientInfo.quizInfo.last.score}',
+                                  'Recent Score ',
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),
@@ -137,7 +137,7 @@ class PatientDetailedViewForDoc extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              patientInfo.relativeInfo[0].name!,
+                              '',
                               style: const TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,

@@ -3,7 +3,6 @@ import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:adv_eeg/screens/questions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class QuizPage extends StatelessWidget {
   const QuizPage({Key? key}) : super(key: key);
@@ -45,7 +44,7 @@ class QuizPage extends StatelessWidget {
                   style: TextStyle(fontSize: 30, color: Colors.white),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Padding(
@@ -59,13 +58,13 @@ class QuizPage extends StatelessWidget {
                     () => Material(
                       color: counterController.selectedValue.value != 1
                           ? Colors.transparent
-                          : Color(0xff0850FD),
+                          : const Color(0xff0850FD),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                           side: BorderSide(
                               color: counterController.selectedValue.value != 1
                                   ? Colors.white
-                                  : Color(0xff0850FD))),
+                                  : const Color(0xff0850FD))),
                       child: const Padding(
                         padding: EdgeInsets.all(12.0),
                         child: Center(
@@ -79,7 +78,7 @@ class QuizPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -95,13 +94,13 @@ class QuizPage extends StatelessWidget {
                     () => Material(
                       color: counterController.selectedValue.value != 2
                           ? Colors.transparent
-                          : Color(0xff0850FD),
+                          : const Color(0xff0850FD),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                           side: BorderSide(
                               color: counterController.selectedValue.value != 2
                                   ? Colors.white
-                                  : Color(0xff0850FD))),
+                                  : const Color(0xff0850FD))),
                       child: const Padding(
                         padding: EdgeInsets.all(12.0),
                         child: Center(
@@ -115,7 +114,7 @@ class QuizPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 64,
               ),
               Align(
@@ -131,9 +130,9 @@ class QuizPage extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    margin: EdgeInsets.all(32),
+                    margin: const EdgeInsets.all(32),
                     width: 124,
-                    child: OptionButton(
+                    child: const OptionButton(
                       color: Color(0xffFF7E1D),
                       text: 'Next',
                     ),

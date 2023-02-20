@@ -49,7 +49,7 @@ class BrainSignalsController extends GetxController {
       print(response.statusCode);
       if (response.statusCode == 201) {
         connection.finish();
-        Get.off(() => const PatientLogin());
+        Get.off(() =>  PatientLogin());
       }
     } catch (err) {
       print(err);

@@ -1,5 +1,6 @@
 // import 'dart:convert';
 
+import 'package:adv_eeg/screens/adminSide.dart';
 import 'package:adv_eeg/screens/emailLogin.dart';
 import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:flutter/material.dart';
@@ -70,10 +71,13 @@ class LandingPage extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   child: GestureDetector(
                       onTap: () {
-                        if (box.read('loginDetails') == null) {
-                          Get.to(() => usernameLogin());
+                        if (box.read('loginDetails') != null &&
+                            box.read('loginDetails')['role'] == 'USER') {
+                          Get.to(() => PatientLogin());
                         } else {
-                          Get.to(() => const PatientLogin());
+                          Get.to(() => usernameLogin(
+                                role: 'USER',
+                              ));
                         }
                       },
                       child: const LoginButtons(
@@ -82,7 +86,14 @@ class LandingPage extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const DoctorView());
+                    if (box.read('loginDetails') != null &&
+                        box.read('loginDetails')['role'] == 'DOCTOR') {
+                      Get.to(() => const DoctorView());
+                    } else {
+                      Get.to(() => usernameLogin(
+                            role: 'DOCTOR',
+                          ));
+                    }
                   },
                   child: const LoginButtons(
                     text: 'Login as Doctor',
@@ -99,7 +110,19 @@ class LandingPage extends StatelessWidget {
                       starValue: 3,
                     ),
                   )),
-              SizedBox(height: 120)
+              const SizedBox(height: 120),
+              TextButton(
+                  onPressed: () {
+                    if (box.read('loginDetails') != null &&
+                        box.read('loginDetails')['role'] == 'ADMIN')
+                      Get.to(() => AdminMain());
+                    else {
+                      Get.to(() => const usernameLogin(
+                            role: 'ADMIN',
+                          ));
+                    }
+                  },
+                  child: const Text('ADMIN LOGIN'))
             ],
           ),
         ),

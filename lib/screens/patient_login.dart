@@ -1,16 +1,19 @@
+import 'package:adv_eeg/controllers/getProfileController.dart';
 import 'package:adv_eeg/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 // import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'eegScreen.dart';
 
 class PatientLogin extends StatelessWidget {
-  const PatientLogin({Key? key}) : super(key: key);
-
+  PatientLogin({Key? key}) : super(key: key);
+  GetProflieController getProflieController = Get.put(GetProflieController());
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -26,10 +29,122 @@ class PatientLogin extends StatelessWidget {
             child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Align(
+            Align(
               alignment: Alignment.topLeft,
-              child: BackButton(
-                color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BackButton(
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        showMenu(
+                            context: context,
+                            position: RelativeRect.fromDirectional(
+                                textDirection: TextDirection.rtl,
+                                start: double.infinity,
+                                top: 0,
+                                end: double.infinity,
+                                bottom: 0),
+                            items: [
+                              PopupMenuItem(
+                                child: TextButton(
+                                  onPressed: () {
+                                    // Get.toNamed('/profile');
+                                    getProflieController.fetchProfile(
+                                        GetStorage()
+                                            .read('loginDetails')['user_id']);
+                                    showModalBottomSheet(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        // transitionAnimationController: AnimationController(vsync: this),
+                                        // isScrollControlled: true,/
+                                        isDismissible: true,
+                                        context: context,
+                                        builder: (context) => Obx(
+                                              () => ModalProgressHUD(
+                                                inAsyncCall:
+                                                    getProflieController
+                                                        .isLoading.value,
+                                                child: Container(
+                                                  color: Colors.green,
+                                                  child: Visibility(
+                                                    visible:
+                                                        !getProflieController
+                                                            .isLoading.value,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.person,
+                                                          size: 100,
+                                                        ),
+                                                        Text(
+                                                            '${getProflieController.profile.value.name}'),
+                                                        Text(
+                                                            '${getProflieController.profile.value.username}'),
+                                                        Text(
+                                                            '${getProflieController.profile.value.age}'),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.person),
+                                      Text('Profile'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                child: TextButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: Text(
+                                              'Are you sure you want to logout?'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                },
+                                                child: Text('No')),
+                                            TextButton(
+                                                onPressed: () {
+                                                  GetStorage()
+                                                      .remove('loginDetails');
+                                                  Get.offAllNamed('/');
+                                                },
+                                                child: Text('Yes'))
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.logout),
+                                        Text('Logout')
+                                      ],
+                                    )),
+                              )
+                            ]);
+                      },
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: Colors.white,
+                      ))
+                ],
               ),
             ),
             SizedBox(
@@ -99,9 +214,9 @@ class OptionButton extends StatelessWidget {
       decoration: BoxDecoration(
           color: color,
           border: Border.all(
-              color: color != Color(0xffFF7E1D)
+              color: color != const Color(0xffFF7E1D)
                   ? Colors.white
-                  : Color(0xffFF7E1D)),
+                  : const Color(0xffFF7E1D)),
           borderRadius: BorderRadius.circular(5)),
       child: Center(
         child: Padding(

@@ -21,12 +21,10 @@ class CollectingData extends StatelessWidget {
             image: DecorationImage(
                 colorFilter:
                     ColorFilter.mode(Colors.black87, BlendMode.hardLight),
-          
                 image: AssetImage(
                   'assets/bg1.png',
                 ),
                 fit: BoxFit.cover)),
-    
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,7 +40,7 @@ class CollectingData extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 100,
             ),
             _Musicvisulaizer()
           ],
@@ -89,10 +87,15 @@ class _VisualComponentState extends State<VisualComponent>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: widget.duration.milliseconds,
       width: 10,
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [Colors.cyan, Color(0xfffff)])),
+          borderRadius: BorderRadius.circular(10),
+          gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0x000fffff), Colors.cyan])),
       height: animation.value,
     );
   }
