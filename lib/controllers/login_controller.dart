@@ -34,6 +34,7 @@ class LoginController extends GetxController {
     print(response.body);
     if (response.statusCode == 200) {
       loginDetails.value = loginFromJson(response.body);
+      print(response.body);
       await box.write("loginDetails", jsonDecode(response.body));
       await box.write("timestamp", DateTime.now().millisecondsSinceEpoch);
       isLoading.value = false;

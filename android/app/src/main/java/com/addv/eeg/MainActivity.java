@@ -1,4 +1,4 @@
-package com.example.adv_egg;
+package com.addv.eeg;
 
 import io.flutter.embedding.android.FlutterActivity;
 

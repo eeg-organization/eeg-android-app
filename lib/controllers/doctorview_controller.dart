@@ -14,7 +14,7 @@ class DoctorViewController extends GetxController {
       '${Constants.apiUrl}/patient-refering-doctor/${GetStorage().read('loginDetails')['user_id']}/';
   var docDetails = DoctorData().obs;
   TextEditingController searchText = TextEditingController();
-  GetQuizController getQuizController = Get.put(GetQuizController());
+  // GetQuizController getQuizController = Get.put(GetQuizController());
   // DropDownController dropDown = DropDownController();
   TextEditingController droopDownController = TextEditingController();
   @override
@@ -32,10 +32,7 @@ class DoctorViewController extends GetxController {
       // print('chud gaya kya??');
       print(response.statusCode);
       docDetails.value = doctorDataFromJson(response.body);
-      for (int i = 0; i < docDetails.value.data!.patientInfo!.length; i++) {
-        getQuizController
-            .fetchQuiz(docDetails.value.data!.patientInfo![i].patient!.uid!);
-      }
+      
       // print(docDetails.value);
     } catch (er) {
       print(er);

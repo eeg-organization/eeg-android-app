@@ -1,8 +1,8 @@
 class baseResp {
   Questionare? questionare;
-  List<Questions> questions=[];
+  List<Questions> questions = [];
 
-  baseResp({this.questionare,required this.questions});
+  baseResp({this.questionare, required this.questions});
 
   baseResp.fromJson(Map<String, dynamic> json) {
     questionare = json['questionare'] != null
@@ -54,9 +54,8 @@ class Questions {
   Questions({this.question, this.options});
 
   Questions.fromJson(Map<String, dynamic> json) {
-    question = json['question'] != null
-        ?  Question.fromJson(json['question'])
-        : null;
+    question =
+        json['question'] != null ? Question.fromJson(json['question']) : null;
     if (json['options'] != null) {
       options = <Options>[];
       json['options'].forEach((v) {
@@ -83,7 +82,8 @@ class Question {
   String? description;
   String? questionare;
 
-  Question({this.uid,required this.question, this.description, this.questionare});
+  Question(
+      {this.uid, required this.question, this.description, this.questionare});
 
   Question.fromJson(Map<String, dynamic> json) {
     uid = json['uid'];

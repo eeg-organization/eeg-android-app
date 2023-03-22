@@ -14,10 +14,6 @@ class QuizPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          // boxShadow: [
-          //   BoxShadow(color: Colors.black)
-          // ],
-          // backgroundBlendMode: BlendMode.color,
           image: DecorationImage(
             colorFilter: ColorFilter.mode(Colors.black87, BlendMode.hardLight),
             image: AssetImage('assets/bg1.png'),
@@ -26,7 +22,6 @@ class QuizPage extends StatelessWidget {
         ),
         child: SafeArea(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Align(
                 alignment: Alignment.topLeft,
@@ -51,7 +46,6 @@ class QuizPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: GestureDetector(
                   onTap: () {
-                    // Get.to(() => const QuestionsPage(type: 'HAM_D'));
                     counterController.selectedValue.value = 1;
                   },
                   child: Obx(
@@ -139,38 +133,6 @@ class QuizPage extends StatelessWidget {
                   ),
                 ),
               )
-              // SizedBox(
-              //   height: size.height * 0.025,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              //   child: Align(
-              //       alignment: Alignment.bottomLeft,
-              //       child: ElevatedButton(
-              //           onPressed: () {
-              //             Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>QuestionsPage(type: 'TYPE_3',)));
-              //           },
-              //           style: ButtonStyle(
-              //               backgroundColor:
-              //               MaterialStateProperty.all(Colors.black),
-              //               minimumSize: MaterialStateProperty.all(
-              //                   const Size(double.infinity, 50))),
-              //           child: const Text('Quiz 3')))),
-              // SizedBox(
-              //   height: size.height * 0.025,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              //   child: Align(
-              //       alignment: Alignment.bottomLeft,
-              //       child: ElevatedButton(
-              //           onPressed: () {},
-              //           style: ButtonStyle(
-              //               backgroundColor:
-              //               MaterialStateProperty.all(Colors.black),
-              //               minimumSize: MaterialStateProperty.all(
-              //                   const Size(double.infinity, 50))),
-              //           child: const Text('Quiz 4')))),
             ],
           ),
         ),

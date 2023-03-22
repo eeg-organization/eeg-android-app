@@ -10,44 +10,44 @@ String quizToJson(Quiz data) => json.encode(data.toJson());
 
 class Quiz {
     Quiz({
-        this.quizs,
+        required this.quizs,
     });
 
-    List<QuizElement>? quizs;
+    List<QuizElement> quizs;
 
     factory Quiz.fromJson(Map<String, dynamic> json) => Quiz(
-        quizs: json["quizs"] == null ? [] : List<QuizElement>.from(json["quizs"]!.map((x) => QuizElement.fromJson(x))),
+        quizs: List<QuizElement>.from(json["quizs"].map((x) => QuizElement.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "quizs": quizs == null ? [] : List<dynamic>.from(quizs!.map((x) => x.toJson())),
+        "quizs": List<dynamic>.from(quizs.map((x) => x.toJson())),
     };
 }
 
 class QuizElement {
     QuizElement({
-        this.uid,
-        this.createdAt,
-        this.data,
-        this.options,
-        this.score,
-        this.user,
-        this.questionare,
+        required this.uid,
+        required this.createdAt,
+        required this.data,
+        required this.options,
+        required this.score,
+        required this.user,
+        required this.questionare,
     });
 
-    String? uid;
-    DateTime? createdAt;
-    Data? data;
-    Options? options;
-    int? score;
-    String? user;
-    String? questionare;
+    String uid;
+    DateTime createdAt;
+    Data data;
+    Options options;
+    int score;
+    String user;
+    String questionare;
 
     factory QuizElement.fromJson(Map<String, dynamic> json) => QuizElement(
         uid: json["uid"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
-        options: json["options"] == null ? null : Options.fromJson(json["options"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        data: Data.fromJson(json["data"]),
+        options: Options.fromJson(json["options"]),
         score: json["score"],
         user: json["user"],
         questionare: json["questionare"],
@@ -55,9 +55,9 @@ class QuizElement {
 
     Map<String, dynamic> toJson() => {
         "uid": uid,
-        "created_at": createdAt?.toIso8601String(),
-        "data": data?.toJson(),
-        "options": options?.toJson(),
+        "created_at": createdAt.toIso8601String(),
+        "data": data.toJson(),
+        "options": options.toJson(),
         "score": score,
         "user": user,
         "questionare": questionare,
@@ -66,32 +66,32 @@ class QuizElement {
 
 class Data {
     Data({
-        this.questions,
-        this.questionare,
+        required this.questions,
+        required this.questionare,
     });
 
-    List<QuestionElement>? questions;
-    Questionare? questionare;
+    List<QuestionElement> questions;
+    Questionare questionare;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        questions: json["questions"] == null ? [] : List<QuestionElement>.from(json["questions"]!.map((x) => QuestionElement.fromJson(x))),
-        questionare: json["questionare"] == null ? null : Questionare.fromJson(json["questionare"]),
+        questions: List<QuestionElement>.from(json["questions"].map((x) => QuestionElement.fromJson(x))),
+        questionare: Questionare.fromJson(json["questionare"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "questions": questions == null ? [] : List<dynamic>.from(questions!.map((x) => x.toJson())),
-        "questionare": questionare?.toJson(),
+        "questions": List<dynamic>.from(questions.map((x) => x.toJson())),
+        "questionare": questionare.toJson(),
     };
 }
 
 class Questionare {
     Questionare({
-        this.uid,
-        this.type,
+        required this.uid,
+        required this.type,
     });
 
-    String? uid;
-    Type? type;
+    String uid;
+    Type type;
 
     factory Questionare.fromJson(Map<String, dynamic> json) => Questionare(
         uid: json["uid"],
@@ -113,23 +113,23 @@ final typeValues = EnumValues({
 
 class QuestionElement {
     QuestionElement({
-        this.options,
+        required this.options,
         this.question1,
         this.question,
     });
 
-    List<Option>? options;
+    List<Option> options;
     Question1Class? question1;
     Question1Class? question;
 
     factory QuestionElement.fromJson(Map<String, dynamic> json) => QuestionElement(
-        options: json["options"] == null ? [] : List<Option>.from(json["options"]!.map((x) => Option.fromJson(x))),
+        options: List<Option>.from(json["options"].map((x) => Option.fromJson(x))),
         question1: json["Question 1"] == null ? null : Question1Class.fromJson(json["Question 1"]),
         question: json["question"] == null ? null : Question1Class.fromJson(json["question"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "options": options == null ? [] : List<dynamic>.from(options!.map((x) => x.toJson())),
+        "options": List<dynamic>.from(options.map((x) => x.toJson())),
         "Question 1": question1?.toJson(),
         "question": question?.toJson(),
     };
@@ -137,16 +137,16 @@ class QuestionElement {
 
 class Option {
     Option({
-        this.uid,
-        this.option,
-        this.question,
-        this.optionId,
+        required this.uid,
+        required this.option,
+        required this.question,
+        required this.optionId,
     });
 
-    String? uid;
-    String? option;
-    String? question;
-    int? optionId;
+    String uid;
+    String option;
+    String question;
+    int optionId;
 
     factory Option.fromJson(Map<String, dynamic> json) => Option(
         uid: json["uid"],
@@ -165,16 +165,16 @@ class Option {
 
 class Question1Class {
     Question1Class({
-        this.uid,
-        this.question,
+        required this.uid,
+        required this.question,
         this.description,
-        this.questionare,
+        required this.questionare,
     });
 
-    String? uid;
-    String? question;
+    String uid;
+    String question;
     String? description;
-    String? questionare;
+    String questionare;
 
     factory Question1Class.fromJson(Map<String, dynamic> json) => Question1Class(
         uid: json["uid"],

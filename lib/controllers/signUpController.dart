@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+import '../Constants/constants.dart';
 
 class SignUpController extends GetxController {
   TextEditingController name = TextEditingController();
@@ -16,5 +21,21 @@ class SignUpController extends GetxController {
   TextEditingController doctor = TextEditingController();
   //create-user-usinapp
 
-  createUser() async {}
+  createUser() async {
+    var response =
+        await http.post(Uri.parse('${Constants.apiUrl}/create-profile-admin/'),
+            headers: Constants.header,
+            body: jsonEncode({
+              "role": "USER",
+              "parent_username": "null",
+              "info": {
+                "username": username.text,
+                "name": name.text,
+                "age": age.text,
+                "email": email.text,
+                "password":password.text,
+                
+              }
+            }));
+  }
 }

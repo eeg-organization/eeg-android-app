@@ -18,7 +18,7 @@ class UsersController extends GetxController {
     super.onInit();
   }
 
-  void fetchUsers() async {
+  void fetchUsers() async { 
     try {
       var response1 = await http.get(
           Uri.parse(

@@ -15,8 +15,29 @@ class DoctorView extends StatelessWidget {
   Widget build(BuildContext context) {
     final DoctorViewController doctorViewController =
         Get.put(DoctorViewController());
-    GetQuizController getQuizController = Get.put(GetQuizController());
+
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xff1A1B41),
+        elevation: 0,
+        title: Text(
+          'Doctor View',
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              GetStorage().erase();
+              Get.offAllNamed('/');
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
       backgroundColor: const Color(0xff1A1B41),
       body: SafeArea(
         child: Column(
@@ -121,21 +142,6 @@ class DoctorView extends StatelessWidget {
                                               fontSize: 20,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 2,
-                                      ),
-                                      Obx(
-                                        () => Text(
-                                          getQuizController.QuizList[index]
-                                                      .value.quizs.last.score !=
-                                                  null
-                                              ? '${getQuizController.QuizList[index].value.quizs.last.score}'
-                                              : ' 0',
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                          ),
                                         ),
                                       ),
                                       const SizedBox(
