@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:adv_eeg/controllers/question_controller.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -37,6 +38,10 @@ class QuizController extends GetxController {
 
   postData() async {
     isLoading.value = true;
+    RxString token = ''.obs;
+    await FirebaseMessaging.instance
+        .getToken()
+        .then((value) => token.value = value!);
     try {
       // print(questionController.question);
       // print(questionController.question.value.questionare?.uid);
@@ -46,7 +51,8 @@ class QuizController extends GetxController {
               "data": questionController.question.value,
               "questionare": questionController.question.value.questionare?.uid,
               "options": options,
-              "user": GetStorage().read('loginDetails')['user_id']
+              "user": GetStorage().read('loginDetails')['user_id'],
+              "registration_id": token.value,
             },
           ),
           headers: Constants().authHeader);

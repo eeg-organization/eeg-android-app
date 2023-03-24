@@ -1,4 +1,5 @@
 import 'package:adv_eeg/Helper.dart';
+import 'package:adv_eeg/controllers/test.dart';
 import 'package:adv_eeg/screens/landing.dart';
 import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final testId= Get.put(TestId());
     return GetMaterialApp(
       // routes: ,
       home: MaterialApp(

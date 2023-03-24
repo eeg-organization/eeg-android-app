@@ -20,6 +20,7 @@ class LoginController extends GetxController {
   login() async {
     isLoading.value = true;
     final url = '${Constants.apiUrl}/login/';
+    try{
     var response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
@@ -37,7 +38,7 @@ class LoginController extends GetxController {
       print(response.body);
       await box.write("loginDetails", jsonDecode(response.body));
       await box.write("timestamp", DateTime.now().millisecondsSinceEpoch);
-      isLoading.value = false;
+      // isLoading.value = false;
       loginDetails.value.role == 'USER'
           ? Get.offAll(() => PatientLogin())
           : loginDetails.value.role == 'DOCTOR'
@@ -46,6 +47,11 @@ class LoginController extends GetxController {
                   ? Get.off(() => AdminMain())
                   : printError();
     }
-    return response.statusCode;
+    return response.statusCode;}
+    catch(err){
+      print(err);
+    }finally{
+      isLoading.value = false;
+    }
   }
 }
