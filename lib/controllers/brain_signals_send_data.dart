@@ -39,7 +39,7 @@ class BrainSignalsController extends GetxController {
       print(deviceId.value);
       final response = await http.post(Uri.parse(url),
           body: jsonEncode({
-            "user": GetStorage().read('loginDetails')['user_id'],
+            "user": GetStorage().read('loginDetails')['user']['uid'],
             "timestamp": DateTime.now().millisecondsSinceEpoch,
             "device_id": deviceId.value,
             "score": valueRecieved.value
@@ -47,9 +47,10 @@ class BrainSignalsController extends GetxController {
           headers: Constants().authHeader);
       // print(response.body);
       print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 201) {
         connection.finish();
-        Get.off(() =>  PatientLogin());
+        Get.off(() => PatientLogin());
       }
     } catch (err) {
       print(err);

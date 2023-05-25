@@ -12,13 +12,15 @@ class TestId extends GetxController {
   }
 
   getNotification() async {
-    var token=''.obs;
-    await FirebaseMessaging.instance.getToken().then((value) => token.value = value!);
+    var token = ''.obs;
+    await FirebaseMessaging.instance
+        .getToken()
+        .then((value) => token.value = value!);
     try {
-
       var response = await http.post(Uri.parse('${Constants.apiUrl}/devices/'),
-          headers: Constants().authHeader,
-          body: jsonEncode({'registration_id': token.value, "type": "android"}));
+          headers: Constants.header,
+          body:
+              jsonEncode({'registration_id': token.value, "type": "android"}));
       print(response.body);
       print(response.statusCode);
     } catch (er) {

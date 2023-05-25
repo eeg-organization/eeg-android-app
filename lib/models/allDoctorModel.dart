@@ -1,39 +1,31 @@
 // To parse this JSON data, do
 //
-//     final login = loginFromJson(jsonString);
+//     final allDoctorModel = allDoctorModelFromJson(jsonString);
 
 import 'dart:convert';
 
-Login loginFromJson(String str) => Login.fromJson(json.decode(str));
+AllDoctorModel allDoctorModelFromJson(String str) => AllDoctorModel.fromJson(json.decode(str));
 
-String loginToJson(Login data) => json.encode(data.toJson());
+String allDoctorModelToJson(AllDoctorModel data) => json.encode(data.toJson());
 
-class Login {
-    Login({
-        this.message,
-        this.user,
-        this.token,
+class AllDoctorModel {
+    AllDoctorModel({
+        this.data,
     });
 
-    String? message;
-    User? user;
-    String? token;
+    final List<Datum>? data;
 
-    factory Login.fromJson(Map<String, dynamic> json) => Login(
-        message: json["message"],
-        user: User.fromJson(json["user"]),
-        token: json["token"],
+    factory AllDoctorModel.fromJson(Map<String, dynamic> json) => AllDoctorModel(
+        data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "message": message,
-        "user": user!.toJson(),
-        "token": token,
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
     };
 }
 
-class User {
-    User({
+class Datum {
+    Datum({
         this.uid,
         this.username,
         this.email,
@@ -64,36 +56,36 @@ class User {
         this.registrationId,
     });
 
-    String? uid;
-    String? username;
-    String? email;
-    String? name;
-    String? role;
-    dynamic hospital;
-    dynamic contact;
-    dynamic gender;
-    dynamic specialization;
-    dynamic address;
-    int? age;
-    dynamic maritalStatus;
-    dynamic income;
-    dynamic religion;
-    dynamic education;
-    dynamic occupation;
-    dynamic habitat;
-    dynamic durationOfIllness;
-    dynamic ageOfOnset;
-    dynamic handedness;
-    dynamic bloodGroup;
-    dynamic bloodPressure;
-    List<dynamic>? relatedTo;
-    dynamic patientPastHistoryPsychiatricIllness;
-    dynamic patientPastHistoryMedicalIllness;
-    dynamic familyHistoryPsychiatricIllness;
-    dynamic familyHistoryMedicalIllness;
-    dynamic registrationId;
+    final String? uid;
+    final String? username;
+    final String? email;
+    final String? name;
+    final String? role;
+    final String? hospital;
+    final String? contact;
+    final dynamic gender;
+    final dynamic specialization;
+    final String? address;
+    final int? age;
+    final dynamic maritalStatus;
+    final dynamic income;
+    final dynamic religion;
+    final dynamic education;
+    final dynamic occupation;
+    final dynamic habitat;
+    final dynamic durationOfIllness;
+    final dynamic ageOfOnset;
+    final dynamic handedness;
+    final String? bloodGroup;
+    final String? bloodPressure;
+    final List<String>? relatedTo;
+    final dynamic patientPastHistoryPsychiatricIllness;
+    final dynamic patientPastHistoryMedicalIllness;
+    final dynamic familyHistoryPsychiatricIllness;
+    final dynamic familyHistoryMedicalIllness;
+    final String? registrationId;
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         uid: json["uid"],
         username: json["username"],
         email: json["email"],
@@ -116,7 +108,7 @@ class User {
         handedness: json["handedness"],
         bloodGroup: json["blood_group"],
         bloodPressure: json["blood_pressure"],
-        relatedTo: List<dynamic>.from(json["related_to"].map((x) => x)),
+        relatedTo: json["related_to"] == null ? [] : List<String>.from(json["related_to"]!.map((x) => x)),
         patientPastHistoryPsychiatricIllness: json["patient_past_history_psychiatric_illness"],
         patientPastHistoryMedicalIllness: json["patient_past_history_medical_illness"],
         familyHistoryPsychiatricIllness: json["family_history_psychiatric_illness"],
@@ -147,7 +139,7 @@ class User {
         "handedness": handedness,
         "blood_group": bloodGroup,
         "blood_pressure": bloodPressure,
-        "related_to": List<dynamic>.from(relatedTo!.map((x) => x)),
+        "related_to": relatedTo == null ? [] : List<dynamic>.from(relatedTo!.map((x) => x)),
         "patient_past_history_psychiatric_illness": patientPastHistoryPsychiatricIllness,
         "patient_past_history_medical_illness": patientPastHistoryMedicalIllness,
         "family_history_psychiatric_illness": familyHistoryPsychiatricIllness,

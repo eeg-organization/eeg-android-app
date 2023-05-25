@@ -3,6 +3,7 @@
 import 'package:adv_eeg/screens/adminSide.dart';
 import 'package:adv_eeg/screens/emailLogin.dart';
 import 'package:adv_eeg/screens/patient_login.dart';
+import 'package:adv_eeg/screens/relativeSide.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -30,27 +31,27 @@ class LandingPage extends StatelessWidget {
                 fit: BoxFit.cover)),
         child: SafeArea(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Hi there 👋',
-                    style: TextStyle(
-                        fontSize: 30,
-                        // fontSize: size.width*0.5
-                        color: Colors.white),
+              Column(children: [
+                SizedBox(
+                  height: 50,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Hi there 👋',
+                      style: TextStyle(
+                          fontSize: 30,
+                          // fontSize: size.width*0.5
+                          color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-              const Expanded(
-                child: Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.topLeft,
@@ -63,66 +64,77 @@ class LandingPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              // SizedBox(
-              //   height: size.height * 0.4,
-              // ),
-              Align(
+              ]),
+              Column(children: [
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: GestureDetector(
+                        onTap: () {
+                          if (box.read('loginDetails') != null &&
+                              box.read('loginDetails')['user']['role'] ==
+                                  'USER') {
+                            Get.to(() => PatientLogin());
+                          } else {
+                            Get.to(() => usernameLogin(
+                                  role: 'USER',
+                                ));
+                          }
+                        },
+                        child: const LoginButtons(
+                            starValue: 1, text: 'Login as User'))),
+                Align(
                   alignment: Alignment.bottomLeft,
                   child: GestureDetector(
+                    onTap: () {
+                      if (box.read('loginDetails') != null &&
+                          box.read('loginDetails')['user']['role'] ==
+                              'DOCTOR') {
+                        Get.to(() => const DoctorView());
+                      } else {
+                        Get.to(() => usernameLogin(
+                              role: 'DOCTOR',
+                            ));
+                      }
+                    },
+                    child: const LoginButtons(
+                      text: 'Login as Doctor',
+                      starValue: 2,
+                    ),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: GestureDetector(
                       onTap: () {
                         if (box.read('loginDetails') != null &&
-                            box.read('loginDetails')['role'] == 'USER') {
-                          Get.to(() => PatientLogin());
+                            box.read('loginDetails')['user']['role'] ==
+                                'RELATIVE') {
+                          Get.to(() => const RelativeSide());
                         } else {
                           Get.to(() => usernameLogin(
-                                role: 'USER',
+                                role: 'RELATIVE',
                               ));
                         }
                       },
                       child: const LoginButtons(
-                          starValue: 1, text: 'Login as user'))),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: GestureDetector(
-                  onTap: () {
-                    if (box.read('loginDetails') != null &&
-                        box.read('loginDetails')['role'] == 'DOCTOR') {
-                      Get.to(() => const DoctorView());
-                    } else {
-                      Get.to(() => usernameLogin(
-                            role: 'DOCTOR',
-                          ));
-                    }
-                  },
-                  child: const LoginButtons(
-                    text: 'Login as Doctor',
-                    starValue: 2,
-                  ),
-                ),
-              ),
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: const LoginButtons(
-                      text: 'Login as relative',
-                      starValue: 3,
-                    ),
-                  )),
-              const SizedBox(height: 120),
-              TextButton(
-                  onPressed: () {
-                    if (box.read('loginDetails') != null &&
-                        box.read('loginDetails')['role'] == 'ADMIN')
-                      Get.to(() => AdminMain());
-                    else {
-                      Get.to(() => const usernameLogin(
-                            role: 'ADMIN',
-                          ));
-                    }
-                  },
-                  child: const Text('ADMIN LOGIN'))
+                        text: 'Login as Relative',
+                        starValue: 3,
+                      ),
+                    )),
+                // const SizedBox(height: 120),
+                TextButton(
+                    onPressed: () {
+                      if (box.read('loginDetails') != null &&
+                          box.read('loginDetails')['user']['role'] == 'ADMIN')
+                        Get.to(() => AdminMain());
+                      else {
+                        Get.to(() => const usernameLogin(
+                              role: 'ADMIN',
+                            ));
+                      }
+                    },
+                    child: const Text('ADMIN LOGIN'))
+              ])
             ],
           ),
         ),

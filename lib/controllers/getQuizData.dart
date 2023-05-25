@@ -32,8 +32,28 @@ class GetQuizController extends GetxController {
       print(response.body);
       isLoading(false);
       quiz.value = quizFromJson(response.body);
-      chartData.addAll(quiz.value.quizs.map((e) =>
-          ChartData(DateFormat('ddmmyyyy').format(e.createdAt), e.score)));
+      chartData.addAll(quiz.value.quizs.map((e) => ChartData(
+          DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day,
+              e.createdAt.hour, e.createdAt.minute, e.createdAt.second),
+          e.score,e.data.questionare.type)));
+    } catch (err) {
+      print(err);
+      isLoading(false);
+    }
+  }
+  fetchBrainScore()async{
+     try {
+      isLoading(true);
+      var response = await http.get(
+          Uri.parse('${Constants.apiUrl}/get-brainsignal-score/$uid'),
+          headers: Constants().authHeader);
+      print(response.body);
+      isLoading(false);
+      quiz.value = quizFromJson(response.body);
+      chartData.addAll(quiz.value.quizs.map((e) => ChartData(
+          DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day,
+              e.createdAt.hour, e.createdAt.minute, e.createdAt.second),
+          e.score,e.data.questionare.type)));
     } catch (err) {
       print(err);
       isLoading(false);

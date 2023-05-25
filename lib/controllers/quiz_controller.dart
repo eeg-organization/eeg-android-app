@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
+import '../models/profile_model.dart';
 
 class QuizController extends GetxController {
   String type;
@@ -34,31 +35,50 @@ class QuizController extends GetxController {
     // print(sum);
     // options.value = options;
   }
+
+  var profile = Profile().obs;
   // options.value=
+  fetchProfile(String profileId) async {
+    try {
+      var response = await http.get(
+          Uri.parse('${Constants.apiUrl}/get-profile/$profileId'),
+          headers: Constants().authHeader);
+      // print(response.body);
+      profile.value = profileFromJson(response.body);
+    } catch (err) {
+      isLoading.value = false;
+      // Error();
+      print(err);
+    }
+  }
 
   postData() async {
     isLoading.value = true;
-    RxString token = ''.obs;
-    await FirebaseMessaging.instance
-        .getToken()
-        .then((value) => token.value = value!);
+    // RxString token = ''.obs;
+    // await fetchProfile(
+    //     GetStorage().read('loginDetails')['user']['related_to'][0]);
+    // await FirebaseMessaging.instance
+    //     .getToken()
+    //     .then((value) => token.value = value!);
     try {
+      print(profile.value.name);
       // print(questionController.question);
-      // print(questionController.question.value.questionare?.uid);
+      // print(questionCo
+      // ntroller.question.value.questionare?.uid);
+      // print(GetStorage().read('loginDetails')['user']['uid']);
       var response = await http.post(Uri.parse(url),
           body: jsonEncode(
             {
               "data": questionController.question.value,
               "questionare": questionController.question.value.questionare?.uid,
               "options": options,
-              "user": GetStorage().read('loginDetails')['user_id'],
-              "registration_id": token.value,
+              "user": GetStorage().read('loginDetails')['user']['uid'],
             },
           ),
           headers: Constants().authHeader);
       isLoading.value = false;
       print(response.body);
-      // print(response.statusCode);
+      print(response.statusCode);
 
       return response.statusCode;
     } catch (er) {

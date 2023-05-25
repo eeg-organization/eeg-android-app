@@ -1,7 +1,7 @@
 import 'package:get_storage/get_storage.dart';
 
 class Constants {
-  static String apiUrl = 'https://clairvoyant-dev1.up.railway.app/api/v1';
+  static String apiUrl = 'http://35.154.215.124:8000/api/v1';
   static Map<String, String> header = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

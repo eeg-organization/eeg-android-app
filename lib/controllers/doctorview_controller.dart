@@ -11,7 +11,7 @@ import 'getQuizData.dart';
 
 class DoctorViewController extends GetxController {
   final url =
-      '${Constants.apiUrl}/patient-refering-doctor/${GetStorage().read('loginDetails')['user_id']}/';
+      '${Constants.apiUrl}/patient-refering-doctor/${GetStorage().read('loginDetails')['user']['uid']}/';
   var docDetails = DoctorData().obs;
   TextEditingController searchText = TextEditingController();
   // GetQuizController getQuizController = Get.put(GetQuizController());
@@ -32,7 +32,7 @@ class DoctorViewController extends GetxController {
       // print('chud gaya kya??');
       print(response.statusCode);
       docDetails.value = doctorDataFromJson(response.body);
-      
+
       // print(docDetails.value);
     } catch (er) {
       print(er);

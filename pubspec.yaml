@@ -10,6 +10,7 @@ dependencies:
   animated_custom_dropdown: ^1.2.2
   auto_size_text: ^3.0.0
   cupertino_icons: ^1.0.2
+  echart_flutter: ^0.1.0+2
   firebase_core: ^2.8.0
   firebase_messaging: ^14.3.0
   flutter:
@@ -27,6 +28,7 @@ dependencies:
   liquid_progress_indicator_ns: ^1.0.0
   modal_progress_hud_nsn: ^0.3.0
   multi_charts: ^0.3.0
+  permission_handler: ^10.2.0
   scoped_model: ^2.0.0-nullsafety.0
   sparkline: ^1.0.0
   step_progress_indicator: ^1.0.2

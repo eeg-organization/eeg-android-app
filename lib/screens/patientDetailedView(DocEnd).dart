@@ -1,10 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:sparkline/sparkline.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../controllers/getQuizData.dart';
@@ -153,13 +149,18 @@ class PatientDetailedViewForDoc extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "${patientInfo.relative?.first.name}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                patientInfo.relative?.first.name != null
+                                    ? Text(
+                                        patientInfo.relative?.first.name != null
+                                            ? patientInfo.relative!.first.name
+                                                .toString()
+                                            : '',
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : const Text(''),
                               ],
                             ),
                           )
@@ -169,11 +170,24 @@ class PatientDetailedViewForDoc extends StatelessWidget {
                   ),
                 ),
                 SfCartesianChart(
-                  series: <ChartSeries>[
-                    LineSeries<ChartData, int>(
+                  primaryXAxis: DateTimeAxis(
+                      // intervalType: DateTimeIntervalType.hours,
+                      ),
+                  series: <ChartSeries<ChartData, DateTime>>[
+                    LineSeries<ChartData, DateTime>(
                       dataSource: getQuizController.chartData,
-                      xValueMapper: (ChartData data, _) => int.parse(data.x),
+                      pointColorMapper: (ChartData data, _) =>
+                          data.y! > 15 ? Colors.red : Colors.green,
+                      name: 'Score',
+                      onPointTap: (pointInteractionDetails) =>
+                          print('${pointInteractionDetails.pointIndex}'),
+                      xValueMapper: (ChartData data, _) => DateTime(
+                          data.x.year, data.x.month, data.x.day, data.x.hour),
                       yValueMapper: (ChartData data, _) => data.y,
+                      dataLabelSettings: DataLabelSettings(isVisible: true),
+                      markerSettings: MarkerSettings(isVisible: true),
+                      dataLabelMapper: (datum, index) =>
+                          '${datum.type.toString()} , Score: ${datum.y.toString()}',
                     )
                   ],
                 )
@@ -187,7 +201,8 @@ class PatientDetailedViewForDoc extends StatelessWidget {
 }
 
 class ChartData {
-  ChartData(this.x, this.y);
-  final String x;
+  ChartData(this.x, this.y, this.type);
+  final DateTime x;
   final int? y;
+  final type;
 }

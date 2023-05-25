@@ -18,8 +18,22 @@ class GetProflieController extends GetxController {
       profile.value = profileFromJson(response.body);
     } catch (err) {
       isLoading.value = false;
-      // Error(); 
+      // Error();
       print(err);
+    }
+  }
+
+  logout() async {
+    isLoading.value = true;
+    try {
+      var response = await http.get(Uri.parse('${Constants.apiUrl}/logout/'),
+          headers: Constants().authHeader);
+      print(response.body);
+      print(response.statusCode);
+    } catch (err) {
+      print(err);
+    } finally {
+      isLoading.value = false;
     }
   }
 }

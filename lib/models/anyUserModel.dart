@@ -9,23 +9,52 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
+    final List<Datum>? data;
+
     User({
         this.data,
     });
 
-    List<Data>? data;
-
     factory User.fromJson(Map<String, dynamic> json) => User(
-        data: json[" data "] == null ? [] : List<Data>.from(json[" data "]!.map((x) => Data.fromJson(x))),
+        data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        " data ": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
     };
 }
 
-class Data {
-    Data({
+class Datum {
+    final String? uid;
+    final String? username;
+    final String? email;
+    final String? name;
+    final String? role;
+    final dynamic hospital;
+    final dynamic contact;
+    final dynamic gender;
+    final dynamic specialization;
+    final dynamic address;
+    final dynamic age;
+    final dynamic maritalStatus;
+    final dynamic income;
+    final dynamic religion;
+    final dynamic education;
+    final dynamic occupation;
+    final dynamic habitat;
+    final dynamic durationOfIllness;
+    final dynamic ageOfOnset;
+    final dynamic handedness;
+    final dynamic bloodGroup;
+    final dynamic bloodPressure;
+    final List<String>? relatedTo;
+    final dynamic patientPastHistoryPsychiatricIllness;
+    final dynamic patientPastHistoryMedicalIllness;
+    final dynamic familyHistoryPsychiatricIllness;
+    final dynamic familyHistoryMedicalIllness;
+    final String? registrationId;
+
+    Datum({
         this.uid,
         this.username,
         this.email,
@@ -37,27 +66,26 @@ class Data {
         this.specialization,
         this.address,
         this.age,
+        this.maritalStatus,
+        this.income,
+        this.religion,
+        this.education,
+        this.occupation,
+        this.habitat,
+        this.durationOfIllness,
+        this.ageOfOnset,
+        this.handedness,
         this.bloodGroup,
         this.bloodPressure,
         this.relatedTo,
+        this.patientPastHistoryPsychiatricIllness,
+        this.patientPastHistoryMedicalIllness,
+        this.familyHistoryPsychiatricIllness,
+        this.familyHistoryMedicalIllness,
+        this.registrationId,
     });
 
-    String? uid;
-    String? username;
-    String? email;
-    String? name;
-    String? role;
-    dynamic hospital;
-    String? contact;
-    dynamic gender;
-    dynamic specialization;
-    String? address;
-    int? age;
-    String? bloodGroup;
-    String? bloodPressure;
-    List<String>? relatedTo;
-
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         uid: json["uid"],
         username: json["username"],
         email: json["email"],
@@ -69,9 +97,23 @@ class Data {
         specialization: json["specialization"],
         address: json["address"],
         age: json["age"],
+        maritalStatus: json["marital_status"],
+        income: json["income"],
+        religion: json["religion"],
+        education: json["education"],
+        occupation: json["occupation"],
+        habitat: json["habitat"],
+        durationOfIllness: json["duration_of_illness"],
+        ageOfOnset: json["age_of_onset"],
+        handedness: json["handedness"],
         bloodGroup: json["blood_group"],
         bloodPressure: json["blood_pressure"],
         relatedTo: json["related_to"] == null ? [] : List<String>.from(json["related_to"]!.map((x) => x)),
+        patientPastHistoryPsychiatricIllness: json["patient_past_history_psychiatric_illness"],
+        patientPastHistoryMedicalIllness: json["patient_past_history_medical_illness"],
+        familyHistoryPsychiatricIllness: json["family_history_psychiatric_illness"],
+        familyHistoryMedicalIllness: json["family_history_medical_illness"],
+        registrationId: json["registration_id"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -86,8 +128,22 @@ class Data {
         "specialization": specialization,
         "address": address,
         "age": age,
+        "marital_status": maritalStatus,
+        "income": income,
+        "religion": religion,
+        "education": education,
+        "occupation": occupation,
+        "habitat": habitat,
+        "duration_of_illness": durationOfIllness,
+        "age_of_onset": ageOfOnset,
+        "handedness": handedness,
         "blood_group": bloodGroup,
         "blood_pressure": bloodPressure,
         "related_to": relatedTo == null ? [] : List<dynamic>.from(relatedTo!.map((x) => x)),
+        "patient_past_history_psychiatric_illness": patientPastHistoryPsychiatricIllness,
+        "patient_past_history_medical_illness": patientPastHistoryMedicalIllness,
+        "family_history_psychiatric_illness": familyHistoryPsychiatricIllness,
+        "family_history_medical_illness": familyHistoryMedicalIllness,
+        "registration_id": registrationId,
     };
 }
