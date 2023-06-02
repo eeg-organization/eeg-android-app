@@ -41,13 +41,15 @@ class LoginController extends GetxController {
 
   login() async {
     isLoading.value = true;
-    await getNotification();
+    if (!GetPlatform.isWeb) await getNotification();
     final url = '${Constants.apiUrl}/login/';
     try {
       var token = ''.obs;
-      await FirebaseMessaging.instance
-          .getToken()
-          .then((value) => token.value = value!);
+      if (!GetPlatform.isWeb) {
+        await FirebaseMessaging.instance
+            .getToken()
+            .then((value) => token.value = value!);
+      }
       var response = await http.post(
         Uri.parse(url),
         headers: Constants.header,
@@ -59,8 +61,8 @@ class LoginController extends GetxController {
           },
         ),
       );
-      // print(response.statusCode);
-      // print(response.body);
+      print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         loginDetails.value = loginFromJson(response.body);
         print(response.body);

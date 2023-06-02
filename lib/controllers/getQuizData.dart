@@ -1,8 +1,6 @@
-import 'dart:ffi';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 import '../Constants/constants.dart';
 import '../models/quiz_model.dart';

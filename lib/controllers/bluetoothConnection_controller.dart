@@ -34,7 +34,7 @@ class BluetoothController extends GetxController {
   void _startDiscovery() async {
     // results.value = [];
     isDiscovering = true.obs;
-    // print(await FlutterBluetoothSerial.instance.address);
+    // print(await FlutterBluetoothSerial.instance.address);  
     _streamSubscription =
         FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
       print(r);

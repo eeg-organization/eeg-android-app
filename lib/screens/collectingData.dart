@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:adv_eeg/controllers/bluetoothConnection_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 
 import '../controllers/brain_signals_send_data.dart';
 
 class CollectingData extends StatelessWidget {
-  CollectingData({super.key});
+  CollectingData({
+    super.key,
+  });
 
   BrainSignalsController brainSignalsController =
       Get.put(BrainSignalsController());
@@ -89,13 +92,13 @@ class _VisualComponentState extends State<VisualComponent>
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: widget.duration.milliseconds,
-      width: 10,
+      width: 5,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color(0x000fffff), Colors.cyan])),
+              colors: [Color.fromARGB(0, 0, 0, 0), Colors.cyan])),
       height: animation.value,
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adv_eeg/Helper.dart';
 import 'package:adv_eeg/screens/adminSide.dart';
 import 'package:adv_eeg/screens/doctorView.dart';
@@ -5,6 +7,7 @@ import 'package:adv_eeg/screens/landing.dart';
 import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:adv_eeg/screens/relativeSide.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +22,8 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'firebase_options.dart';
+
 Future myBackgroundMessageHandler(RemoteMessage message) async {
   if (message.notification != null) {
     print('Handling a background message ${message.notification}');
@@ -30,25 +35,24 @@ final FlutterLocalNotificationsPlugin flutterLocalNotifications =
 var role;
 Future main() async {
   await GetStorage.init();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   WidgetsFlutterBinding.ensureInitialized();
-  await Permission.notification.isDenied.then((value) {
-    if (value) {
-      Permission.notification.request();
+  if (!GetPlatform.isWeb) {
+    await Permission.notification.isDenied.then((value) {
+      if (value) {
+        Permission.notification.request();
+      }
+    });
+    try {
+      if (GetPlatform.isMobile) {
+        await FirebaseMessaging.instance.getInitialMessage();
+        await HelperNotification.initialize(flutterLocalNotifications);
+        FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+      }
+    } catch (er) {
+      print(er);
     }
-  });
-  try {
-    if (GetPlatform.isMobile) {
-      await FirebaseMessaging.instance.getInitialMessage();
-      await HelperNotification.initialize(flutterLocalNotifications);
-      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-    }
-  } catch (er) {
-    print(er);
   }
-  role = await GetStorage().read('loginDetails') != null
-      ? await GetStorage().read('loginDetails')['user']['role']
-      : null;
   if (await GetStorage().read('timestamp') != null &&
       (DateTime.fromMillisecondsSinceEpoch(GetStorage().read('timestamp'))
               .difference(DateTime.now())
@@ -57,6 +61,9 @@ Future main() async {
           3) {
     GetStorage().erase();
   }
+  role = await GetStorage().read('loginDetails') != null
+      ? await GetStorage().read('loginDetails')['user']['role']
+      : null;
   // print(object)
   runApp(const MyApp());
 }

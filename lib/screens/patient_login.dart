@@ -191,7 +191,6 @@ class PatientLogin extends StatelessWidget {
                           final BluetoothDevice? selectedDevice = await Get.to(
                               () => EegScreen(),
                               transition: Transition.cupertino);
-                          Get.to(() => CollectingData());
                         },
                         child: const OptionButton(
                           text: 'EEG',
