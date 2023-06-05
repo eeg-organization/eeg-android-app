@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:adv_eeg/screens/patient_login.dart';
+import 'package:adv_eeg/screens/patientScreens/patient_login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../Constants/constants.dart';
-import '../models/questions_model.dart';
+import '../../Constants/constants.dart';
+import '../../models/patients/questions_model.dart';
 
 class QuestionController extends GetxController {
   String type;

@@ -1,11 +1,11 @@
-import 'package:adv_eeg/save_file_mobile.dart';
+import 'package:adv_eeg/utils/reportGenerator/save_file_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-import 'models/brainScoreModel.dart';
+import '../../models/brainScoreModel.dart';
 
 Future<void> generatEEGReport(RxList<BrainScoreModel> scores) async {
   // print(scores.value.score);

@@ -2,7 +2,7 @@ import 'package:adv_eeg/models/anyUserModel.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../Constants/constants.dart';
+import '../../Constants/constants.dart';
 
 class UsersController extends GetxController {
   UsersController(this.role);

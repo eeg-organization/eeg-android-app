@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../controllers/getQuizData.dart';
-import '../models/doctor_model.dart';
+import '../../controllers/doctor/getQuizData.dart';
+import '../../models/doctor_model.dart';
 
 class PatientDetailedViewForDoc extends StatelessWidget {
   final PatientInfo patientInfo;

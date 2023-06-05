@@ -1,6 +1,6 @@
 import 'package:adv_eeg/controllers/counter_controller.dart';
-import 'package:adv_eeg/screens/patient_login.dart';
-import 'package:adv_eeg/screens/questions_page.dart';
+import 'package:adv_eeg/screens/patientScreens/patient_login.dart';
+import 'package:adv_eeg/screens/patientScreens/questions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

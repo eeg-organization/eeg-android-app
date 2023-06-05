@@ -1,9 +1,9 @@
-import 'package:adv_eeg/screens/yogaPoseDetailed.dart';
+import 'package:adv_eeg/screens/patientScreens/yogaPoseDetailed.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/yogaController.dart';
-import '../models/yogaModel.dart';
+import '../../controllers/patientSideControllers/yogaController.dart';
+import '../../models/patients/yogaModel.dart';
 
 class YogaScreen extends StatelessWidget {
   final YogaController controller = Get.put(YogaController());

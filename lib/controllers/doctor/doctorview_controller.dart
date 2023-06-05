@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import '../Constants/constants.dart';
-import '../models/doctor_model.dart';
+import '../../Constants/constants.dart';
+import '../../models/doctor_model.dart';
 
 class DoctorViewController extends GetxController {
   final url =

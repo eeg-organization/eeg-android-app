@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:adv_eeg/screens/yogaScreen.dart';
+import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import '../Constants/constants.dart';
-import '../screens/eegScreen.dart';
+import '../../Constants/constants.dart';
+import '../../screens/patientScreens/eegScreen.dart';
 
 class BrainSignalsController extends GetxController {
   @override

@@ -1,5 +1,5 @@
-import 'package:adv_eeg/screens/patient_login.dart';
-import 'package:adv_eeg/screens/yogaScreen.dart';
+import 'package:adv_eeg/screens/patientScreens/patient_login.dart';
+import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,9 +8,9 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:toast/toast.dart';
 
-import '../controllers/counter_controller.dart';
-import '../controllers/question_controller.dart';
-import '../controllers/quiz_controller.dart';
+import '../../controllers/counter_controller.dart';
+import '../../controllers/patientSideControllers/question_controller.dart';
+import '../../controllers/patientSideControllers/quiz_controller.dart';
 
 class QuestionsPage extends StatelessWidget {
   const QuestionsPage({Key? key, required this.type}) : super(key: key);

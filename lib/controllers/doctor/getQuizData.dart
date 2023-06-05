@@ -2,9 +2,9 @@ import 'package:adv_eeg/models/brainScoreModel.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../Constants/constants.dart';
-import '../models/quiz_model.dart';
-import '../screens/patientDetailedView(DocEnd).dart';
+import '../../Constants/constants.dart';
+import '../../models/patients/quiz_model.dart';
+import '../../screens/doctorScreens/patientDetailedView(DocEnd).dart';
 
 class GetQuizController extends GetxController {
   GetQuizController(this.uid);

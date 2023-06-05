@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:adv_eeg/controllers/getProfileController.dart';
+import 'package:adv_eeg/controllers/patientSideControllers/getProfileController.dart';
 import 'package:adv_eeg/screens/landing.dart';
-import 'package:adv_eeg/screens/quiz_page.dart';
-import 'package:adv_eeg/screens/yogaScreen.dart';
+import 'package:adv_eeg/screens/patientScreens/quiz_page.dart';
+import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
@@ -13,8 +13,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../eegReportGenerator.dart';
-import '../quizReportGenerator.dart';
+import '../../utils/reportGenerator/eegReportGenerator.dart';
+import '../../utils/reportGenerator/quizReportGenerator.dart';
 import 'eegScreen.dart';
 
 class PatientLogin extends StatelessWidget {

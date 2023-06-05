@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../models/yogaModel.dart';
+import '../../models/patients/yogaModel.dart';
 
 class YogaPoseDetailScreen extends StatelessWidget {
   final YogaPose yogaPose;

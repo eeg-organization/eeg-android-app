@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:adv_eeg/models/allDoctorModel.dart';
-import 'package:adv_eeg/screens/emailLogin.dart';
+import 'package:adv_eeg/screens/auth/emailLogin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../Constants/constants.dart';
+import '../../Constants/constants.dart';
 
 class SignUpController extends GetxController {
   SignUpController({required this.role});

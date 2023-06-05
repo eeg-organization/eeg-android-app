@@ -1,11 +1,11 @@
 // ignore: file_names
-import 'package:adv_eeg/screens/patientDetailedView(DocEnd).dart';
+import 'package:adv_eeg/screens/doctorScreens/patientDetailedView(DocEnd).dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/doctorview_controller.dart';
+import '../../controllers/doctor/doctorview_controller.dart';
 
 class DoctorView extends StatelessWidget {
   const DoctorView({super.key});

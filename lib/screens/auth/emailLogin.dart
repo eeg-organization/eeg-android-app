@@ -1,10 +1,10 @@
-import 'package:adv_eeg/screens/patient_login.dart';
-import 'package:adv_eeg/screens/signUpPage.dart';
+import 'package:adv_eeg/screens/patientScreens/patient_login.dart';
+import 'package:adv_eeg/screens/auth/signUpPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../controllers/login_controller.dart';
+import '../../controllers/auth/login_controller.dart';
 // import 'package:get/get.dart';
 
 // ignore: camel_case_types

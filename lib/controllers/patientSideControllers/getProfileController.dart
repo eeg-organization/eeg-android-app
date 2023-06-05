@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-import '../Constants/constants.dart';
-import '../models/brainScoreModel.dart';
-import '../models/quiz_model.dart';
+import '../../Constants/constants.dart';
+import '../../models/brainScoreModel.dart';
+import '../../models/patients/quiz_model.dart';
 
 class GetProflieController extends GetxController {
   @override

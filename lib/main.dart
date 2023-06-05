@@ -1,9 +1,9 @@
-import 'package:adv_eeg/Helper.dart';
-import 'package:adv_eeg/screens/adminSide.dart';
-import 'package:adv_eeg/screens/doctorView.dart';
+import 'package:adv_eeg/utils/notifications/Helper.dart';
+import 'package:adv_eeg/screens/adminScreens/adminSide.dart';
+import 'package:adv_eeg/screens/doctorScreens/doctorView.dart';
 import 'package:adv_eeg/screens/landing.dart';
-import 'package:adv_eeg/screens/patient_login.dart';
-import 'package:adv_eeg/screens/relativeSide.dart';
+import 'package:adv_eeg/screens/patientScreens/patient_login.dart';
+import 'package:adv_eeg/screens/relativeScreens/relativeSide.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';

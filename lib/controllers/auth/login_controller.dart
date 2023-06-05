@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:adv_eeg/screens/adminSide.dart';
-import 'package:adv_eeg/screens/doctorView.dart';
-import 'package:adv_eeg/screens/relativeSide.dart';
+import 'package:adv_eeg/screens/adminScreens/adminSide.dart';
+import 'package:adv_eeg/screens/doctorScreens/doctorView.dart';
+import 'package:adv_eeg/screens/relativeScreens/relativeSide.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-import '../Constants/constants.dart';
-import '../models/loginModel.dart';
-import '../screens/patient_login.dart';
+import '../../Constants/constants.dart';
+import '../../models/auth/loginModel.dart';
+import '../../screens/patientScreens/patient_login.dart';
 
 class LoginController extends GetxController {
   var loginDetails = Login().obs;

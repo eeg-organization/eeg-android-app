@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:adv_eeg/controllers/question_controller.dart';
+import 'package:adv_eeg/controllers/patientSideControllers/question_controller.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import '../Constants/constants.dart';
-import '../models/profile_model.dart';
+import '../../Constants/constants.dart';
+import '../../models/profile_model.dart';
 
 class QuizController extends GetxController {
   String type;
@@ -22,11 +22,10 @@ class QuizController extends GetxController {
 
   var options = <String, int>{}.obs;
   mergeScoreAndQuestion() {
-    int sum = 0;
     for (int i = 0;
         i < questionController.question.value.questions.length;
         i++) {
-      sum += i;
+
       options['${questionController.question.value.questions[i].question?.question}'] =
           questionController.options[i];
     }

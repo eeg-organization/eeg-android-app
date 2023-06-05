@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 import 'package:toast/toast.dart';
-import '../controllers/bluetoothConnection_controller.dart';
-import '../controllers/brain_signals_send_data.dart';
+import '../../controllers/patientSideControllers/bluetoothConnection_controller.dart';
+import '../../controllers/patientSideControllers/brain_signals_send_data.dart';
 import 'collectingData.dart';
 
 class EegScreen extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:adv_eeg/controllers/getAllUsers.dart';
-import 'package:adv_eeg/screens/signUpPage.dart';
+import 'package:adv_eeg/controllers/admin/getAllUsers.dart';
+import 'package:adv_eeg/screens/auth/signUpPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../models/yogaModel.dart';
+import '../../models/patients/yogaModel.dart';
 
 class YogaController extends GetxController {
   final List<YogaPose> yogaPoses = [

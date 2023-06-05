@@ -1,11 +1,11 @@
 
 // ignore_for_file: must_be_immutable
 
-import 'package:adv_eeg/controllers/bluetoothConnection_controller.dart';
+import 'package:adv_eeg/controllers/patientSideControllers/bluetoothConnection_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/brain_signals_send_data.dart';
+import '../../controllers/patientSideControllers/brain_signals_send_data.dart';
 
 class CollectingData extends StatelessWidget {
   CollectingData({

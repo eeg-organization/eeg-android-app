@@ -1,7 +1,7 @@
 // import 'dart:convert';
 
-import 'package:adv_eeg/screens/emailLogin.dart';
-import 'package:adv_eeg/screens/yogaScreen.dart';
+import 'package:adv_eeg/screens/auth/emailLogin.dart';
+import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class LandingPage extends StatelessWidget {
