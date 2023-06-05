@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:adv_eeg/Helper.dart';
 import 'package:adv_eeg/screens/adminSide.dart';
 import 'package:adv_eeg/screens/doctorView.dart';
@@ -7,7 +5,6 @@ import 'package:adv_eeg/screens/landing.dart';
 import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:adv_eeg/screens/relativeSide.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
@@ -80,8 +77,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
           useMaterial3: true,
+
           // primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.poppinsTextTheme()),
+          textTheme: GoogleFonts.poppinsTextTheme(TextTheme(
+            headlineMedium: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+          ))),
       // darkTheme: ThemeData(primarySwatch: Colors.primaries.first.shade200.blue),
       home: role == null
           ? LandingPage()

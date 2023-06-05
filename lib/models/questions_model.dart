@@ -21,9 +21,7 @@ class baseResp {
     if (questionare != null) {
       data['questionare'] = questionare!.toJson();
     }
-    if (questions != null) {
-      data['questions'] = questions.map((v) => v.toJson()).toList();
-    }
+    data['questions'] = questions.map((v) => v.toJson()).toList();
     return data;
   }
 }

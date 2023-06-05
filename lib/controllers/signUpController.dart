@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:adv_eeg/models/allDoctorModel.dart';
-import 'package:adv_eeg/models/user_model.dart';
 import 'package:adv_eeg/screens/emailLogin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -10,11 +9,12 @@ import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
 
 class SignUpController extends GetxController {
+  SignUpController({required this.role});
+  final role;
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
-    await fetchDoctor();
+    if (role != 'DOCTOR') await fetchRole();
   }
 
   TextEditingController name = TextEditingController();
@@ -31,16 +31,18 @@ class SignUpController extends GetxController {
   TextEditingController confirmPassword = TextEditingController();
   var gender = 'GENDER'.obs;
   //create-user-usinapp
-  var doctorList = AllDoctorModel().obs;
-  fetchDoctor() async {
+  var userList = AllDoctorModel().obs;
+  fetchRole() async {
     try {
       isLoading(true);
-      var response = await http.get(
-          Uri.parse(
-              '${Constants.apiUrl}/get-all-user-paticular-role?role=DOCTOR'),
-          headers: Constants.header);
+      var url;
+      if (role == 'USER')
+        url = '${Constants.apiUrl}/get-all-user-paticular-role?role=DOCTOR';
+      else if (role == 'RELATIVE')
+        url = '${Constants.apiUrl}/get-all-user-paticular-role?role=USER';
+      var response = await http.get(Uri.parse(url), headers: Constants.header);
       print(response.body);
-      doctorList.value = allDoctorModelFromJson(response.body);
+      userList.value = allDoctorModelFromJson(response.body);
       print(response.statusCode);
     } catch (e) {
       print(e);
@@ -52,11 +54,6 @@ class SignUpController extends GetxController {
   createUser() async {
     try {
       isLoading(true);
-      print(doctor.value);
-      print(username.text);
-      print(name.text);
-      print(age.text);
-      print(password.text);
       var response = await http.post(
           Uri.parse('${Constants.apiUrl}/create-profile-usingapp/'),
           headers: Constants.header,
@@ -67,17 +64,18 @@ class SignUpController extends GetxController {
               "username": username.text,
               "name": name.text,
               "age": age.text,
-              "role": "USER",
-              // "email": email.text,
+              "role": role,
+              "email": email.text,
+              "phone_no": phoneNo.text,
+              "gender": gender.value,
+              "blood_group": bloodGroup.value,
               "password": password.text,
             }
           }));
       print(response.body);
       Get.snackbar('Success',
           'Your account has been created successfully! Login to Continue');
-      Get.off(() => usernameLogin(
-            role: 'USER',
-          ));
+      Get.off(() => usernameLogin());
     } catch (e) {
       print(e);
     } finally {

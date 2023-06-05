@@ -1,4 +1,3 @@
-import 'package:adv_eeg/screens/landing.dart';
 import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:adv_eeg/screens/signUpPage.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +9,10 @@ import '../controllers/login_controller.dart';
 
 // ignore: camel_case_types
 class usernameLogin extends StatelessWidget {
-  const usernameLogin({super.key, required this.role});
-  final String role;
-
+  const usernameLogin({super.key});
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -24,7 +20,7 @@ class usernameLogin extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Get.to(() => LandingPage());
+            Get.back();
           },
         ),
       ),
@@ -70,10 +66,14 @@ class usernameLogin extends StatelessWidget {
                         side: const BorderSide(color: Colors.white)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: TextField(
+                      child: TextFormField(
                         textAlign: TextAlign.start,
                         keyboardType: TextInputType.name,
                         controller: loginController.username,
+                        validator: (value) => value!.isEmpty
+                            ? 'Please enter your username'
+                            : null,
+
                         // // obscureText: true,
                         // onChanged: (value) {
                         //   username = value;
@@ -107,10 +107,17 @@ class usernameLogin extends StatelessWidget {
                           side: const BorderSide(color: Colors.white)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: TextField(
+                        child: TextFormField(
                           textAlign: TextAlign.start,
                           obscureText: true,
+                          keyboardType: TextInputType.visiblePassword,
                           controller: loginController.password,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter a value.';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                               // label: Text('Password'),
                               labelStyle:
@@ -141,11 +148,6 @@ class usernameLogin extends StatelessWidget {
                     ),
                   ),
                 ),
-                // const Expanded(
-                //   child: SizedBox(
-                //     height: 80,
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Align(
@@ -168,7 +170,33 @@ class usernameLogin extends StatelessWidget {
                         style: TextStyle(color: Colors.grey)),
                     TextButton(
                         onPressed: () {
-                          Get.to(() => SignUpPage(role: role));
+                          Get.defaultDialog(
+                              title: 'Select your role',
+                              content: Column(
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        Get.to(() => SignUpPage(role: 'USER'));
+                                      },
+                                      child: const Text('Patient')),
+                                  TextButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        Get.to(
+                                            () => SignUpPage(role: 'DOCTOR'));
+                                      },
+                                      child: const Text('Doctor')),
+                                  TextButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        Get.to(
+                                            () => SignUpPage(role: 'RELATIVE'));
+                                      },
+                                      child: const Text('Relative')),
+                                ],
+                              ));
+                          // Get.to(() => SignUpPage(role: role));
                         },
                         child: const Text('Sign up'))
                   ],

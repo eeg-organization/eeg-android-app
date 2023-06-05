@@ -122,53 +122,59 @@ class PatientDetailedViewForDoc extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-                  child: Material(
-                    color: const Color(0xff1A1B41),
-                    borderRadius: BorderRadius.circular(5),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Material(
-                            borderRadius: BorderRadius.circular(40),
-                            color: Colors.black,
-                            child: const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 65,
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                patientInfo.relative != null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 0),
+                        child: Material(
+                          color: const Color(0xff1A1B41),
+                          borderRadius: BorderRadius.circular(5),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                patientInfo.relative?.first.name != null
-                                    ? Text(
-                                        patientInfo.relative?.first.name != null
-                                            ? patientInfo.relative!.first.name
-                                                .toString()
-                                            : '',
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    : const Text(''),
+                                Material(
+                                  borderRadius: BorderRadius.circular(40),
+                                  color: Colors.black,
+                                  child: const Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 65,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      patientInfo.relative?.first.name != null
+                                          ? Text(
+                                              patientInfo.relative?.first
+                                                          .name !=
+                                                      null
+                                                  ? patientInfo
+                                                      .relative!.first.name
+                                                      .toString()
+                                                  : '',
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : const Text(''),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                          ),
+                        ),
+                      )
+                    : Container(),
                 SfCartesianChart(
                   primaryXAxis: DateTimeAxis(
                       // intervalType: DateTimeIntervalType.hours,

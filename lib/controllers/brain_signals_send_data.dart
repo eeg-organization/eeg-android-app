@@ -1,27 +1,14 @@
 import 'dart:convert';
 
+import 'package:adv_eeg/screens/yogaScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
 import '../screens/eegScreen.dart';
-import '../screens/patient_login.dart';
 
 class BrainSignalsController extends GetxController {
-  // @override
-  // Future onInit() async {
-  //   // TODO: implement onInit
-  //   super.onInit();
-  //   await postData();
-  // }
-
-  // @override
-  // void onClose() {
-  //   // TODO: implement onClose
-  //   super.onClose();
-  //   EegScreen().connection!.dispose();
-  // }
   @override
   void dispose() {
     super.dispose();
@@ -34,9 +21,9 @@ class BrainSignalsController extends GetxController {
   final dio = Dio();
 
   getPrediction() async {
+    // connection.finish();
     // Get.to(() => CollectingData());
     var url = '${predictionUrl}/predict';
-    // connection.finish();
     try {
       // Get.snackbar('Data', dataList.sublist(dataList.length - 9).toString());
       var body = {"list": dataList.sublist(dataList.length - 8)};
@@ -80,7 +67,7 @@ class BrainSignalsController extends GetxController {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 201) {
-        Get.off(() => PatientLogin());
+        Get.off(() => YogaScreen());
       }
     } catch (err) {
       print(err);

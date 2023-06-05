@@ -1,24 +1,15 @@
 // import 'dart:convert';
 
-import 'package:adv_eeg/screens/adminSide.dart';
 import 'package:adv_eeg/screens/emailLogin.dart';
-import 'package:adv_eeg/screens/patient_login.dart';
-import 'package:adv_eeg/screens/relativeSide.dart';
+import 'package:adv_eeg/screens/yogaScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-// import 'package:http/http.dart' as http;
-
-import 'doctorView.dart';
-// import 'usernameLogin.dart';
-
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    GetStorage box = GetStorage();
+    // var size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: Colors.blue,
@@ -64,76 +55,74 @@ class LandingPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 30.0),
+                //   child: Align(
+                //     alignment: Alignment.topLeft,
+                //     child: Text(
+                //       "Discover a World of Healing: Access Your Journey Towards Happiness",
+                //       style: TextStyle(fontSize: 30, color: Colors.white
+
+                //           // fontSize: size.width*0.5
+                //           ),
+                //     ),
+                //   ),
+                // ),
               ]),
-              Column(children: [
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Align(
                     alignment: Alignment.bottomLeft,
                     child: GestureDetector(
                         onTap: () {
-                          if (box.read('loginDetails') != null &&
-                              box.read('loginDetails')['user']['role'] ==
-                                  'USER') {
-                            Get.to(() => PatientLogin());
-                          } else {
-                            Get.to(() => usernameLogin(
-                                  role: 'USER',
-                                ));
-                          }
+                          Get.to(() => const usernameLogin());
                         },
-                        child: const LoginButtons(
-                            starValue: 1, text: 'Login as User'))),
+                        child:
+                            const LoginButtons(starValue: 1, text: 'Login'))),
+
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: GestureDetector(
                     onTap: () {
-                      if (box.read('loginDetails') != null &&
-                          box.read('loginDetails')['user']['role'] ==
-                              'DOCTOR') {
-                        Get.to(() => const DoctorView());
-                      } else {
-                        Get.to(() => usernameLogin(
-                              role: 'DOCTOR',
-                            ));
-                      }
+                      Get.to(() => YogaScreen());
                     },
                     child: const LoginButtons(
-                      text: 'Login as Doctor',
+                      text: 'Yoga for you',
                       starValue: 2,
                     ),
                   ),
                 ),
-                Align(
-                    alignment: Alignment.bottomLeft,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (box.read('loginDetails') != null &&
-                            box.read('loginDetails')['user']['role'] ==
-                                'RELATIVE') {
-                          Get.to(() => const RelativeSide());
-                        } else {
-                          Get.to(() => usernameLogin(
-                                role: 'RELATIVE',
-                              ));
-                        }
-                      },
-                      child: const LoginButtons(
-                        text: 'Login as Relative',
-                        starValue: 3,
-                      ),
-                    )),
-                // const SizedBox(height: 120),
-                TextButton(
-                    onPressed: () {
-                      if (box.read('loginDetails') != null &&
-                          box.read('loginDetails')['user']['role'] == 'ADMIN')
-                        Get.to(() => AdminMain());
-                      else {
-                        Get.to(() => const usernameLogin(
-                              role: 'ADMIN',
-                            ));
-                      }
-                    },
-                    child: const Text('ADMIN LOGIN'))
+                // Align(
+                //     alignment: Alignment.bottomLeft,
+                //     child: GestureDetector(
+                //       onTap: () {
+                //         if (box.read('loginDetails') != null &&
+                //             box.read('loginDetails')['user']['role'] ==
+                //                 'RELATIVE') {
+                //           Get.to(() => const RelativeSide());
+                //         } else {
+                //           Get.to(() => usernameLogin(
+                //                 role: 'RELATIVE',
+                //               ));
+                //         }
+                //       },
+                //       child: const LoginButtons(
+                //         text: 'Login as Relative',
+                //         starValue: 3,
+                //       ),
+                //     )),
+                // // const SizedBox(height: 120),
+                // TextButton(
+                //     onPressed: () {
+                //       if (box.read('loginDetails') != null &&
+                //           box.read('loginDetails')['user']['role'] == 'ADMIN')
+                //         Get.to(() => AdminMain());
+                //       else {
+                //         Get.to(() => const usernameLogin(
+                //               role: 'ADMIN',
+                //             ));
+                //       }
+                //     },
+                //     child: const Text('ADMIN LOGIN'))
               ])
             ],
           ),

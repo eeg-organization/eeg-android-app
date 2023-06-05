@@ -1,4 +1,4 @@
-
+import 'package:adv_eeg/models/brainScoreModel.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,6 +10,7 @@ class GetQuizController extends GetxController {
   GetQuizController(this.uid);
   final String uid;
   RxList<ChartData> chartData = <ChartData>[].obs;
+
   @override
   void onInit() async {
     await fetchQuiz();
@@ -17,7 +18,7 @@ class GetQuizController extends GetxController {
     super.onInit();
   }
 
-  var QuizList = [].obs;
+  var brainScores = <BrainScoreModel>[].obs;
   var quiz = Quiz(quizs: []).obs;
   var isLoading = false.obs;
 
@@ -33,27 +34,27 @@ class GetQuizController extends GetxController {
       chartData.addAll(quiz.value.quizs.map((e) => ChartData(
           DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day,
               e.createdAt.hour, e.createdAt.minute, e.createdAt.second),
-          e.score,e.data.questionare.type)));
+          e.score,
+          e.data.questionare.type)));
     } catch (err) {
       print(err);
       isLoading(false);
     }
   }
-  fetchBrainScore()async{
-     try {
-      isLoading(true);
+
+  fetchBrainScore() async {
+    try {
       var response = await http.get(
           Uri.parse('${Constants.apiUrl}/get-brainsignal-score/$uid'),
           headers: Constants().authHeader);
       print(response.body);
       isLoading(false);
-      quiz.value = quizFromJson(response.body);
-      chartData.addAll(quiz.value.quizs.map((e) => ChartData(
-          DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day,
-              e.createdAt.hour, e.createdAt.minute, e.createdAt.second),
-          e.score,e.data.questionare.type)));
+      brainScores.value = brainScoreModelFromJson(response.body);
     } catch (err) {
+      Get.snackbar('Error', 'Something went wrong');
       print(err);
+    }
+    finally{
       isLoading(false);
     }
   }

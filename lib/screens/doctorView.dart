@@ -1,5 +1,4 @@
 // ignore: file_names
-import 'package:adv_eeg/controllers/getQuizData.dart';
 import 'package:adv_eeg/screens/patientDetailedView(DocEnd).dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

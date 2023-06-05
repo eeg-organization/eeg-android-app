@@ -1,12 +1,12 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 
-import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/date_symbols.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 import 'package:toast/toast.dart';
@@ -26,8 +26,9 @@ class EegScreen extends StatelessWidget {
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: () async {
-          // bluetoothController.results.value = [];
-          // bluetoothController.startDiscovery();
+          bluetoothController.results.value = [];
+          bluetoothController.isDiscovering.value = true;
+          bluetoothController.discoverBluetooth();
         },
         child: Scaffold(
           appBar: AppBar(
@@ -35,9 +36,10 @@ class EegScreen extends StatelessWidget {
             elevation: 0,
             leading: BackButton(
               color: Colors.white,
-              onPressed: () => Get.off(() => PatientLogin()),
+              onPressed: () => Get.back(),
             ),
           ),
+          extendBodyBehindAppBar: true,
           body: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -51,7 +53,6 @@ class EegScreen extends StatelessWidget {
             child: Obx(
               () => ModalProgressHUD(
                 inAsyncCall: bluetoothController.connecting.value ||
-                    bluetoothController.isDiscovering.value ||
                     (bluetoothController.connection.value != null &&
                         bluetoothController.connection.value!.isConnected),
                 progressIndicator: SizedBox(
@@ -59,22 +60,24 @@ class EegScreen extends StatelessWidget {
                   width: 200,
                   child: Column(
                     children: [
-                      const CircularProgressIndicator(),
+                      bluetoothController.connection.value != null &&
+                              bluetoothController.connection.value!.isConnected
+                          ? Musicvisulaizer()
+                          : CircularProgressIndicator.adaptive(),
                       (bluetoothController.connection.value != null &&
                               bluetoothController.connection.value!.isConnected)
                           ? Text('Getting your Brain Signals',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.inika(color: Colors.white))
+                              style: TextStyle(color: Colors.white))
                           : bluetoothController.connecting.value
                               ? Text('Connecting to your device',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.inika(color: Colors.white))
+                                  style: TextStyle(color: Colors.white))
                               : bluetoothController.isDiscovering.value
                                   ? Text(
                                       'Discovering Devices',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.inika(
-                                          color: Colors.white),
+                                      style: TextStyle(color: Colors.white),
                                     )
                                   : const Text('')
                     ],
@@ -104,30 +107,24 @@ class EegScreen extends StatelessWidget {
                                             .results[index].device.address);
                                 bluetoothController.connection.value =
                                     connection;
-                                brainSignalsCont.deviceId.value=bluetoothController.results[index].device.address;
+                                brainSignalsCont.deviceId.value =
+                                    bluetoothController
+                                        .results[index].device.address;
                                 // print(connection);
                                 bluetoothController.connecting.value = false;
                                 var t = DateTime.now().millisecondsSinceEpoch;
-                                // Get.snackbar('Time', t.toString());
-                                // Get.to(() => CollectingData());
                                 connection!.input?.listen((var data) {
                                   print(data);
                                   // Get.snackbar('Data', data.toString());
                                   print('Data incoming: ${ascii.decode(data)}');
-                                  // Get.snackbar(
-                                  //     'Data', ascii.decode(data).toString());
-                                  // Scaffold.of(context).showSnackBar(SnackBar(content: Text(ascii.decode(data).toString()),));
-                                  // while (t == DateTime.now().minute) {
-                                  //   print('waiting');
-                                  //   brainSignalsCont.dataList.add(ascii.decode(data));
-                                  // }
+
                                   if (DateTime.fromMillisecondsSinceEpoch(t)
                                           .difference(DateTime.now())
                                           .inMinutes
                                           .abs() <
                                       1) {
-                                    brainSignalsCont.dataList.add(
-                                        double.parse(ascii.decode(data)).abs());
+                                    brainSignalsCont.dataList
+                                        .add(double.parse(ascii.decode(data)));
                                   } else if (DateTime
                                               .fromMillisecondsSinceEpoch(t)
                                           .difference(DateTime.now())
@@ -152,15 +149,19 @@ class EegScreen extends StatelessWidget {
                               } catch (exception) {
                                 bluetoothController.connecting.value = false;
                                 // Get.snackbar('Error', exception.toString());
-                                Toast.show(
-                                  'Cannot Connect to your device. Some error occurred. Try again',
-                                  backgroundColor: Colors.black,
-                                  textStyle: GoogleFonts.inika(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                  duration: 2,
-                                );
+                                // Toast.show(
+                                //   'Cannot Connect to your device. Some error occurred. Try again',
+                                //   backgroundColor: Colors.black,
+                                //   textStyle: GoogleFonts.inika(
+                                //     color: Colors.white,
+                                //     fontSize: 15,
+                                //   ),
+                                //   duration: 2,
+                                // );
+                                Get.snackbar('Error',
+                                    'Cannot Connect to your device. Some error occurred. Try again',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    barBlur: 0);
                                 print('Cannot connect, exception occured');
                                 // print(exception);
                               }

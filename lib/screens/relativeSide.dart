@@ -1,9 +1,5 @@
-import 'package:adv_eeg/screens/landing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:get_storage/get_storage.dart';
 
 class RelativeSide extends StatelessWidget {

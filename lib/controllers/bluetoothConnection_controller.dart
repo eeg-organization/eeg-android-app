@@ -4,13 +4,12 @@ import 'dart:async';
 import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 // import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
-import 'package:toast/toast.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
 class BluetoothController extends GetxController {
   @override
   void dispose() {
-    // TODO: implement dispose
+
     super.dispose();
     isDiscovering.value = false;
   }
@@ -20,7 +19,7 @@ class BluetoothController extends GetxController {
   void onInit() async {
     super.onInit();
     // Permission.bluetooth.request();
-    _startDiscovery();
+    discoverBluetooth();
     print(results);
   }
 
@@ -31,7 +30,7 @@ class BluetoothController extends GetxController {
   var connecting = false.obs;
   var connection=Rxn<BluetoothConnection>();
 
-  void _startDiscovery() async {
+  void discoverBluetooth() async {
     // results.value = [];
     isDiscovering = true.obs;
     // print(await FlutterBluetoothSerial.instance.address);  

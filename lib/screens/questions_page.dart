@@ -1,12 +1,11 @@
 import 'package:adv_eeg/screens/patient_login.dart';
-import 'package:adv_eeg/screens/quiz_page.dart';
+import 'package:adv_eeg/screens/yogaScreen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:string_contains/string_contains.dart';
 import 'package:toast/toast.dart';
 
 import '../controllers/counter_controller.dart';
@@ -55,6 +54,11 @@ class QuestionsPage extends StatelessWidget {
                   backgroundColor: Colors.amber,
                 ),
                 child: Scaffold(
+                  appBar: AppBar(
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                  ),
+                  extendBodyBehindAppBar: true,
                   body: Container(
                     decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -67,18 +71,6 @@ class QuestionsPage extends StatelessWidget {
                     child: SafeArea(
                       child: Column(
                         children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: BackButton(
-                              onPressed: () {
-                                Get.off(() => const QuizPage());
-                              },
-                              color: Colors.white,
-                            ),
-                          ),
-                          // SizedBox(
-                          //   height: size.height * 0.05,
-                          // ),
                           Obx(
                             () => Padding(
                               padding: const EdgeInsets.symmetric(
@@ -323,7 +315,7 @@ class QuestionsPage extends StatelessWidget {
                                                   gravity: Toast.bottom);
                                               // Get.off(() => const QuizPage());
                                               // Navigator.pop(context);
-                                              Get.off(() => const QuizPage());
+                                              Get.off(() => YogaScreen());
                                             }
                                           }
                                         },

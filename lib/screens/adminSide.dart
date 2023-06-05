@@ -1,9 +1,6 @@
 import 'package:adv_eeg/controllers/getAllUsers.dart';
-import 'package:adv_eeg/screens/patient_login.dart';
 import 'package:adv_eeg/screens/signUpPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -19,7 +16,6 @@ class _AdminMainState extends State<AdminMain>
   late TabController controller;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = TabController(length: 3, vsync: this);
   }

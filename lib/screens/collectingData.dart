@@ -1,8 +1,8 @@
-import 'dart:convert';
+
+// ignore_for_file: must_be_immutable
 
 import 'package:adv_eeg/controllers/bluetoothConnection_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 
 import '../controllers/brain_signals_send_data.dart';
@@ -45,7 +45,7 @@ class CollectingData extends StatelessWidget {
             const SizedBox(
               height: 100,
             ),
-            _Musicvisulaizer()
+            Musicvisulaizer()
           ],
         ),
       ),
@@ -68,7 +68,6 @@ class _VisualComponentState extends State<VisualComponent>
   late AnimationController animController;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     animController = AnimationController(
         duration: Duration(milliseconds: widget.duration), vsync: this);
@@ -83,7 +82,6 @@ class _VisualComponentState extends State<VisualComponent>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     animController.dispose();
   }
@@ -103,9 +101,8 @@ class _VisualComponentState extends State<VisualComponent>
     );
   }
 }
-
-class _Musicvisulaizer extends StatelessWidget {
-  _Musicvisulaizer({super.key});
+class Musicvisulaizer extends StatelessWidget {
+  Musicvisulaizer({super.key});
   List<int> duration = [900, 700, 600, 800, 500];
 
   @override

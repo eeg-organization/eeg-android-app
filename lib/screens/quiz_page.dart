@@ -12,6 +12,18 @@ class QuizPage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     CounterController counterController = Get.put(CounterController());
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back_ios),
+        //   // onPressed: () {
+        //   //   // Get.to(() => LandingPage());
+        //   //   Get.back();
+        //   // },
+        // ),
+      ),
+      extendBodyBehindAppBar: true,
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -23,12 +35,12 @@ class QuizPage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment.topLeft,
-                child: BackButton(
-                  color: Colors.white,
-                ),
-              ),
+              // const Align(
+              //   alignment: Alignment.topLeft,
+              //   child: BackButton(
+              //     color: Colors.white,
+              //   ),
+              // ),
               SizedBox(
                 height: size.height * 0.2,
               ),

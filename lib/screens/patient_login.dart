@@ -1,7 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:adv_eeg/controllers/getProfileController.dart';
-import 'package:adv_eeg/screens/collectingData.dart';
 import 'package:adv_eeg/screens/landing.dart';
 import 'package:adv_eeg/screens/quiz_page.dart';
+import 'package:adv_eeg/screens/yogaScreen.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
@@ -11,6 +13,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../eegReportGenerator.dart';
+import '../quizReportGenerator.dart';
 import 'eegScreen.dart';
 
 class PatientLogin extends StatelessWidget {
@@ -20,6 +24,12 @@ class PatientLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: CustomDrawer(getProflieController: getProflieController),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      extendBodyBehindAppBar: true,
       body: Obx(
         () => ModalProgressHUD(
           inAsyncCall: getProflieController.isLoading.value,
@@ -34,122 +44,6 @@ class PatientLogin extends StatelessWidget {
                 child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BackButton(
-                        color: Colors.white,
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            showMenu(
-                                context: context,
-                                position: RelativeRect.fromDirectional(
-                                    textDirection: TextDirection.rtl,
-                                    start: double.infinity,
-                                    top: 0,
-                                    end: double.infinity,
-                                    bottom: 0),
-                                items: [
-                                  PopupMenuItem(
-                                    child: TextButton(
-                                      onPressed: () {
-                                        // Get.toNamed('/profile');
-                                        getProflieController.fetchProfile(
-                                            GetStorage().read(
-                                                'loginDetails')['user']['uid']);
-                                        Get.bottomSheet(Obx(
-                                          () => ModalProgressHUD(
-                                            inAsyncCall: getProflieController
-                                                .isLoading.value,
-                                            child: Container(
-                                              // color: Colors.green,
-                                              child: Visibility(
-                                                visible: !getProflieController
-                                                    .isLoading.value,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.person,
-                                                      size: 100,
-                                                    ),
-                                                    Text(
-                                                      '${getProflieController.profile.value.name}',
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                    Text(
-                                                        '${getProflieController.profile.value.username}',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                    Text(
-                                                        '${getProflieController.profile.value.age}',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ));
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.person),
-                                          Text('Profile'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  PopupMenuItem(
-                                    child: TextButton(
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              title: Text(
-                                                  'Are you sure you want to logout?'),
-                                              actions: [
-                                                TextButton(
-                                                    onPressed: () {
-                                                      Get.back();
-                                                    },
-                                                    child: Text('No')),
-                                                TextButton(
-                                                    onPressed: () async {
-                                                      await getProflieController
-                                                          .logout();
-                                                      GetStorage().erase();
-                                                      Get.offAll(
-                                                          () => LandingPage());
-                                                    },
-                                                    child: Text('Yes'))
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.logout),
-                                            Text('Logout')
-                                          ],
-                                        )),
-                                  )
-                                ]);
-                          },
-                          icon: Icon(
-                            Icons.more_vert,
-                            color: Colors.white,
-                          ))
-                    ],
-                  ),
-                ),
                 SizedBox(
                   height: size.height * 0.2,
                 ),
@@ -188,7 +82,21 @@ class PatientLogin extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       child: GestureDetector(
                         onTap: () async {
-                          final BluetoothDevice? selectedDevice = await Get.to(
+                          if (GetPlatform.isIOS) {
+                            Get.snackbar('Alert',
+                                'This feature is not available for iOS');
+                            return;
+                          }
+                          if (await FlutterBluetoothSerial.instance.state ==
+                              BluetoothState.STATE_OFF) {
+                            await FlutterBluetoothSerial.instance
+                                .requestEnable();
+                            if (await FlutterBluetoothSerial.instance.state ==
+                                BluetoothState.STATE_OFF) {
+                              Get.snackbar('Alert', 'Please turn on bluetooth');
+                              return;
+                            }
+                          } await Get.to(
                               () => EegScreen(),
                               transition: Transition.cupertino);
                         },
@@ -203,6 +111,102 @@ class PatientLogin extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({
+    super.key,
+    required this.getProflieController,
+  });
+
+  final GetProflieController getProflieController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Container(
+          child: Column(
+        children: [
+          DrawerHeader(
+            child: Container(
+              height: Get.height,
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                        'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '${getProflieController.profile.value.name}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    '${getProflieController.profile.value.username}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () async {
+              await getProflieController.fetchQuiz();
+              await generateQuizReport(getProflieController.quiz);
+              // Get.to(() => QuizPage());
+            },
+            leading: Icon(Icons.quiz),
+            title: Text('Fetch Previous Quiz Reports'),
+          ),
+          ListTile(
+            onTap: () async {
+              await getProflieController.fetchBrainScore();
+              await generatEEGReport(getProflieController.brainScores);
+              // Get.to(() => QuizPage());
+            },
+            leading: Icon(Icons.bluetooth),
+            title: Text('Fetch Previous EEG Reports'),
+          ),
+          ListTile(
+            onTap: () {
+              Get.to(() => YogaScreen());
+            },
+            leading: Icon(Icons.person_outline_sharp),
+            title: Text('Yoga'),
+          ),
+          ListTile(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Are you sure you want to logout?'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text('No')),
+                    TextButton(
+                        onPressed: () async {
+                          await getProflieController.logout();
+                          GetStorage().erase();
+                          Get.offAll(() => LandingPage());
+                        },
+                        child: Text('Yes'))
+                  ],
+                ),
+              );
+            },
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+          ),
+        ],
+      )),
     );
   }
 }
