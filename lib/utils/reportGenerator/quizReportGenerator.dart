@@ -1,13 +1,25 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:adv_eeg/utils/reportGenerator/save_file_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-
+import 'package:image/image.dart' as img;
 import '../../models/patients/quiz_model.dart';
+import '../../screens/doctorScreens/patientDetailedView(DocEnd).dart';
 
+final chartData = <ChartData>[];
 Future<void> generateQuizReport(Rx<Quiz> quiz) async {
+  chartData.addAll(quiz.value.quizs.map((e) => ChartData(
+      DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day,
+          e.createdAt.hour, e.createdAt.minute, e.createdAt.second),
+      e.score,
+      e.data.questionare.type)));
   print(quiz.value.quizs.map((e) => e.score));
   //Create a PDF document.
   final PdfDocument document = PdfDocument();
@@ -28,12 +40,14 @@ Future<void> generateQuizReport(Rx<Quiz> quiz) async {
   //Add invoice footer
   drawFooter(page, pageSize);
   //Save the PDF document
+
   final List<int> bytes = document.saveSync();
   //Dispose the document.
+  // await createGraph(quiz, page, document);
   document.dispose();
   //Save and launch the file.
   await saveAndLaunchFile(bytes,
-      '${GetStorage().read('loginDetails')['user']['name']}_${DateTime.now().microsecondsSinceEpoch}.pdf');
+      '${GetStorage().read('loginDetails')['user']['name']}_${DateTime.now()}.pdf');
 }
 
 //Draws the invoice header
@@ -119,6 +133,58 @@ PdfGrid getGrid(Rx<Quiz> quiz) {
     }
   }
   return grid;
+}
+
+GlobalKey chartContainerKey = GlobalKey();
+createGraph(Rx<Quiz> quiz, PdfPage page, PdfDocument pdf) async {
+  // Add a separate page with the graph
+  final graphPage = pdf.pages.add();
+  final graphBounds = Rect.fromLTWH(
+      0, 0, graphPage.getClientSize().width, graphPage.getClientSize().height);
+  final chart = RepaintBoundary(
+    key: chartContainerKey,
+    child: SfCartesianChart(
+      key: chartContainerKey,
+      primaryXAxis: DateTimeAxis(
+          // intervalType: DateTimeIntervalType.hours,
+          ),
+      series: <ChartSeries<ChartData, DateTime>>[
+        LineSeries<ChartData, DateTime>(
+          dataSource: chartData,
+          pointColorMapper: (ChartData data, _) =>
+              data.y! > 15 ? Colors.red : Colors.green,
+          name: 'Score',
+          onPointTap: (pointInteractionDetails) =>
+              print('${pointInteractionDetails.pointIndex}'),
+          xValueMapper: (ChartData data, _) =>
+              DateTime(data.x.year, data.x.month, data.x.day, data.x.hour),
+          yValueMapper: (ChartData data, _) => data.y,
+          dataLabelSettings: DataLabelSettings(isVisible: true),
+          markerSettings: MarkerSettings(isVisible: true),
+          dataLabelMapper: (datum, index) =>
+              '${datum.type.toString()} , Score: ${datum.y.toString()}',
+        )
+      ],
+    ),
+  );
+  // Capture a screenshot of the chart widget
+  RenderRepaintBoundary boundary = await chartContainerKey.currentContext!
+      .findRenderObject() as RenderRepaintBoundary;
+  ui.Image chartImage = await boundary.toImage(pixelRatio: 3.0);
+  ByteData? byteData =
+      await chartImage.toByteData(format: ui.ImageByteFormat.png);
+  Uint8List screenshotBytes = byteData!.buffer.asUint8List();
+
+  // Create an Image object from the screenshot
+  final chartImageWidget = Image.memory(screenshotBytes);
+
+  // Add the chart image to the PDF document
+  final pdfImage = PdfBitmap(chartImageWidget as List<int>);
+  page.graphics.drawImage(
+    pdfImage,
+    Rect.fromLTWH(
+        0, 0, page.getClientSize().width, page.getClientSize().height),
+  );
 }
 
 //Create and row for the grid.

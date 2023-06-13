@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:adv_eeg/screens/doctorScreens/patientDetailedView(DocEnd).dart';
+import 'package:adv_eeg/screens/patientScreens/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -71,31 +72,17 @@ class DoctorView extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Severity',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 15,
-                          // fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      // DropdownButton(
-                      //   onChanged: (value) =>
-                      //       doctorViewController.droopDownController,
-                      //   items: [
-                      //     DropdownMenuItem(child: Text('High')),
-                      //     DropdownMenuItem(child: Text('Medium')),
-                      //     // DropdownMenuItem(child: Text('Low')),
-                      //     // DropdownMenuItem(child: Text('High')),
-                      //   ],
-                      // )
-                    ],
-                  ),
+                  // Text(
+                  //   'Severity',
+                  //   style: GoogleFonts.poppins(
+                  //     color: Colors.white,
+                  //     fontSize: 15,
+                  //     // fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   width: 10,
+                  // ),
                 ],
               ),
             ),
@@ -117,13 +104,10 @@ class DoctorView extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.black,
-                                  child: const Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                    size: 65,
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: NetworkImage(
+                                    'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
                                   ),
                                 ),
                                 Padding(
@@ -146,16 +130,16 @@ class DoctorView extends StatelessWidget {
                                       const SizedBox(
                                         height: 5,
                                       ),
-                                      GestureDetector(
-                                        onTap: () {},
-                                        child: const Text(
-                                          'Message Relative',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              decoration:
-                                                  TextDecoration.underline),
-                                        ),
-                                      )
+                                      // GestureDetector(
+                                      //   onTap: () {},
+                                      //   child: const Text(
+                                      //     'Message Relative',
+                                      //     style: TextStyle(
+                                      //         color: Colors.white,
+                                      //         decoration:
+                                      //             TextDecoration.underline),
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 )
@@ -163,14 +147,49 @@ class DoctorView extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                Get.to(() => PatientDetailedViewForDoc(
-                                    doctorViewController.docDetails.value.data!
-                                        .patientInfo![index]));
+                                Get.defaultDialog(
+                                    title: 'Patient Options',
+                                    content: Column(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Get.to(PatientDetailedViewForDoc(
+                                              doctorViewController
+                                                  .docDetails
+                                                  .value
+                                                  .data!
+                                                  .patientInfo![index],
+                                            ));
+                                          },
+                                          child: Text(
+                                              'View Patient Previous Data'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Get.to(() => QuizPage(
+                                                role: 'DOCTOR',
+                                                uid: doctorViewController
+                                                    .docDetails
+                                                    .value
+                                                    .data!
+                                                    .patientInfo![index]
+                                                    .patient!
+                                                    .uid));
+                                          },
+                                          child:
+                                              Text('Analyze Patient From Quiz'),
+                                        ),
+                                      ],
+                                    ));
+                                // Get.to(() => PatientDetailedViewForDoc(
+                                //     doctorViewController.docDetails.value.data!
+                                //         .patientInfo![index]));
                               },
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all(Colors.orange)),
-                              child: const Text('View'),
+                              child: const Text('View',
+                                  style: TextStyle(color: Colors.white)),
                             )
                           ],
                         ),

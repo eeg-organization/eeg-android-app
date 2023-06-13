@@ -52,7 +52,8 @@ class EegScreen extends StatelessWidget {
                     fit: BoxFit.cover)),
             child: Obx(
               () => ModalProgressHUD(
-                inAsyncCall: bluetoothController.connecting.value ||
+                inAsyncCall: bluetoothController.isDiscovering.value ||
+                    bluetoothController.connecting.value ||
                     (bluetoothController.connection.value != null &&
                         bluetoothController.connection.value!.isConnected),
                 progressIndicator: SizedBox(
@@ -113,7 +114,7 @@ class EegScreen extends StatelessWidget {
                                 // print(connection);
                                 bluetoothController.connecting.value = false;
                                 var t = DateTime.now().millisecondsSinceEpoch;
-                                connection!.input?.listen((var data) {
+                                connection!.input?.listen((var data) async {
                                   print(data);
                                   // Get.snackbar('Data', data.toString());
                                   print('Data incoming: ${ascii.decode(data)}');
@@ -131,10 +132,11 @@ class EegScreen extends StatelessWidget {
                                           .inMinutes
                                           .abs() >=
                                       1) {
-                                    brainSignalsCont.getPrediction();
-                                    // connection!.output.add(data);
-                                    connection!.finish(); // Sending data
                                     Get.off(() => CollectingData());
+                                    connection!.finish(); // Sending data
+                                    await brainSignalsCont
+                                        .getPrediction(connection!);
+                                    // connection!.output.add(data);
                                     // connection!.finish();
                                     if (ascii.decode(data).contains('!')) {
                                       connection!

@@ -66,7 +66,7 @@ class PatientLogin extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       child: GestureDetector(
                           onTap: () {
-                            Get.to(() => const QuizPage());
+                            Get.to(() => QuizPage(role: "USER",uid:  GetStorage().read('loginDetails')['user']['uid'],));
                           },
                           child: const OptionButton(
                             text: 'Quiz',
@@ -82,9 +82,9 @@ class PatientLogin extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       child: GestureDetector(
                         onTap: () async {
-                          if (GetPlatform.isIOS) {
+                          if (!GetPlatform.isAndroid) {
                             Get.snackbar('Alert',
-                                'This feature is not available for iOS');
+                                'This feature is not available for your Platform');
                             return;
                           }
                           if (await FlutterBluetoothSerial.instance.state ==

@@ -25,7 +25,7 @@ class QuestionController extends GetxController {
     isLoading = true.obs;
   }
 
-  var question = baseResp(questions: []).obs;
+  var   question = baseResp(questions: []).obs;
   var options = [].obs;
   var quizResponse = ''.obs;
   var isLoading = false.obs;

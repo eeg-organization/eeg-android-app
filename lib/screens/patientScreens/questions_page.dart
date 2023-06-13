@@ -1,8 +1,11 @@
+import 'package:adv_eeg/screens/patientScreens/eegScreen.dart';
 import 'package:adv_eeg/screens/patientScreens/patient_login.dart';
 import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -13,8 +16,12 @@ import '../../controllers/patientSideControllers/question_controller.dart';
 import '../../controllers/patientSideControllers/quiz_controller.dart';
 
 class QuestionsPage extends StatelessWidget {
-  const QuestionsPage({Key? key, required this.type}) : super(key: key);
+  const QuestionsPage(
+      {Key? key, required this.type, required this.role, required this.uid})
+      : super(key: key);
   final type;
+  final role;
+  final uid;
   @override
   Widget build(BuildContext context) {
     ToastContext().init(context);
@@ -307,15 +314,117 @@ class QuestionsPage extends StatelessWidget {
                                             quizController
                                                 .mergeScoreAndQuestion();
                                             if (await quizController
-                                                    .postData() ==
+                                                    .postData(uid) ==
                                                 200) {
-                                              Toast.show(
-                                                  "Quiz Submitted Successfully ",
-                                                  duration: Toast.lengthShort,
-                                                  gravity: Toast.bottom);
-                                              // Get.off(() => const QuizPage());
-                                              // Navigator.pop(context);
-                                              Get.off(() => YogaScreen());
+                                              Get.back();
+                                              Get.bottomSheet(
+                                                Dismissible(
+                                                  key: Key('value'),
+                                                  onDismissed: (direction) {
+                                                    Get.back();
+                                                  },
+                                                  child: Material(
+                                                    color: Colors.blueGrey,
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    20),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    20)),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8.0,
+                                                          vertical: 16),
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            'Your Score is ${quizController.score.value}',
+                                                            style: GoogleFonts
+                                                                .inter(
+                                                                    fontSize:
+                                                                        20,
+                                                                    color: Colors
+                                                                        .white),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(16.0),
+                                                            child: Text(
+                                                              'Please find out more about your score by the image below',
+                                                              style: GoogleFonts
+                                                                  .inter(
+                                                                      fontSize:
+                                                                          20,
+                                                                      color: Colors
+                                                                          .white),
+                                                            ),
+                                                          ),
+                                                          Image.asset(type ==
+                                                                  'BID'
+                                                              ? 'assets/bid.png'
+                                                              : 'assets/hamd.png'),
+                                                          ElevatedButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                Get.back();
+                                                                if (!GetPlatform
+                                                                    .isAndroid) {
+                                                                  Get.snackbar(
+                                                                      'Alert',
+                                                                      'This feature is not available for your Platform');
+                                                                  return;
+                                                                }
+                                                                if (await FlutterBluetoothSerial
+                                                                        .instance
+                                                                        .state ==
+                                                                    BluetoothState
+                                                                        .STATE_OFF) {
+                                                                  await FlutterBluetoothSerial
+                                                                      .instance
+                                                                      .requestEnable();
+                                                                  if (await FlutterBluetoothSerial
+                                                                          .instance
+                                                                          .state ==
+                                                                      BluetoothState
+                                                                          .STATE_OFF) {
+                                                                    Get.snackbar(
+                                                                        'Alert',
+                                                                        'Please turn on bluetooth');
+                                                                    return;
+                                                                  }
+                                                                }
+                                                                await Get.to(
+                                                                    () =>
+                                                                        EegScreen(),
+                                                                    transition:
+                                                                        Transition
+                                                                            .cupertino);
+                                                              },
+                                                              child: Text(
+                                                                  'Do take the EEG test to know more about your brain')),
+                                                          ElevatedButton(
+                                                              onPressed: () {
+                                                                Get.back();
+                                                                Get.off(() =>
+                                                                    YogaScreen());
+                                                              },
+                                                              child: Text(
+                                                                'Checkout Yoga for improving your health',
+                                                              ))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                isDismissible: false,
+                                              );
+
+                                              // Get.back();
+                                              // Get.off(() => YogaScreen());
                                             }
                                           }
                                         },

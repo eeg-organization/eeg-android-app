@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:adv_eeg/screens/patientScreens/collectingData.dart';
 import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_seria_changed/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -20,24 +23,47 @@ class BrainSignalsController extends GetxController {
   var dataList = [].obs;
   final dio = Dio();
 
-  getPrediction() async {
-    // connection.finish();
+  getPrediction(BluetoothConnection connection) async {
     // Get.to(() => CollectingData());
-    var url = '${predictionUrl}/predict';
+    var url = '${predictionUrl}/predict_multiclass';
     try {
+      // connection.finish();
+      // Get.off(() => CollectingData());
       // Get.snackbar('Data', dataList.sublist(dataList.length - 9).toString());
-      var body = {"list": dataList.sublist(dataList.length - 8)};
+      var body = {"list": dataList};
       print(body);
       final response = await dio.post(url, data: body);
       print(response.statusCode);
       // Get.snackbar('StatusCode', response.statusCode.toString());
-
-      // Get.snackbar('Body', response.data);
+      // Get.snackbar('Body', response.data['prediction'].toString());
+      Get.bottomSheet(Material(
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              width: double.infinity,
+              color: Colors.white,
+              child: Center(
+                child: Text(
+                  'Your Score is ${response.data['prediction'].toString()}',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                  Get.off(() => YogaScreen());
+                },
+                child: Text('Checkout Yoga'))
+          ],
+        ),
+      ));
       if (response.statusCode == 200) {
         var data = response.data;
         print(data);
 
-        valueRecieved.value = double.parse(data['prediction'].toString());
+        valueRecieved.value = double.parse(data['prediction']);
         await postPrediction();
         // Get.off(() => PatientLogin());
       }
@@ -66,9 +92,9 @@ class BrainSignalsController extends GetxController {
       // print(response.body);
       print(response.statusCode);
       print(response.body);
-      if (response.statusCode == 201) {
-        Get.off(() => YogaScreen());
-      }
+      // if (response.statusCode == 201) {
+      //   Get.off(() => YogaScreen());
+      // }
     } catch (err) {
       print(err);
     }

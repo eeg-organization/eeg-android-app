@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuizPage extends StatelessWidget {
-  const QuizPage({Key? key}) : super(key: key);
+  const QuizPage({required this.role, required this.uid});
+  final role, uid;
 
   @override
   Widget build(BuildContext context) {
@@ -87,39 +88,44 @@ class QuizPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30.0,
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    // Get.to(() => const QuestionsPage(type: 'BID'));
-                    counterController.selectedValue.value = 2;
-                  },
-                  child: Obx(
-                    () => Material(
-                      color: counterController.selectedValue.value != 2
-                          ? Colors.transparent
-                          : const Color(0xff0850FD),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          side: BorderSide(
-                              color: counterController.selectedValue.value != 2
-                                  ? Colors.white
-                                  : const Color(0xff0850FD))),
-                      child: const Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Center(
-                          child: Text(
-                            'Quiz 2',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+              role != 'USER'
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          // Get.to(() => const QuestionsPage(type: 'BID'));
+                          counterController.selectedValue.value = 2;
+                        },
+                        child: Obx(
+                          () => Material(
+                            color: counterController.selectedValue.value != 2
+                                ? Colors.transparent
+                                : const Color(0xff0850FD),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                side: BorderSide(
+                                    color:
+                                        counterController.selectedValue.value !=
+                                                2
+                                            ? Colors.white
+                                            : const Color(0xff0850FD))),
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Center(
+                                child: Text(
+                                  'Quiz 2',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
+                    )
+                  : Container(),
               const SizedBox(
                 height: 64,
               ),
@@ -129,10 +135,18 @@ class QuizPage extends StatelessWidget {
                   onTap: () {
                     if (counterController.selectedValue.value == 1) {
                       counterController.selectedValue.value = 0;
-                      Get.off(() => const QuestionsPage(type: 'HAM_D'));
+                      Get.off(() => QuestionsPage(
+                            type: 'HAM_D',
+                            role: role,
+                            uid: uid,
+                          ));
                     } else if (counterController.selectedValue.value == 2) {
                       counterController.selectedValue.value = 0;
-                      Get.off(() => const QuestionsPage(type: 'BID'));
+                      Get.off(() => QuestionsPage(
+                            type: 'BID',
+                            role: role,
+                            uid: uid,
+                          ));
                     }
                   },
                   child: Container(

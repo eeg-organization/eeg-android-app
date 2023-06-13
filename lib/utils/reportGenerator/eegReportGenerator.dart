@@ -125,6 +125,7 @@ PdfGrid getGrid(RxList<BrainScoreModel> brainScores) {
   return grid;
 }
 
+
 //Create and row for the grid.
 void addBrainScores(int SerialNo, DateTime dateTime, String deviceId,
     String score, PdfGrid grid) {

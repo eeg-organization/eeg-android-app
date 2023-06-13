@@ -10,11 +10,10 @@ class GetQuizController extends GetxController {
   GetQuizController(this.uid);
   final String uid;
   RxList<ChartData> chartData = <ChartData>[].obs;
-
+  RxList<ChartData> brainScore = <ChartData>[].obs;
   @override
   void onInit() async {
     await fetchQuiz();
-
     super.onInit();
   }
 
@@ -23,6 +22,7 @@ class GetQuizController extends GetxController {
   var isLoading = false.obs;
 
   fetchQuiz() async {
+    await fetchBrainScore();
     try {
       isLoading(true);
       var response = await http.get(
@@ -49,12 +49,17 @@ class GetQuizController extends GetxController {
           headers: Constants().authHeader);
       print(response.body);
       isLoading(false);
+      // brainScoreS.value=brainScoreModelFromJson(response.body);
       brainScores.value = brainScoreModelFromJson(response.body);
+      brainScore.addAll(brainScores.map((e) => ChartData(
+          DateTime(e.createdAt!.year, e.createdAt!.month, e.createdAt!.day,
+              e.createdAt!.hour, e.createdAt!.minute, e.createdAt!.second),
+          double.parse(e.score!).toInt(),
+          e.deviceId)));
     } catch (err) {
       Get.snackbar('Error', 'Something went wrong');
       print(err);
-    }
-    finally{
+    } finally {
       isLoading(false);
     }
   }
