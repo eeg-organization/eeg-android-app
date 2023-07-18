@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:convert';
+
 import 'package:adv_eeg/controllers/patientSideControllers/getProfileController.dart';
+import 'package:adv_eeg/models/profile_model.dart';
 import 'package:adv_eeg/screens/landing.dart';
 import 'package:adv_eeg/screens/patientScreens/quiz_page.dart';
 import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
@@ -24,6 +27,7 @@ class PatientLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       drawer: CustomDrawer(getProflieController: getProflieController),
       appBar: AppBar(
         elevation: 0,
@@ -33,82 +37,77 @@ class PatientLogin extends StatelessWidget {
       body: Obx(
         () => ModalProgressHUD(
           inAsyncCall: getProflieController.isLoading.value,
-          child: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    colorFilter:
-                        ColorFilter.mode(Colors.black87, BlendMode.hardLight),
-                    image: AssetImage('assets/bg1.png'),
-                    fit: BoxFit.cover)),
-            child: SafeArea(
-                child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: size.height * 0.2,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text('Choose an Option',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 30,
-                      )
-                      // fontWeight: FontWeight.),
-                      ),
-                ),
-                SizedBox(
-                  height: size.height * 0.05,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: GestureDetector(
-                          onTap: () {
-                            Get.to(() => QuizPage(role: "USER",uid:  GetStorage().read('loginDetails')['user']['uid'],));
-                          },
-                          child: const OptionButton(
-                            text: 'Quiz',
-                            color: Colors.transparent,
-                          ))),
-                ),
-                SizedBox(
-                  height: size.height * 0.025,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: GestureDetector(
-                        onTap: () async {
-                          if (!GetPlatform.isAndroid) {
-                            Get.snackbar('Alert',
-                                'This feature is not available for your Platform');
-                            return;
-                          }
-                          if (await FlutterBluetoothSerial.instance.state ==
-                              BluetoothState.STATE_OFF) {
-                            await FlutterBluetoothSerial.instance
-                                .requestEnable();
-                            if (await FlutterBluetoothSerial.instance.state ==
-                                BluetoothState.STATE_OFF) {
-                              Get.snackbar('Alert', 'Please turn on bluetooth');
-                              return;
-                            }
-                          } await Get.to(
-                              () => EegScreen(),
-                              transition: Transition.cupertino);
+          child: SafeArea(
+              child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: size.height * 0.2,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text('Choose an Option',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 30,
+                    )
+                    // fontWeight: FontWeight.),
+                    ),
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: GestureDetector(
+                        onTap: () {
+                          Get.to(() => QuizPage(
+                                role: "USER",
+                                uid: GetStorage().read('loginDetails')['user']
+                                    ['uid'],
+                              ));
                         },
                         child: const OptionButton(
-                          text: 'EEG',
+                          text: 'Quiz',
                           color: Colors.transparent,
-                        ),
-                      )),
-                )
-              ],
-            )),
-          ),
+                        ))),
+              ),
+              SizedBox(
+                height: size.height * 0.025,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (!GetPlatform.isAndroid) {
+                          Get.snackbar('Alert',
+                              'This feature is not available for your Platform');
+                          return;
+                        }
+                        if (await FlutterBluetoothSerial.instance.state ==
+                            BluetoothState.STATE_OFF) {
+                          await FlutterBluetoothSerial.instance.requestEnable();
+                          if (await FlutterBluetoothSerial.instance.state ==
+                              BluetoothState.STATE_OFF) {
+                            Get.snackbar('Alert', 'Please turn on bluetooth');
+                            return;
+                          }
+                        }
+                        await Get.to(() => EegScreen(),
+                            transition: Transition.cupertino);
+                      },
+                      child: const OptionButton(
+                        text: 'EEG',
+                        color: Colors.transparent,
+                      ),
+                    )),
+              )
+            ],
+          )),
         ),
       ),
     );
@@ -156,8 +155,11 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () async {
-              await getProflieController.fetchQuiz();
-              await generateQuizReport(getProflieController.quiz);
+              await getProflieController.fetchQuiz(null);
+              await generateQuizReport(
+                  getProflieController.quiz,
+                  profileFromJson(
+                      jsonEncode(GetStorage().read('loginDetails')['user'])));
               // Get.to(() => QuizPage());
             },
             leading: Icon(Icons.quiz),
@@ -165,7 +167,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () async {
-              await getProflieController.fetchBrainScore();
+              await getProflieController.fetchBrainScore(null);
               await generatEEGReport(getProflieController.brainScores);
               // Get.to(() => QuizPage());
             },

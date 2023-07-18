@@ -19,35 +19,26 @@ class CollectingData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                colorFilter:
-                    ColorFilter.mode(Colors.black87, BlendMode.hardLight),
-                image: AssetImage(
-                  'assets/bg1.png',
-                ),
-                fit: BoxFit.cover)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Center(
-              child: Text(
-                'Wait we are scanning your brain signals',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                ),
+      backgroundColor: Colors.grey.shade900,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Center(
+            child: Text(
+              'Wait we are scanning your brain signals',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
               ),
             ),
-            const SizedBox(
-              height: 100,
-            ),
-            Musicvisulaizer()
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 100,
+          ),
+          Musicvisulaizer()
+        ],
       ),
     );
   }

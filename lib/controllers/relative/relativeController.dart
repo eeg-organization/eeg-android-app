@@ -1,34 +1,64 @@
 import 'dart:convert';
 
-import 'package:adv_eeg/models/brainScoreModel.dart';
+import 'package:adv_eeg/Constants/constants.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-import '../../Constants/constants.dart';
+import '../../models/brainScoreModel.dart';
 import '../../models/patients/quiz_model.dart';
+import '../../models/profile_model.dart';
 import '../../screens/doctorScreens/patientDetailedView(DocEnd).dart';
 
-class GetQuizController extends GetxController {
-  GetQuizController(this.uid);
-  final String uid;
-  RxList<ChartData> chartData = <ChartData>[].obs;
-  RxList<ChartData> brainScore = <ChartData>[].obs;
+class RelativeController extends GetxController {
   @override
-  void onInit() async {
-    await fetchQuiz();
+  Future onInit() async {
+    // TODO: implement onInit
+    await getRelative();
+    await fetchProfile();
+    // await fetchQuiz();
+    // await fetchBrainScore();
     super.onInit();
   }
 
-  var brainScores = <BrainScoreModel>[].obs;
-  var quiz = Quiz(quizs: []).obs;
+  var data = ''.obs;
+  RxList<ChartData> chartData = <ChartData>[].obs;
+  RxList<ChartData> brainScore = <ChartData>[].obs;
+  getRelative() async {
+    var response = await http.get(Uri.parse(
+        '${Constants.apiUrl}/find-related-patient/${GetStorage().read('loginDetails')['user']['uid']}'));
+    print(response.body);
+    data.value = jsonDecode(response.body)['message']['patient'][0];
+  }
+
+  var profile = Profile().obs;
   var isLoading = false.obs;
+  fetchProfile() async {
+    isLoading.value = true;
+    await fetchBrainScore();
+    await fetchQuiz();
+    try {
+      var response = await http.get(
+          Uri.parse('${Constants.apiUrl}/get-profile/$data'),
+          headers: Constants().authHeader);
+      // print(response.body);
+      isLoading.value = false;
+      profile.value = profileFromJson(response.body);
+    } catch (err) {
+      isLoading.value = false;
+      // Error();
+      print(err);
+    }
+  }
+
+  var quiz = Quiz(quizs: []).obs;
+  // var isLoading = false.obs;
 
   fetchQuiz() async {
-    await fetchBrainScore();
     try {
       isLoading(true);
       var response = await http.get(
-          Uri.parse('${Constants.apiUrl}/get-profile-quizs/$uid'),
+          Uri.parse('${Constants.apiUrl}/get-profile-quizs/${data}'),
           headers: Constants().authHeader);
       print(response.body);
       isLoading(false);
@@ -44,14 +74,14 @@ class GetQuizController extends GetxController {
     }
   }
 
+  var brainScores = <BrainScoreModel>[].obs;
   fetchBrainScore() async {
     try {
       var response = await http.get(
-          Uri.parse('${Constants.apiUrl}/get-brainsignal-score/$uid'),
+          Uri.parse('${Constants.apiUrl}/get-brainsignal-score/${data}'),
           headers: Constants().authHeader);
       print(response.body);
       isLoading(false);
-      // brainScoreS.value=brainScoreModelFromJson(response.body);
       brainScores.value = brainScoreModelFromJson(
           jsonEncode(jsonDecode(response.body)['data']));
       brainScore.addAll(brainScores.map((e) => ChartData(
@@ -64,6 +94,6 @@ class GetQuizController extends GetxController {
       print(err);
     } finally {
       isLoading(false);
-    }   
+    }
   }
 }

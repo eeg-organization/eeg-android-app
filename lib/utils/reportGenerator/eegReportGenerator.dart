@@ -53,6 +53,7 @@ PdfLayoutResult drawHeader(PdfPage page, Size pageSize, PdfGrid grid) {
   final PdfFont contentFont = PdfStandardFont(PdfFontFamily.helvetica, 9);
   final Size contentSize = contentFont.measureString('');
   const String address = '';
+
   return PdfTextElement(text: address, font: contentFont).draw(
       page: page,
       bounds: Rect.fromLTWH(30, 120, pageSize.width - (contentSize.width + 30),
@@ -125,13 +126,12 @@ PdfGrid getGrid(RxList<BrainScoreModel> brainScores) {
   return grid;
 }
 
-
 //Create and row for the grid.
 void addBrainScores(int SerialNo, DateTime dateTime, String deviceId,
     String score, PdfGrid grid) {
   print('addQuizItem Called');
   final PdfGridRow row = grid.rows.add();
-  row.cells[0].value = SerialNo;
+  row.cells[0].value = SerialNo.toString();
   final DateFormat format = DateFormat.yMMMMd('en_US').add_Hm();
   row.cells[1].value = format.format(dateTime);
   row.cells[2].value = deviceId.toString();

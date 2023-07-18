@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:adv_eeg/models/profile_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -35,12 +37,13 @@ class GetProflieController extends GetxController {
   var quiz = Quiz(quizs: []).obs;
   // var isLoading = false.obs;
 
-  fetchQuiz() async {
+  fetchQuiz(String? uid) async {
+    quiz = Quiz(quizs: []).obs;
     try {
       isLoading(true);
+      uid = uid ?? GetStorage().read('loginDetails')['user']['uid'];
       var response = await http.get(
-          Uri.parse(
-              '${Constants.apiUrl}/get-profile-quizs/${GetStorage().read('loginDetails')['user']['uid']}'),
+          Uri.parse('${Constants.apiUrl}/get-profile-quizs/${uid}'),
           headers: Constants().authHeader);
       print(response.body);
       isLoading(false);
@@ -56,15 +59,17 @@ class GetProflieController extends GetxController {
   }
 
   var brainScores = <BrainScoreModel>[].obs;
-  fetchBrainScore() async {
+  fetchBrainScore(String? uid) async {
     try {
+      uid = uid ?? GetStorage().read('loginDetails')['user']['uid'];
       var response = await http.get(
           Uri.parse(
               '${Constants.apiUrl}/get-brainsignal-score/${GetStorage().read('loginDetails')['user']['uid']}'),
           headers: Constants().authHeader);
       print(response.body);
       isLoading(false);
-      brainScores.value = brainScoreModelFromJson(response.body);
+      brainScores.value = brainScoreModelFromJson(
+          jsonEncode(jsonDecode(response.body)['data']));
     } catch (err) {
       Get.snackbar('Error', 'Something went wrong');
       print(err);

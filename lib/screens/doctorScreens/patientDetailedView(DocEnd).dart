@@ -109,7 +109,7 @@ class PatientDetailedViewForDoc extends StatelessWidget {
                                         ),
                                         Obx(
                                           () => Text(
-                                            'Recent Quiz score ${getQuizController.brainScores.length != 0 ? getQuizController.brainScores.last.score.toString() : 'No EEG Tests Taken Yet!'}',
+                                            'Recent EEG score ${getQuizController.brainScores.length != 0 ? getQuizController.brainScores.last.score.toString() : 'No EEG Tests Taken Yet!'}',
                                             style: const TextStyle(
                                               color: Colors.white,
                                             ),

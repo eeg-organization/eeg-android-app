@@ -1,12 +1,17 @@
 // ignore: file_names
+import 'package:adv_eeg/models/profile_model.dart';
 import 'package:adv_eeg/screens/doctorScreens/patientDetailedView(DocEnd).dart';
 import 'package:adv_eeg/screens/patientScreens/quiz_page.dart';
+import 'package:adv_eeg/utils/reportGenerator/quizReportGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../controllers/doctor/doctorview_controller.dart';
+import '../../controllers/doctor/getQuizData.dart';
+import '../../controllers/patientSideControllers/getProfileController.dart';
+import '../landing.dart';
 
 class DoctorView extends StatelessWidget {
   const DoctorView({super.key});
@@ -15,6 +20,8 @@ class DoctorView extends StatelessWidget {
   Widget build(BuildContext context) {
     final DoctorViewController doctorViewController =
         Get.put(DoctorViewController());
+    final GetProflieController getProfileController =
+        Get.put(GetProflieController());
 
     return Scaffold(
       appBar: AppBar(
@@ -31,8 +38,26 @@ class DoctorView extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              GetStorage().erase();
-              Get.offAllNamed('/');
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Are you sure you want to logout?'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text('No')),
+                    TextButton(
+                        onPressed: () async {
+                          // await getProflieController.logout();
+                          GetStorage().erase();
+                          Get.offAll(() => LandingPage());
+                        },
+                        child: Text('Yes'))
+                  ],
+                ),
+              );
             },
             icon: const Icon(Icons.logout),
           ),
@@ -179,6 +204,79 @@ class DoctorView extends StatelessWidget {
                                           child:
                                               Text('Analyze Patient From Quiz'),
                                         ),
+                                        TextButton(
+                                            onPressed: () async {
+                                              await getProfileController
+                                                  .fetchQuiz(
+                                                      doctorViewController
+                                                          .docDetails
+                                                          .value
+                                                          .data!
+                                                          .patientInfo![index]
+                                                          .patient!
+                                                          .uid!)
+                                                  .then((value) async {
+                                                await generateQuizReport(
+                                                    getProfileController.quiz,
+                                                    Profile(
+                                                        name:
+                                                            doctorViewController
+                                                                .docDetails
+                                                                .value
+                                                                .data!
+                                                                .patientInfo![
+                                                                    index]
+                                                                .patient!
+                                                                .name,
+                                                        uid:
+                                                            doctorViewController
+                                                                .docDetails
+                                                                .value
+                                                                .data!
+                                                                .patientInfo![
+                                                                    index]
+                                                                .patient!
+                                                                .uid!,
+                                                        username:
+                                                            doctorViewController
+                                                                .docDetails
+                                                                .value
+                                                                .data!
+                                                                .patientInfo![
+                                                                    index]
+                                                                .patient!
+                                                                .username,
+                                                        email:
+                                                            doctorViewController
+                                                                .docDetails
+                                                                .value
+                                                                .data!
+                                                                .patientInfo![
+                                                                    index]
+                                                                .patient!
+                                                                .email,
+                                                        contact:
+                                                            doctorViewController
+                                                                .docDetails
+                                                                .value
+                                                                .data!
+                                                                .patientInfo![
+                                                                    index]
+                                                                .patient!
+                                                                .contact,
+                                                        age:
+                                                            doctorViewController
+                                                                .docDetails
+                                                                .value
+                                                                .data!
+                                                                .patientInfo![
+                                                                    index]
+                                                                .patient!
+                                                                .age!));
+                                              });
+                                            },
+                                            child: Text(
+                                                'Download Patient Quiz Report'))
                                       ],
                                     ));
                                 // Get.to(() => PatientDetailedViewForDoc(

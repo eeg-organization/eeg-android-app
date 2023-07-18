@@ -59,18 +59,18 @@ class QuizController extends GetxController {
     //     .getToken()
     //     .then((value) => token.value = value!);
     try {
-      print(options);
-      print(profile.value.name);
-      // print(questionController.question);
-      // print(questionCo
-      // ntroller.question.value.questionare?.uid);
-      // print(GetStorage().read('loginDetails')['user']['uid']);
-      print({
-        "data": questionController.question.value,
-        "questionare": questionController.question.value.questionare?.uid,
-        "options": options,
-        "user": uid,
-      });
+      // print(options);
+      // print(profile.value.name);
+      // // print(questionController.question);
+      // // print(questionCo
+      // // ntroller.question.value.questionare?.uid);
+      // // print(GetStorage().read('loginDetails')['user']['uid']);
+      // print({
+      //   "data": questionController.question.value,
+      //   "questionare": questionController.question.value.questionare?.uid,
+      //   "options": options,
+      //   "user": uid,
+      // });
       var response = await http.post(Uri.parse(url),
           body: jsonEncode(
             {
@@ -82,6 +82,8 @@ class QuizController extends GetxController {
           ),
           headers: Constants().authHeader);
       isLoading.value = false;
+      print(response.body);
+      print(response.statusCode);
       score.value = jsonDecode(response.body)['score'];
       return response.statusCode;
     } catch (er) {

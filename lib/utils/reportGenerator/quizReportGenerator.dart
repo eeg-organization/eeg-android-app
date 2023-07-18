@@ -11,10 +11,11 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:image/image.dart' as img;
 import '../../models/patients/quiz_model.dart';
+import '../../models/profile_model.dart';
 import '../../screens/doctorScreens/patientDetailedView(DocEnd).dart';
 
 final chartData = <ChartData>[];
-Future<void> generateQuizReport(Rx<Quiz> quiz) async {
+Future<void> generateQuizReport(Rx<Quiz> quiz, Profile profile) async {
   chartData.addAll(quiz.value.quizs.map((e) => ChartData(
       DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day,
           e.createdAt.hour, e.createdAt.minute, e.createdAt.second),
@@ -34,7 +35,7 @@ Future<void> generateQuizReport(Rx<Quiz> quiz) async {
   //Generate PDF grid.
   final PdfGrid grid = getGrid(quiz);
   //Draw the header section by creating text element
-  final PdfLayoutResult result = drawHeader(page, pageSize, grid);
+  final PdfLayoutResult result = drawHeader(page, pageSize, grid, profile);
   //Draw grid
   drawGrid(page, grid, result);
   //Add invoice footer
@@ -46,19 +47,18 @@ Future<void> generateQuizReport(Rx<Quiz> quiz) async {
   // await createGraph(quiz, page, document);
   document.dispose();
   //Save and launch the file.
-  await saveAndLaunchFile(bytes,
-      '${GetStorage().read('loginDetails')['user']['name']}_${DateTime.now()}.pdf');
+  await saveAndLaunchFile(bytes, '${profile.name}_${DateTime.now()}.pdf');
 }
 
 //Draws the invoice header
-PdfLayoutResult drawHeader(PdfPage page, Size pageSize, PdfGrid grid) {
+PdfLayoutResult drawHeader(
+    PdfPage page, Size pageSize, PdfGrid grid, Profile profile) {
   //Draw rectangle
   page.graphics.drawRectangle(
       brush: PdfSolidBrush(PdfColor(91, 126, 215)),
       bounds: Rect.fromLTWH(0, 0, pageSize.width - 0, 90));
   //Draw string
-  page.graphics.drawString(
-      'Quiz Report for ${GetStorage().read('loginDetails')['user']['name']}',
+  page.graphics.drawString('Quiz Report for ${profile.name}',
       PdfStandardFont(PdfFontFamily.helvetica, 30),
       brush: PdfBrushes.white,
       bounds: Rect.fromLTWH(25, 0, pageSize.width - 115, 90),
@@ -66,7 +66,8 @@ PdfLayoutResult drawHeader(PdfPage page, Size pageSize, PdfGrid grid) {
 
   final PdfFont contentFont = PdfStandardFont(PdfFontFamily.helvetica, 9);
   final Size contentSize = contentFont.measureString('');
-  const String address = '';
+  String address =
+      'Name:${profile.name}\tAge:${profile.age}\r\nGender:${profile.gender}\tContact:${profile.contact}\r\nEmail:${profile.email}\tAddress:${profile.address}';
   return PdfTextElement(text: address, font: contentFont).draw(
       page: page,
       bounds: Rect.fromLTWH(30, 120, pageSize.width - (contentSize.width + 30),
@@ -99,7 +100,7 @@ void drawFooter(PdfPage page, Size pageSize) {
 PdfGrid getGrid(Rx<Quiz> quiz) {
   print('GetGrid Called');
   final PdfGrid grid = PdfGrid();
-  grid.columns.add(count: 4);
+  grid.columns.add(count: 3);
 
   final PdfGridRow headerRow = grid.headers.add(1)[0];
 
@@ -108,11 +109,11 @@ PdfGrid getGrid(Rx<Quiz> quiz) {
   headerRow.cells[0].value = 'Quiz Type';
   headerRow.cells[0].stringFormat.alignment = PdfTextAlignment.center;
   headerRow.cells[1].value = 'Date & Time';
-  headerRow.cells[2].value = 'Total Questions';
-  headerRow.cells[3].value = 'Score';
+  // headerRow.cells[2].value = 'Total Questions';
+  headerRow.cells[2].value = 'Score';
   quiz.value.quizs
-      .map((e) => addQuizItem(e.data.questionare.type.toString(), e.createdAt,
-          e.data.questions.length, e.score, grid))
+      .map((e) => addQuizItem(
+          e.data.questionare.type.toString(), e.createdAt, e.score, grid))
       .toList();
   grid.applyBuiltInStyle(PdfGridBuiltInStyle.listTable4Accent5);
 
@@ -188,13 +189,13 @@ createGraph(Rx<Quiz> quiz, PdfPage page, PdfDocument pdf) async {
 }
 
 //Create and row for the grid.
-void addQuizItem(String QuizType, DateTime dateTime, int TotalQuestions,
-    int score, PdfGrid grid) {
+void addQuizItem(String QuizType, DateTime dateTime, int score, PdfGrid grid) {
   print('addQuizItem Called');
   final PdfGridRow row = grid.rows.add();
+  // row.cells[0].value = SerialNo.toString();
   row.cells[0].value = QuizType;
   final DateFormat format = DateFormat.yMMMMd('en_US').add_Hms();
   row.cells[1].value = format.format(dateTime);
-  row.cells[2].value = TotalQuestions.toString();
-  row.cells[3].value = score.toString();
+  // row.cells[2].value = TotalQuestions.toString();
+  row.cells[2].value = score.toString();
 }
