@@ -1,6 +1,7 @@
 // import 'dart:convert';
 
 import 'package:adv_eeg/screens/auth/emailLogin.dart';
+import 'package:adv_eeg/screens/patientScreens/eegScreen.dart';
 import 'package:adv_eeg/screens/patientScreens/yogaScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,6 +83,18 @@ class LandingPage extends StatelessWidget {
                   child: const LoginButtons(
                     text: 'Yoga for you',
                     starValue: 2,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => EegScreen());
+                  },
+                  child: const LoginButtons(
+                    text: 'Offline Mode',
+                    starValue: 3,
                   ),
                 ),
               ),

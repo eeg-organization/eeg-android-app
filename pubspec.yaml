@@ -21,6 +21,7 @@ dependencies:
   flutter_bluetooth_seria_changed: ^0.4.0
   flutter_inappwebview: ^5.7.2+3
   flutter_local_notifications: ^9.1.5
+  geolocator: ^9.0.2
   get: ^4.6.5
   get_storage: ^2.0.3
   google_fonts: ^5.0.0
@@ -35,6 +36,7 @@ dependencies:
   syncfusion_flutter_charts: ^21.2.8
   syncfusion_flutter_core: ^21.2.8
   syncfusion_flutter_pdf: ^21.2.8
+  tflite_flutter: ^0.10.4
   toast: ^0.3.0
   url_launcher: ^6.1.11
   youtube_player_flutter: ^8.1.2

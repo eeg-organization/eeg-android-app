@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:adv_eeg/controllers/patientSideControllers/question_controller.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -11,16 +12,44 @@ class QuizController extends GetxController {
   String type;
   late QuestionController questionController;
   var isLoading = false.obs;
+
   QuizController(this.type);
   @override
-  void onInit() {
+  void onInit() async {
     questionController = Get.put(QuestionController(type));
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {}
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+    } else {
+      Position position = await Geolocator.getCurrentPosition();
+      latitude!.value = position.latitude.toString();
+      longitude!.value = position.longitude.toString();
+    }
     super.onInit();
   }
 
   final url = '${Constants.apiUrl}/create-quiz/';
 
   var options = <String, int>{}.obs;
+  RxString? latitude = ''.obs;
+  RxString? longitude = ''.obs;
+
   mergeScoreAndQuestion() {
     for (int i = 0;
         i < questionController.question.value.questions.length;
@@ -78,6 +107,8 @@ class QuizController extends GetxController {
               "questionare": questionController.question.value.questionare?.uid,
               "options": options,
               "user": uid,
+              "latitude": latitude?.value,
+              "longitude": longitude?.value
             },
           ),
           headers: Constants().authHeader);
